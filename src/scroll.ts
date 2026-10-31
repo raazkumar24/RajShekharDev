@@ -2,6 +2,7 @@ import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { SplitText } from "gsap/SplitText"
 import Lenis from "lenis"
+import { bindMagnetic } from "./pointer"
 
 gsap.registerPlugin(ScrollTrigger, SplitText)
 
@@ -9,10 +10,12 @@ type Options = {
   root: HTMLElement
   onSection: (id: string) => void
   onHeader: (state: { hidden: boolean; scrolled: boolean }) => void
+  /** Section id to jump to once every pinned scene has been measured */
+  initialTarget?: string | null
 }
 
 /** Builds every scroll scene. Returns a cleanup function. */
-export function setupScroll({ root, onSection, onHeader }: Options) {
+export function setupScroll({ root, onSection, onHeader, initialTarget }: Options) {
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
   const lenis = reduced ? null : new Lenis({ lerp: 0.09, wheelMultiplier: 0.9 })
   const raf = (time: number) => lenis?.raf(time * 1000)
@@ -34,7 +37,9 @@ export function setupScroll({ root, onSection, onHeader }: Options) {
   const onClick = (event: MouseEvent) => {
     const link = (event.target as HTMLElement).closest<HTMLAnchorElement>('a[href^="#"]')
     if (!link) return
-    const target = document.querySelector(link.getAttribute("href") || "")
+    const href = link.getAttribute("href") || ""
+    if (href.length < 2 || href.startsWith("#case-study")) return
+    const target = document.querySelector(href)
     if (!target) return
     event.preventDefault()
     if (lenis) {
@@ -46,6 +51,7 @@ export function setupScroll({ root, onSection, onHeader }: Options) {
   root.addEventListener("click", onClick)
 
   const splits: SplitText[] = []
+  const cleanups: Array<() => void> = []
   const q = gsap.utils.selector(root)
 
   const ctx = gsap.context(() => {
@@ -74,30 +80,70 @@ export function setupScroll({ root, onSection, onHeader }: Options) {
     if (reduced) return
 
     // ---------- Loader → hero intro ----------
+    // The full loader plays once per visit; returning from a case study gets a quick hero reveal.
     const heroLines = q(".hero-name span")
     const heroSplit = SplitText.create(heroLines, { type: "chars", mask: "chars" })
-    const loaderSplit = SplitText.create(q(".loader-name span"), { type: "chars", mask: "chars" })
-    splits.push(heroSplit, loaderSplit)
-    const counter = { value: 0 }
-    const countEl = root.querySelector(".loader-count")
-    gsap
-      .timeline({ defaults: { ease: "expo.out" }, onComplete: () => root.classList.add("is-loaded") })
-      .from(loaderSplit.chars, { yPercent: 110, duration: 0.9, stagger: 0.03 })
-      .to(counter, {
-        value: 100,
-        duration: 1.2,
-        ease: "power2.inOut",
-        onUpdate: () => {
-          if (countEl) countEl.textContent = String(Math.round(counter.value))
-        },
-      }, 0.1)
-      .fromTo(".loader-bar i", { scaleX: 0 }, { scaleX: 1, duration: 1.2, ease: "power2.inOut" }, 0.1)
-      .to(loaderSplit.chars, { yPercent: -110, duration: 0.6, stagger: 0.015, ease: "power3.in" }, 1.35)
-      .to(".loader", { yPercent: -100, duration: 0.9, ease: "expo.inOut" }, 1.6)
-      .set(".loader", { display: "none" })
-      .from(heroSplit.chars, { yPercent: 110, duration: 1.3, stagger: 0.04 }, 1.95)
-      .from(".hero-portrait img", { yPercent: 16, opacity: 0, duration: 1.4 }, 2.05)
-      .from(".hero-fade", { y: 24, opacity: 0, duration: 0.9, stagger: 0.07, clearProps: "transform,opacity" }, 2.25)
+    splits.push(heroSplit)
+    if (root.classList.contains("is-loaded")) {
+      gsap
+        .timeline({ defaults: { ease: "expo.out" } })
+        .from(heroSplit.chars, { yPercent: 110, duration: 1.1, stagger: 0.03 }, 0.15)
+        .from(".hero-portrait img", { yPercent: 10, opacity: 0, duration: 1.1 }, 0.2)
+        .from(".hero-fade", { y: 20, opacity: 0, duration: 0.8, stagger: 0.06, clearProps: "transform,opacity" }, 0.35)
+    } else {
+      const loaderSplit = SplitText.create(q(".loader-name span"), { type: "chars", mask: "chars" })
+      splits.push(loaderSplit)
+      const counter = { value: 0 }
+      const countEl = root.querySelector(".loader-count")
+      gsap
+        .timeline({ defaults: { ease: "expo.out" }, onComplete: () => root.classList.add("is-loaded") })
+        .from(loaderSplit.chars, { yPercent: 110, duration: 0.9, stagger: 0.03 })
+        .to(counter, {
+          value: 100,
+          duration: 1.2,
+          ease: "power2.inOut",
+          onUpdate: () => {
+            if (countEl) countEl.textContent = String(Math.round(counter.value))
+          },
+        }, 0.1)
+        .fromTo(".loader-bar i", { scaleX: 0 }, { scaleX: 1, duration: 1.2, ease: "power2.inOut" }, 0.1)
+        .to(loaderSplit.chars, { yPercent: -110, duration: 0.6, stagger: 0.015, ease: "power3.in" }, 1.35)
+        .to(".loader", { yPercent: -100, duration: 0.9, ease: "expo.inOut" }, 1.6)
+        .set(".loader", { display: "none" })
+        .from(heroSplit.chars, { yPercent: 110, duration: 1.3, stagger: 0.04 }, 1.95)
+        .from(".hero-portrait img", { yPercent: 16, opacity: 0, duration: 1.4 }, 2.05)
+        .from(".hero-fade", { y: 24, opacity: 0, duration: 0.9, stagger: 0.07, clearProps: "transform,opacity" }, 2.25)
+    }
+
+    // Hero responds to the pointer: the star drifts and the portrait leans in
+    const hero = root.querySelector<HTMLElement>(".hero")
+    if (hero && window.matchMedia("(pointer: fine)").matches) {
+      // Hand the CSS transform to GSAP so pointer offsets layer on top of it
+      gsap.set(".hero-star", { xPercent: -44, x: 0, rotation: -6 })
+      const starX = gsap.quickTo(".hero-star", "x", { duration: 1.2, ease: "power3" })
+      const starY = gsap.quickTo(".hero-star", "y", { duration: 1.2, ease: "power3" })
+      const starR = gsap.quickTo(".hero-star", "rotation", { duration: 1.6, ease: "power3" })
+      const faceX = gsap.quickTo(".hero-portrait img", "x", { duration: 1.4, ease: "power3" })
+      const onHeroMove = (event: PointerEvent) => {
+        const nx = event.clientX / window.innerWidth - 0.5
+        const ny = event.clientY / window.innerHeight - 0.5
+        starX(nx * -60)
+        starY(ny * -40)
+        starR(-6 + nx * 40)
+        faceX(nx * 18)
+      }
+      hero.addEventListener("pointermove", onHeroMove)
+      cleanups.push(() => hero.removeEventListener("pointermove", onHeroMove))
+    }
+
+    // Section labels: the number ring spins in and the rule draws across
+    q(".section-label").forEach((label) => {
+      gsap
+        .timeline({ scrollTrigger: { trigger: label, start: "top 92%" } })
+        .from(label.querySelector("span"), { scale: 0, rotate: -180, duration: 0.9, ease: "back.out(1.8)" })
+        .from(label.querySelector("p"), { x: -16, opacity: 0, duration: 0.7, ease: "power3.out" }, 0.1)
+        .from(label.querySelector("i"), { scaleX: 0, transformOrigin: "0 50%", duration: 1.3, ease: "expo.out" }, 0.15)
+    })
 
     // ---------- Hero exit: pinned, shrinks into a card while the next scene slides over ----------
     gsap
@@ -297,9 +343,111 @@ export function setupScroll({ root, onSection, onHeader }: Options) {
       })
     })
 
+    // ---------- Who is Raj: lead lights up word by word, stats count up ----------
+    const lead = root.querySelector(".who-lead")
+    if (lead) {
+      const leadSplit = SplitText.create(lead, { type: "words" })
+      splits.push(leadSplit)
+      gsap.fromTo(
+        leadSplit.words,
+        { opacity: 0.18 },
+        {
+          opacity: 1,
+          stagger: 0.1,
+          ease: "none",
+          scrollTrigger: { trigger: lead, start: "top 85%", end: "bottom 50%", scrub: true },
+        },
+      )
+    }
+    gsap.from(".who-copy > p, .who-copy dl > div", {
+      y: 40,
+      opacity: 0,
+      stagger: 0.1,
+      duration: 0.9,
+      ease: "power3.out",
+      scrollTrigger: { trigger: ".who-copy", start: "top 85%" },
+    })
+    q("[data-count]").forEach((stat) => {
+      const target = Number(stat.dataset.count || 0)
+      const suffix = (stat.textContent || "").replace(/[0-9]/g, "")
+      const counter = { value: 0 }
+      stat.textContent = `0${suffix}`
+      gsap.to(counter, {
+        value: target,
+        duration: 1.6,
+        ease: "power3.out",
+        onUpdate: () => {
+          stat.textContent = `${Math.round(counter.value)}${suffix}`
+        },
+        scrollTrigger: { trigger: stat, start: "top 90%" },
+      })
+      cleanups.push(() => {
+        stat.textContent = `${target}${suffix}`
+      })
+    })
+    gsap.from(".now-strip li", {
+      y: 30,
+      opacity: 0,
+      stagger: 0.08,
+      duration: 0.8,
+      ease: "power3.out",
+      scrollTrigger: { trigger: ".now-strip", start: "top 90%" },
+    })
+
+    // ---------- Services: card contents settle in ----------
+    q(".stack-card").forEach((card) => {
+      gsap.from(card.querySelectorAll(".stack-deliver li, .stack-cta"), {
+        x: 24,
+        opacity: 0,
+        stagger: 0.06,
+        duration: 0.7,
+        ease: "power3.out",
+        scrollTrigger: { trigger: card, start: "top 60%" },
+      })
+    })
+
+    // ---------- Process: steps light up as the line reaches them ----------
+    q(".process-step").forEach((step) => {
+      ScrollTrigger.create({
+        trigger: step,
+        start: "top 70%",
+        toggleClass: { targets: step, className: "is-on" },
+      })
+    })
+    gsap.from(".process-step", {
+      y: 60,
+      opacity: 0,
+      stagger: 0.12,
+      duration: 0.9,
+      ease: "power3.out",
+      scrollTrigger: { trigger: ".process-steps", start: "top 85%" },
+    })
+
+    // ---------- Contact brief: fields arrive one after another ----------
+    gsap.from(".brief-anim", {
+      y: 40,
+      opacity: 0,
+      stagger: 0.08,
+      duration: 0.8,
+      ease: "power3.out",
+      clearProps: "transform,opacity",
+      scrollTrigger: { trigger: ".brief", start: "top 80%" },
+    })
+
     const mm = gsap.matchMedia()
+    const processLine = (axis: "scaleX" | "scaleY") =>
+      gsap.fromTo(
+        ".process-line i",
+        { [axis]: 0 },
+        {
+          [axis]: 1,
+          ease: "none",
+          scrollTrigger: { trigger: ".process-steps", start: "top 75%", end: "bottom 55%", scrub: 1 },
+        },
+      )
 
     mm.add("(min-width: 901px)", () => {
+      processLine("scaleX")
       // ---------- Works: horizontal pinned gallery ----------
       const track = root.querySelector<HTMLElement>(".work-track")
       if (track) {
@@ -390,6 +538,7 @@ export function setupScroll({ root, onSection, onHeader }: Options) {
     })
 
     mm.add("(max-width: 900px)", () => {
+      processLine("scaleY")
       // ---------- Mobile Works Animation ----------
       // 1. Intro header stagger reveal
       gsap.from(".work-intro > *", {
@@ -535,61 +684,24 @@ export function setupScroll({ root, onSection, onHeader }: Options) {
     })
   }, root)
 
-  // Custom cursor (fine pointers only)
-  const cursor = root.querySelector<HTMLElement>(".cursor")
-  let onMove: ((event: PointerEvent) => void) | null = null
-  let onOver: ((event: PointerEvent) => void) | null = null
-  if (cursor && window.matchMedia("(pointer: fine)").matches) {
-    const x = gsap.quickTo(cursor, "x", { duration: 0.35, ease: "power3" })
-    const y = gsap.quickTo(cursor, "y", { duration: 0.35, ease: "power3" })
-    onMove = (event) => {
-      x(event.clientX)
-      y(event.clientY)
-    }
-    onOver = (event) => {
-      const target = event.target as HTMLElement
-      const view = target.closest("[data-cursor]")
-      cursor.classList.toggle("is-view", Boolean(view))
-      cursor.classList.toggle("is-link", !view && Boolean(target.closest("a, button, input, select, textarea")))
-    }
-    window.addEventListener("pointermove", onMove)
-    window.addEventListener("pointerover", onOver)
-    cursor.classList.add("is-ready")
-  }
-
-  // Magnetic social buttons
-  const magnets: Array<() => void> = []
-  if (window.matchMedia("(pointer: fine)").matches && !reduced) {
-    root.querySelectorAll<HTMLElement>("[data-magnetic]").forEach((element) => {
-      const icon = element.querySelector(".social-icon")
-      const mx = gsap.quickTo(element, "x", { duration: 0.5, ease: "elastic.out(1, 0.4)" })
-      const my = gsap.quickTo(element, "y", { duration: 0.5, ease: "elastic.out(1, 0.4)" })
-      const move = (event: PointerEvent) => {
-        const box = element.getBoundingClientRect()
-        const dx = event.clientX - (box.left + box.width / 2)
-        const dy = event.clientY - (box.top + box.height / 2)
-        mx(dx * 0.35)
-        my(dy * 0.45)
-        if (icon) gsap.to(icon, { x: dx * 0.12, y: dy * 0.12, duration: 0.3 })
-      }
-      const leave = () => {
-        mx(0)
-        my(0)
-        if (icon) gsap.to(icon, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.4)" })
-      }
-      element.addEventListener("pointermove", move)
-      element.addEventListener("pointerleave", leave)
-      magnets.push(() => {
-        element.removeEventListener("pointermove", move)
-        element.removeEventListener("pointerleave", leave)
-      })
-    })
-  }
+  // Magnetic buttons (header CTA, social links, talk badge)
+  const unbindMagnetic = bindMagnetic(root)
 
   // Triggers are created out of page order (pins inside matchMedia); sort so
   // positions below pinned scenes account for their pin spacing.
   ScrollTrigger.sort()
   ScrollTrigger.refresh()
+
+  // Arriving from a case study: jump straight to the requested section
+  if (initialTarget) {
+    const target = document.getElementById(initialTarget)
+    if (target) {
+      const top = target.getBoundingClientRect().top + window.scrollY
+      if (lenis) lenis.scrollTo(top, { immediate: true, force: true })
+      else window.scrollTo({ top, behavior: "instant" })
+      ScrollTrigger.update()
+    }
+  }
   const onLoad = () => ScrollTrigger.refresh()
   window.addEventListener("load", onLoad)
   document.fonts?.ready.then(onLoad)
@@ -600,11 +712,11 @@ export function setupScroll({ root, onSection, onHeader }: Options) {
   return () => {
     root.removeEventListener("click", onClick)
     window.removeEventListener("scroll-lock", onLock)
-    magnets.forEach((remove) => remove())
+    unbindMagnetic()
+    cleanups.forEach((cleanup) => cleanup())
     window.removeEventListener("load", onLoad)
-    if (onMove) window.removeEventListener("pointermove", onMove)
-    if (onOver) window.removeEventListener("pointerover", onOver)
     ctx.revert()
+    root.style.removeProperty("--scroll-progress")
     splits.forEach((split) => split.revert())
     gsap.ticker.remove(raf)
     lenis?.destroy()

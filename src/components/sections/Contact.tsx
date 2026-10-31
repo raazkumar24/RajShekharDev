@@ -1,7 +1,13 @@
 import { useState } from "react"
-import type { FormEvent } from "react"
+import type { FormEvent, ReactNode } from "react"
 import type { EnquiryForm, FormStatus } from "../../types/portfolio"
-import { budgetOptions, EMAIL, serviceOptions, socials } from "../../data/portfolioData"
+import {
+  budgetOptions,
+  EMAIL,
+  serviceOptions,
+  socials,
+  timelineOptions,
+} from "../../data/portfolioData"
 import { SectionLabel } from "../common/SectionLabel"
 import { ArrowUpRight, Icon } from "../common/Icon"
 import { Footer } from "../layout/Footer"
@@ -15,7 +21,39 @@ const emptyForm: EnquiryForm = {
   email: "",
   services: [],
   budget: "",
+  timeline: "",
   message: "",
+}
+
+const serviceMeta: Record<string, { hint: string; icon: ReactNode }> = {
+  "Web design": {
+    hint: "UI, UX & art direction",
+    icon: (
+      <>
+        <rect height="16" rx="2" width="20" x="2" y="4" />
+        <path d="M2 9h20M8 20V9" />
+      </>
+    ),
+  },
+  Development: {
+    hint: "React, Next.js & MERN",
+    icon: <path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16" />,
+  },
+  "Creative systems": {
+    hint: "Design systems & CMS",
+    icon: (
+      <>
+        <rect height="7" rx="1.5" width="7" x="3" y="3" />
+        <rect height="7" rx="1.5" width="7" x="14" y="3" />
+        <rect height="7" rx="1.5" width="7" x="3" y="14" />
+        <circle cx="17.5" cy="17.5" r="3.5" />
+      </>
+    ),
+  },
+  "Something else": {
+    hint: "Tell me what you need",
+    icon: <path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6" />,
+  },
 }
 
 export function Contact({ time }: ContactProps) {
@@ -87,7 +125,7 @@ export function Contact({ time }: ContactProps) {
   const mailtoHref = `mailto:${EMAIL}?subject=${encodeURIComponent(
     `Project enquiry — ${form.services.join(", ") || "New project"}`,
   )}&body=${encodeURIComponent(
-    `Hi Raj,\n\n${form.message}\n\nBudget: ${form.budget || "Not sure yet"}\n\n— ${form.name} (${form.email})`,
+    `Hi Raj,\n\n${form.message}\n\nBudget: ${form.budget || "Not sure yet"}\nTimeline: ${form.timeline || "Flexible"}\n\n— ${form.name} (${form.email})`,
   )}`
 
   return (
@@ -197,22 +235,27 @@ export function Contact({ time }: ContactProps) {
           </ul>
         </div>
 
-        <form className="contact-form" data-rise id="enquiry" noValidate onSubmit={handleSubmit}>
+        <form className="brief" id="enquiry" noValidate onSubmit={handleSubmit}>
           {status === "sent" ? (
-            <div className="success-message" role="status">
+            <div className="brief-success" role="status">
               <svg aria-hidden="true" className="success-check" viewBox="0 0 64 64">
                 <circle cx="32" cy="32" r="29" />
                 <path d="m20 33 8 8 16-18" />
               </svg>
-              <span>Brief received</span>
+              <span className="brief-kicker">Brief received</span>
               <h3>Thanks, {form.name.trim().split(" ")[0]}.</h3>
               <p>
                 I&apos;ll review your note and reply within 48 hours. Want it in my inbox right now?
                 Send the same brief from your email app.
               </p>
-              <div className="success-actions">
-                <a className="form-button" href={mailtoHref}>
-                  Open in email app <ArrowUpRight />
+              <div className="brief-success-actions">
+                <a className="brief-submit" href={mailtoHref}>
+                  <span className="roll" data-text="Open in email app">
+                    Open in email app
+                  </span>
+                  <i>
+                    <ArrowUpRight />
+                  </i>
                 </a>
                 <button className="text-button" onClick={resetForm} type="button">
                   Start a new brief
@@ -221,95 +264,155 @@ export function Contact({ time }: ContactProps) {
             </div>
           ) : (
             <>
-              <div className="form-heading">
-                <p>Project brief</p>
-                <span>{filledSteps} / 4 complete</span>
-              </div>
-              <div className="form-progress" aria-hidden="true">
-                <i style={{ transform: `scaleX(${filledSteps / 4})` }} />
+              <header className="brief-head brief-anim">
+                <div>
+                  <span className="brief-kicker">
+                    <i /> Project brief
+                  </span>
+                  <h3>
+                    Tell me
+                    <br />
+                    <span>everything.</span>
+                  </h3>
+                </div>
+                <div
+                  aria-label={`${filledSteps} of 4 required steps complete`}
+                  className="brief-meter"
+                  role="img"
+                >
+                  <svg aria-hidden="true" viewBox="0 0 64 64">
+                    <circle cx="32" cy="32" r="28" />
+                    <circle
+                      cx="32"
+                      cy="32"
+                      r="28"
+                      style={{ strokeDashoffset: 176 - (176 * filledSteps) / 4 }}
+                    />
+                  </svg>
+                  <strong>
+                    {filledSteps}
+                    <small>/4</small>
+                  </strong>
+                </div>
+              </header>
+
+              <div className="brief-pair brief-anim">
+                <div className={errors.name ? "brief-field has-error" : "brief-field"}>
+                  <input
+                    aria-describedby={errors.name ? "enquiry-name-error" : undefined}
+                    aria-invalid={Boolean(errors.name)}
+                    autoComplete="name"
+                    data-field="name"
+                    id="enquiry-name"
+                    onChange={(event) => updateField("name", event.target.value)}
+                    placeholder=" "
+                    type="text"
+                    value={form.name}
+                  />
+                  <label htmlFor="enquiry-name">
+                    <b>01</b> Your name
+                  </label>
+                  {errors.name && (
+                    <p className="field-error" id="enquiry-name-error">
+                      {errors.name}
+                    </p>
+                  )}
+                </div>
+                <div className={errors.email ? "brief-field has-error" : "brief-field"}>
+                  <input
+                    aria-describedby={errors.email ? "enquiry-email-error" : undefined}
+                    aria-invalid={Boolean(errors.email)}
+                    autoComplete="email"
+                    data-field="email"
+                    id="enquiry-email"
+                    onChange={(event) => updateField("email", event.target.value)}
+                    placeholder=" "
+                    type="email"
+                    value={form.email}
+                  />
+                  <label htmlFor="enquiry-email">
+                    <b>02</b> Email address
+                  </label>
+                  {errors.email && (
+                    <p className="field-error" id="enquiry-email-error">
+                      {errors.email}
+                    </p>
+                  )}
+                </div>
               </div>
 
-              <div className={errors.name ? "field has-error" : "field"}>
-                <label htmlFor="enquiry-name">01 / Your name</label>
-                <input
-                  aria-describedby={errors.name ? "enquiry-name-error" : undefined}
-                  aria-invalid={Boolean(errors.name)}
-                  autoComplete="name"
-                  data-field="name"
-                  id="enquiry-name"
-                  onChange={(event) => updateField("name", event.target.value)}
-                  placeholder="Type your name"
-                  type="text"
-                  value={form.name}
-                />
-                {errors.name && (
-                  <p className="field-error" id="enquiry-name-error">
-                    {errors.name}
-                  </p>
-                )}
-              </div>
-
-              <div className={errors.email ? "field has-error" : "field"}>
-                <label htmlFor="enquiry-email">02 / Email address</label>
-                <input
-                  aria-describedby={errors.email ? "enquiry-email-error" : undefined}
-                  aria-invalid={Boolean(errors.email)}
-                  autoComplete="email"
-                  data-field="email"
-                  id="enquiry-email"
-                  onChange={(event) => updateField("email", event.target.value)}
-                  placeholder="you@company.com"
-                  type="email"
-                  value={form.email}
-                />
-                {errors.email && (
-                  <p className="field-error" id="enquiry-email-error">
-                    {errors.email}
-                  </p>
-                )}
-              </div>
-
-              <fieldset className={errors.services ? "field has-error" : "field"}>
-                <legend>03 / What do you need?</legend>
-                <div className="chips">
+              <fieldset className={errors.services ? "brief-group has-error" : "brief-group"}>
+                <legend className="brief-anim">
+                  <b>03</b> What do you need? <em>Pick any</em>
+                </legend>
+                <div className="brief-tiles brief-anim">
                   {serviceOptions.map((option, index) => (
                     <button
                       aria-pressed={form.services.includes(option)}
-                      className="chip"
+                      className="brief-tile"
                       data-field={index === 0 ? "services" : undefined}
                       key={option}
                       onClick={() => toggleService(option)}
                       type="button"
                     >
-                      <i aria-hidden="true" />
-                      {option}
+                      <span className="brief-tile-icon">
+                        <Icon size={20}>{serviceMeta[option]?.icon}</Icon>
+                      </span>
+                      <strong>{option}</strong>
+                      <small>{serviceMeta[option]?.hint}</small>
+                      <span aria-hidden="true" className="brief-tile-check">
+                        <Icon size={12}>
+                          <path d="m5 12 5 5 9-10" />
+                        </Icon>
+                      </span>
                     </button>
                   ))}
                 </div>
                 {errors.services && <p className="field-error">{errors.services}</p>}
               </fieldset>
 
-              <fieldset className="field">
-                <legend>
-                  04 / Budget <em>(optional)</em>
-                </legend>
-                <div className="chips">
-                  {budgetOptions.map((option) => (
-                    <button
-                      aria-pressed={form.budget === option}
-                      className="chip chip--plain"
-                      key={option}
-                      onClick={() => updateField("budget", form.budget === option ? "" : option)}
-                      type="button"
-                    >
-                      {option}
-                    </button>
-                  ))}
-                </div>
-              </fieldset>
+              <div className="brief-pair brief-pair--options brief-anim">
+                <fieldset className="brief-group">
+                  <legend>
+                    <b>04</b> Budget <em>Optional</em>
+                  </legend>
+                  <div className="brief-segments">
+                    {budgetOptions.map((option) => (
+                      <button
+                        aria-pressed={form.budget === option}
+                        key={option}
+                        onClick={() => updateField("budget", form.budget === option ? "" : option)}
+                        type="button"
+                      >
+                        {option}
+                      </button>
+                    ))}
+                  </div>
+                </fieldset>
+                <fieldset className="brief-group">
+                  <legend>
+                    <b>05</b> Timeline <em>Optional</em>
+                  </legend>
+                  <div className="brief-segments">
+                    {timelineOptions.map((option) => (
+                      <button
+                        aria-pressed={form.timeline === option}
+                        key={option}
+                        onClick={() =>
+                          updateField("timeline", form.timeline === option ? "" : option)
+                        }
+                        type="button"
+                      >
+                        {option}
+                      </button>
+                    ))}
+                  </div>
+                </fieldset>
+              </div>
 
-              <div className={errors.message ? "field has-error" : "field"}>
-                <label htmlFor="enquiry-message">05 / Tell me about the project</label>
+              <div
+                className={`brief-field brief-field--area brief-anim ${errors.message ? "has-error" : ""}`}
+              >
                 <textarea
                   aria-describedby={errors.message ? "enquiry-message-error" : undefined}
                   aria-invalid={Boolean(errors.message)}
@@ -317,30 +420,44 @@ export function Contact({ time }: ContactProps) {
                   id="enquiry-message"
                   maxLength={600}
                   onChange={(event) => updateField("message", event.target.value)}
-                  placeholder="A little about your idea, timeline, and goals..."
-                  rows={3}
+                  placeholder=" "
+                  rows={4}
                   value={form.message}
                 />
+                <label htmlFor="enquiry-message">
+                  <b>06</b> Tell me about the project
+                </label>
                 <div className="field-foot">
                   {errors.message ? (
                     <p className="field-error" id="enquiry-message-error">
                       {errors.message}
                     </p>
                   ) : (
-                    <span />
+                    <span className="brief-hint">Idea, goals, links — anything helps.</span>
                   )}
                   <span className="char-count">{form.message.length} / 600</span>
                 </div>
               </div>
 
-              <button
-                className={status === "sending" ? "form-button is-sending" : "form-button"}
-                disabled={status === "sending"}
-                type="submit"
-              >
-                <span>{status === "sending" ? "Sending brief…" : "Send enquiry"}</span>
-                {status === "sending" ? <i className="spinner" aria-hidden="true" /> : <ArrowUpRight />}
-              </button>
+              <div className="brief-foot brief-anim">
+                <button
+                  className={status === "sending" ? "brief-submit is-sending" : "brief-submit"}
+                  disabled={status === "sending"}
+                  type="submit"
+                >
+                  <span className="roll" data-text={status === "sending" ? "Sending brief…" : "Send enquiry"}>
+                    {status === "sending" ? "Sending brief…" : "Send enquiry"}
+                  </span>
+                  <i>{status === "sending" ? <span className="spinner" aria-hidden="true" /> : <ArrowUpRight />}</i>
+                </button>
+                <p>
+                  <Icon size={14}>
+                    <rect height="10" rx="2" width="14" x="5" y="11" />
+                    <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+                  </Icon>
+                  Reply within 48 hrs. Your details stay private.
+                </p>
+              </div>
             </>
           )}
         </form>

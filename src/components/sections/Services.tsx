@@ -1,5 +1,6 @@
 import { SectionLabel } from "../common/SectionLabel"
-import { services } from "../../data/portfolioData"
+import { ArrowUpRight } from "../common/Icon"
+import { process, services } from "../../data/portfolioData"
 
 export function Services() {
   return (
@@ -21,17 +22,60 @@ export function Services() {
             </div>
             <h3>{service.title}</h3>
             <div className="stack-bottom">
-              <p>{service.description}</p>
-              <ul>
-                {service.tags.map((tag) => (
-                  <li key={tag}>{tag}</li>
-                ))}
-              </ul>
+              <div className="stack-copy">
+                <p>{service.description}</p>
+                <ul>
+                  {service.tags.map((tag) => (
+                    <li key={tag}>{tag}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="stack-deliver">
+                <span>What you get</span>
+                <ol>
+                  {service.deliverables.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ol>
+              </div>
+              <a className="stack-cta" href="#contact">
+                <span className="roll" data-text="Start a project">
+                  Start a project
+                </span>
+                <i>
+                  <ArrowUpRight />
+                </i>
+              </a>
             </div>
           </article>
         ))}
       </div>
+
+      <div className="process">
+        <div className="process-head">
+          <SectionLabel number="3.1">Process / How we get there</SectionLabel>
+          <h2 className="big-title" data-split>
+            HOW I WORK
+          </h2>
+          <p data-rise>
+            A clear, collaborative rhythm — you always know what is happening, what comes next and
+            what it needs from you.
+          </p>
+        </div>
+        <ol className="process-steps">
+          <span aria-hidden="true" className="process-line">
+            <i />
+          </span>
+          {process.map((step) => (
+            <li className="process-step" key={step.number}>
+              <span className="process-dot">{step.number}</span>
+              <span className="process-time">{step.duration}</span>
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
     </section>
   )
 }
-

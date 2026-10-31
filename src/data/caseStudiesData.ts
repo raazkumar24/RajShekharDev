@@ -36,6 +36,11 @@ export const caseStudies: Record<string, CaseStudyData> = {
       mobileImg:
         "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1000",
       caption: "RESPONSIVE RESTAURANT EXPERIENCE",
+      screen: {
+        nav: ["Menu", "About", "Gallery", "Contact"],
+        primary: "View menu",
+        secondary: "Book a table",
+      },
     },
 
     challenges: [
@@ -243,6 +248,11 @@ export async function getPosts() {
       mobileImg:
         "https://images.unsplash.com/photo-1556742049-0a67c5574f73?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1000",
       caption: "E-COMMERCE EXPERIENCE — DESKTOP & MOBILE",
+      screen: {
+        nav: ["Shop", "New in", "Sale", "Cart"],
+        primary: "Shop now",
+        secondary: "View cart",
+      },
     },
 
     challenges: [
@@ -444,6 +454,11 @@ export async function getPosts() {
       mobileImg:
         "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1000",
       caption: "ANALYTICS INTERFACE — DESKTOP & MOBILE",
+      screen: {
+        nav: ["Overview", "Reports", "Users", "Settings"],
+        primary: "Open dashboard",
+        secondary: "Export",
+      },
     },
 
     challenges: [
@@ -631,6 +646,11 @@ function MetricCard({ metric }: { metric: Metric }) {
       mobileImg:
         "https://images.unsplash.com/photo-1507679799987-c73779587ccf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1000",
       caption: "EXPERIMENTAL DIGITAL GALLERY",
+      screen: {
+        nav: ["Archive", "Forms", "Objects", "Visit"],
+        primary: "Enter archive",
+        secondary: "Collections",
+      },
     },
 
     challenges: [

@@ -1,4 +1,12 @@
-import type { NavItem, Project, Service, SocialLink, ToolkitGroup } from "../types/portfolio"
+import type {
+  NavItem,
+  NowItem,
+  ProcessStep,
+  Project,
+  Service,
+  SocialLink,
+  ToolkitGroup,
+} from "../types/portfolio"
 
 export const EMAIL = "hello@rajshekhar.dev"
 
@@ -95,6 +103,7 @@ export const services: Service[] = [
     description:
       "Clear, expressive interfaces shaped around your story, your audience, and the moments that matter.",
     tags: ["Art direction", "UI / UX", "Prototyping"],
+    deliverables: ["Brand-led UI design", "Responsive layouts", "Clickable prototypes", "Design handoff"],
   },
   {
     number: "02",
@@ -102,6 +111,7 @@ export const services: Service[] = [
     description:
       "Fast, responsive builds with thoughtful interactions and a clean technical foundation made to scale.",
     tags: ["React", "Next.js", "Motion"],
+    deliverables: ["Production React / Next.js", "APIs & databases", "Scroll & motion design", "SEO & performance"],
   },
   {
     number: "03",
@@ -109,7 +119,42 @@ export const services: Service[] = [
     description:
       "Flexible visual and component systems that keep every page consistent without making it predictable.",
     tags: ["Design systems", "CMS", "Accessibility"],
+    deliverables: ["Component libraries", "Design tokens", "Headless CMS setup", "Accessibility audits"],
   },
+]
+
+export const process: ProcessStep[] = [
+  {
+    number: "01",
+    title: "Discover",
+    duration: "Week 1",
+    description: "Goals, audience and scope. We agree on what success looks like before a single pixel moves.",
+  },
+  {
+    number: "02",
+    title: "Design",
+    duration: "Week 1–2",
+    description: "Structure, art direction and interactive prototypes you can click through and react to.",
+  },
+  {
+    number: "03",
+    title: "Build",
+    duration: "Week 2–6",
+    description: "Production code with motion, CMS and performance baked in — with a review every week.",
+  },
+  {
+    number: "04",
+    title: "Launch",
+    duration: "Ongoing",
+    description: "Deploy, measure and refine. Clear handover docs and support so it keeps getting better.",
+  },
+]
+
+export const nowItems: NowItem[] = [
+  { label: "Currently building", value: "Full-stack products with Next.js & MERN" },
+  { label: "Exploring", value: "Three.js, WebGL & motion systems" },
+  { label: "Based in", value: "India — working worldwide" },
+  { label: "Open to", value: "Freelance projects & full-time roles" },
 ]
 
 export const socials: SocialLink[] = [
@@ -172,4 +217,5 @@ export const bandTwo = "REACT ✦ NEXT.JS ✦ MERN STACK ✦ MOTION ✦ DESIGN S
 
 export const serviceOptions = ["Web design", "Development", "Creative systems", "Something else"]
 export const budgetOptions = ["< ₹50k", "₹50k – 1L", "₹1L – 3L", "₹3L+", "Not sure yet"]
+export const timelineOptions = ["ASAP", "1–3 months", "3+ months", "Flexible"]
 

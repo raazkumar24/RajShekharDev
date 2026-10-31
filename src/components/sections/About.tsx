@@ -1,6 +1,7 @@
 import { CircleBadge } from "../common/CircleBadge"
 import { ArrowDown } from "../common/Icon"
 import { Toolkit } from "./Toolkit"
+import { nowItems } from "../../data/portfolioData"
 import collageTechBg from "@/assets/collage-tech-bg.png"
 import year2023 from "@/assets/2023.png"
 import collageTechBg2 from "@/assets/collage-tech-bg2.png"
@@ -182,7 +183,7 @@ export function About() {
         <h2 className="outline-title who-title">WHO IS RAJ?</h2>
       </div>
 
-      <div className="who-grid" data-rise>
+      <div className="who-grid">
         <p className="who-lead">
           A developer who thinks like a designer — obsessed with the details between pixels,
           performance, and people.
@@ -195,20 +196,32 @@ export function About() {
           </p>
           <dl>
             <div>
-              <dt>3+</dt>
+              <dt data-count="3">3+</dt>
               <dd>Years crafting for the web</dd>
             </div>
             <div>
-              <dt>40+</dt>
+              <dt data-count="40">40+</dt>
               <dd>Projects shipped</dd>
             </div>
             <div>
-              <dt>15</dt>
+              <dt data-count="15">15</dt>
               <dd>Happy clients worldwide</dd>
             </div>
           </dl>
         </div>
       </div>
+
+      <ul className="now-strip" aria-label="Right now">
+        {nowItems.map((item, index) => (
+          <li key={item.label}>
+            <span>
+              {index === 0 && <i className="now-dot" aria-hidden="true" />}
+              {item.label}
+            </span>
+            <p>{item.value}</p>
+          </li>
+        ))}
+      </ul>
 
       <Toolkit />
     </section>

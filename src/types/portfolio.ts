@@ -30,6 +30,19 @@ export interface Service {
   title: string
   description: string
   tags: string[]
+  deliverables: string[]
+}
+
+export interface ProcessStep {
+  number: string
+  title: string
+  duration: string
+  description: string
+}
+
+export interface NowItem {
+  label: string
+  value: string
 }
 
 export interface SocialLink {
@@ -43,6 +56,7 @@ export interface EnquiryForm {
   email: string
   services: string[]
   budget: string
+  timeline: string
   message: string
 }
 
@@ -97,6 +111,12 @@ export interface CaseStudyData {
     desktopImg: string
     mobileImg: string
     caption: string
+    /** Labels rendered inside the browser / phone mockups */
+    screen: {
+      nav: string[]
+      primary: string
+      secondary: string
+    }
   }
 
   // Section 03: The Challenge

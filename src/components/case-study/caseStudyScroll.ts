@@ -2,550 +2,407 @@ import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { SplitText } from "gsap/SplitText"
 import Lenis from "lenis"
+import { bindMagnetic } from "../../pointer"
 
 gsap.registerPlugin(ScrollTrigger, SplitText)
 
 interface CaseStudyScrollOptions {
   root: HTMLElement
-  onChapterChange?: (chapter: string) => void
   onHeader?: (header: { hidden: boolean; scrolled: boolean }) => void
 }
 
-export function setupCaseStudyScroll({
-  root,
-  onChapterChange,
-  onHeader,
-}: CaseStudyScrollOptions) {
+/** Smooth scrolling + every scroll scene of the case study page. Returns a cleanup. */
+export function setupCaseStudyScroll({ root, onHeader }: CaseStudyScrollOptions) {
+  const site = root.closest<HTMLElement>(".site") ?? root
+  // Opening a case study directly (deep link / new tab) skips the home loader
+  site.classList.add("is-loaded")
+
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  const lenis = reduced ? null : new Lenis({ lerp: 0.08, wheelMultiplier: 0.9 })
+  const lenis = reduced ? null : new Lenis({ lerp: 0.09, wheelMultiplier: 0.9 })
   const raf = (time: number) => lenis?.raf(time * 1000)
+  window.scrollTo({ top: 0, behavior: "instant" })
 
   if (lenis) {
-    lenis.scrollTo(0, { immediate: true })
     lenis.on("scroll", ScrollTrigger.update)
     gsap.ticker.add(raf)
     gsap.ticker.lagSmoothing(0)
   }
 
-  const splits: SplitText[] = []
+  // The menu overlay pauses smooth scrolling while open
+  const onLock = (event: Event) => {
+    if ((event as CustomEvent<boolean>).detail) lenis?.stop()
+    else lenis?.start()
+  }
+  window.addEventListener("scroll-lock", onLock)
 
-  // Anchor click handling within case study (e.g. #cs-brief, #cs-outcome)
+  // In-page chapter anchors (#cs-…) glide through Lenis
   const onClick = (event: MouseEvent) => {
     const link = (event.target as HTMLElement).closest<HTMLAnchorElement>('a[href^="#cs-"]')
     if (!link) return
     const target = root.querySelector<HTMLElement>(link.getAttribute("href") || "")
     if (!target) return
     event.preventDefault()
-    if (lenis) {
-      lenis.scrollTo(target, { duration: 1.4, offset: -40 })
-    } else {
-      target.scrollIntoView({ behavior: "smooth" })
-    }
+    if (lenis) lenis.scrollTo(target, { duration: 1.5 })
+    else target.scrollIntoView()
   }
   root.addEventListener("click", onClick)
 
+  const splits: SplitText[] = []
+  const q = gsap.utils.selector(root)
+
   const ctx = gsap.context(() => {
-    // -------------------------------------------------------------
-    // HEADER TRACKING & SCROLL PROGRESS
-    // -------------------------------------------------------------
+    // ---------- Header state, progress line & chapter rail ----------
     ScrollTrigger.create({
       start: 0,
       end: "max",
       onUpdate: (self) => {
+        site.style.setProperty("--scroll-progress", self.progress.toFixed(4))
         onHeader?.({
           scrolled: self.scroll() > 40,
-          hidden: self.direction === 1 && self.scroll() > window.innerHeight * 0.4,
+          hidden: self.direction === 1 && self.scroll() > window.innerHeight * 0.6,
         })
-        document.documentElement.style.setProperty("--scroll-progress", String(self.progress))
       },
     })
-    // -------------------------------------------------------------
-    // 1. HERO ENTRANCE & 3D PARALLAX ANIMATION
-    // -------------------------------------------------------------
-    const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } })
 
-    // Eyebrow and tech pills fade up
-    heroTl.from(".cs-hero-card .cs-eyebrow", {
-      y: 20,
-      opacity: 0,
-      duration: 0.7,
-      delay: 0.2,
-    })
-
-    // Giant solid title & stroked title chars entrance
-    try {
-      const titleLines = root.querySelectorAll(".cs-giant-title span")
-      if (titleLines.length) {
-        const titleSplit = SplitText.create(titleLines, { type: "chars", mask: "chars" })
-        splits.push(titleSplit)
-        heroTl.from(
-          titleSplit.chars,
-          {
-            yPercent: 110,
-            duration: 1.1,
-            stagger: 0.025,
-            ease: "power4.out",
-          },
-          "-=0.5",
-        )
-      }
-    } catch {
-      heroTl.from(
-        ".cs-giant-title",
-        { y: 40, opacity: 0, duration: 1, ease: "power4.out" },
-        "-=0.5",
-      )
+    const rail = root.querySelector<HTMLElement>(".cs-rail")
+    const railLinks = q(".cs-rail a")
+    if (rail) {
+      ScrollTrigger.create({
+        trigger: q("#cs-brief")[0],
+        endTrigger: q(".cs-next")[0],
+        start: "top 60%",
+        end: "top 40%",
+        toggleClass: { targets: rail, className: "is-on" },
+      })
     }
+    q(".cs-rail a").forEach((link, index) => {
+      const chapter = root.querySelector(link.getAttribute("href") || "")
+      if (!chapter) return
+      ScrollTrigger.create({
+        trigger: chapter,
+        start: "top 50%",
+        end: "bottom 50%",
+        onToggle: (self) => {
+          if (self.isActive) railLinks.forEach((item, i) => item.classList.toggle("is-active", i === index))
+        },
+      })
+    })
 
-    heroTl.from(
-      [".cs-hero-card .cs-tagline", ".cs-hero-card .cs-hero-summary"],
-      { y: 25, opacity: 0, duration: 0.8, stagger: 0.1 },
-      "-=0.6",
-    )
+    if (reduced) return
 
-    heroTl.from(
-      ".cs-hero-card .cs-tech-pill",
+    // ---------- Hero intro ----------
+    const titleSplit = SplitText.create(q(".cs-title span"), { type: "chars", mask: "chars" })
+    splits.push(titleSplit)
+    gsap
+      .timeline({ defaults: { ease: "expo.out" } })
+      .from(titleSplit.chars, { yPercent: 115, duration: 1.2, stagger: 0.035 }, 0.1)
+      .from(".cs-fade", { y: 26, opacity: 0, duration: 0.9, stagger: 0.08, clearProps: "transform,opacity" }, 0.3)
+      .from(".cs-switch button", { y: 14, opacity: 0, duration: 0.6, stagger: 0.05, clearProps: "transform,opacity" }, 0.45)
+      .fromTo(
+        ".cs-cover",
+        { clipPath: "inset(18% 10% 0% 10% round 28px)" },
+        { clipPath: "inset(0% 0% 0% 0% round 28px)", duration: 1.5, ease: "expo.inOut" },
+        0.25,
+      )
+      .from(".cs-cover-media img", { scale: 1.35, duration: 1.8 }, 0.25)
+      .from(".cs-stamp", { scale: 0, rotate: -120, duration: 1, ease: "back.out(1.6)" }, 1.1)
+
+    // Title halves drift apart as the hero leaves
+    gsap
+      .timeline({ scrollTrigger: { trigger: ".cs-hero", start: "top top", end: "bottom top", scrub: true } })
+      .to(".cs-title-solid", { xPercent: -12, ease: "none" }, 0)
+      .to(".cs-title-outline", { xPercent: 10, ease: "none" }, 0)
+
+    // Cover image parallax inside its frame
+    gsap.fromTo(
+      ".cs-cover-media img",
+      { yPercent: -8 },
       {
-        y: 18,
-        opacity: 0,
-        scale: 0.85,
-        stagger: 0.06,
-        duration: 0.6,
-        ease: "back.out(1.5)",
+        yPercent: 8,
+        ease: "none",
+        scrollTrigger: { trigger: ".cs-cover", start: "top bottom", end: "bottom top", scrub: true },
       },
-      "-=0.5",
     )
 
-    // 3D Perspective Browser Card entrance
-    heroTl.from(
-      ".cs-perspective-browser",
+    // ---------- Brief: words light up as you read ----------
+    gsap.fromTo(
+      ".cs-word",
+      { opacity: 0.14 },
       {
-        y: 60,
-        opacity: 0,
-        rotateY: -16,
-        rotateX: 12,
-        scale: 0.9,
-        duration: 1.2,
-        ease: "power3.out",
+        opacity: 1,
+        stagger: 0.1,
+        ease: "none",
+        scrollTrigger: { trigger: ".cs-brief-text", start: "top 82%", end: "bottom 45%", scrub: true },
       },
-      "-=0.8",
     )
-
-    heroTl.from(
-      [".cs-meta-stack", ".cs-curved-arrow", ".cs-stamp-badge"],
-      {
-        scale: 0.7,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.12,
-        ease: "back.out(1.6)",
-      },
-      "-=0.6",
-    )
-
-    // Continuous scroll scrub: Circular Stamp Badge rotates with scroll
-    gsap.to(".cs-stamp-badge svg", {
-      rotate: 360,
-      ease: "none",
-      scrollTrigger: {
-        trigger: root,
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 1,
-      },
-    })
-
-    // Scroll Scrub: 3D Browser tilts dynamically as user scrolls down
-    gsap.to(".cs-perspective-browser", {
-      rotateY: 4,
-      rotateX: -4,
-      yPercent: 16,
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".cs-hero-card",
-        start: "top 20%",
-        end: "bottom top",
-        scrub: 1.2,
-      },
-    })
-
-    // Floating specs card counter-parallax
-    gsap.to(".cs-meta-stack", {
-      yPercent: -28,
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".cs-hero-card",
-        start: "top 20%",
-        end: "bottom top",
-        scrub: 1.5,
-      },
-    })
-
-    // -------------------------------------------------------------
-    // 2. CHAPTER 01: THE BRIEF CARDS REVEAL
-    // -------------------------------------------------------------
-    gsap.from(".cs-brief-card .cs-section-header", {
-      y: 40,
-      opacity: 0,
-      duration: 0.9,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: ".cs-brief-card",
-        start: "top 82%",
-      },
-    })
-
-    gsap.from(".cs-brief-card .cs-meta-card", {
+    gsap.from(".cs-fact", {
       y: 50,
       opacity: 0,
-      scale: 0.94,
       stagger: 0.1,
-      duration: 0.8,
+      duration: 0.9,
       ease: "power3.out",
-      scrollTrigger: {
-        trigger: ".cs-brief-card .cs-meta-grid",
-        start: "top 85%",
-      },
+      scrollTrigger: { trigger: ".cs-facts", start: "top 88%" },
     })
 
-    // -------------------------------------------------------------
-    // 3. CHAPTER 02: DUAL HARDWARE STAGE (LAPTOP + PHONE + FOLIAGE)
-    // -------------------------------------------------------------
-    gsap.from(".cs-experience-card .cs-exp-header", {
-      y: 35,
-      opacity: 0,
-      duration: 0.8,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: ".cs-experience-card",
-        start: "top 80%",
-      },
-    })
-
-    // Pedestal and laptop rise
-    gsap.from(".cs-laptop-mockup", {
-      y: 70,
-      opacity: 0,
-      scale: 0.92,
-      duration: 1.1,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: ".cs-devices-stage",
-        start: "top 80%",
-      },
-    })
-
-    // Overlapping phone floats in with a staggered parallax
+    // ---------- Band ----------
     gsap.fromTo(
-      ".cs-phone-mockup",
-      { y: 90, opacity: 0, scale: 0.88 },
+      ".cs-band-track",
+      { xPercent: 0 },
       {
-        y: 0,
-        opacity: 1,
-        scale: 1,
-        duration: 1.2,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: ".cs-devices-stage",
-          start: "top 78%",
-        },
+        xPercent: -40,
+        ease: "none",
+        scrollTrigger: { trigger: ".cs-band", start: "top bottom", end: "bottom top", scrub: true },
       },
     )
 
-    // Foreground botanical leaves depth-of-field floating parallax
-    gsap.to(".cs-ambient-foliage", {
-      yPercent: -22,
-      rotate: -3,
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".cs-devices-stage",
-        start: "top bottom",
-        end: "bottom top",
-        scrub: 1.5,
-      },
+    // ---------- Section labels & split headings ----------
+    q(".section-label").forEach((label) => {
+      gsap
+        .timeline({ scrollTrigger: { trigger: label, start: "top 92%" } })
+        .from(label.querySelector("span"), { scale: 0, rotate: -180, duration: 0.9, ease: "back.out(1.8)" })
+        .from(label.querySelector("p"), { x: -16, opacity: 0, duration: 0.7, ease: "power3.out" }, 0.1)
+        .from(label.querySelector("i"), { scaleX: 0, transformOrigin: "0 50%", duration: 1.3, ease: "expo.out" }, 0.15)
+    })
+    q("[data-cs-split]").forEach((title) => {
+      const split = SplitText.create(title, { type: "words,chars", mask: "chars" })
+      splits.push(split)
+      gsap.from(split.chars, {
+        yPercent: 115,
+        rotate: 6,
+        stagger: 0.025,
+        ease: "power3.out",
+        scrollTrigger: { trigger: title, start: "top 90%", end: "top 50%", scrub: 1 },
+      })
+    })
+    q("[data-cs-rise], .cs-head-row > p").forEach((element) => {
+      gsap.from(element, {
+        y: 50,
+        opacity: 0,
+        ease: "power3.out",
+        scrollTrigger: { trigger: element, start: "top 92%", end: "top 65%", scrub: 1 },
+      })
     })
 
-    // Mobile phone overlaps and drifts forward with spatial parallax
-    gsap.to(".cs-phone-mockup", {
+    // ---------- Experience: devices tilt up into place ----------
+    gsap
+      .timeline({ scrollTrigger: { trigger: ".cs-devices", start: "top 90%", end: "center 55%", scrub: 1 } })
+      .fromTo(
+        ".cs-browser",
+        { rotateX: 24, y: 120, scale: 0.88, opacity: 0.3 },
+        { rotateX: 0, y: 0, scale: 1, opacity: 1, ease: "power2.out" },
+      )
+      .fromTo(".cs-phone", { y: 200, rotate: 8, opacity: 0 }, { y: 0, rotate: 0, opacity: 1, ease: "power2.out" }, 0.15)
+    gsap.to(".cs-phone", {
       yPercent: -14,
       ease: "none",
-      scrollTrigger: {
-        trigger: ".cs-devices-stage",
-        start: "top bottom",
-        end: "bottom top",
-        scrub: 1.2,
-      },
+      scrollTrigger: { trigger: ".cs-devices", start: "center 55%", end: "bottom top", scrub: true },
+    })
+    q(".cs-browser-view img, .cs-phone-view img").forEach((image) => {
+      gsap.fromTo(
+        image,
+        { yPercent: -6, scale: 1.12 },
+        {
+          yPercent: 6,
+          scale: 1.12,
+          ease: "none",
+          scrollTrigger: { trigger: image, start: "top bottom", end: "bottom top", scrub: true },
+        },
+      )
     })
 
-    // -------------------------------------------------------------
-    // 4. CHAPTER 03: THE CHALLENGE CARDS
-    // -------------------------------------------------------------
-    gsap.from(".cs-challenge-card-group .cs-section-header", {
-      y: 35,
-      opacity: 0,
-      duration: 0.8,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: ".cs-challenge-card-group",
-        start: "top 82%",
+    // ---------- Visual direction ----------
+    gsap.fromTo(
+      ".cs-swatch",
+      { clipPath: "inset(100% 0% 0% 0% round 22px)" },
+      {
+        clipPath: "inset(0% 0% 0% 0% round 22px)",
+        stagger: 0.1,
+        duration: 1.1,
+        ease: "expo.out",
+        clearProps: "clipPath",
+        scrollTrigger: { trigger: ".cs-palette", start: "top 85%" },
       },
-    })
-
-    gsap.from(".cs-challenge-card", {
+    )
+    gsap.from(".cs-spec", {
       y: 60,
       opacity: 0,
-      rotateX: 12,
-      stagger: 0.14,
+      stagger: 0.12,
       duration: 0.9,
       ease: "power3.out",
-      scrollTrigger: {
-        trigger: ".cs-challenge-grid",
-        start: "top 85%",
-      },
+      scrollTrigger: { trigger: ".cs-specimen", start: "top 88%" },
     })
-
-    // -------------------------------------------------------------
-    // 5. CHAPTER 04: DESIGN DIRECTION & COLOR DISCS
-    // -------------------------------------------------------------
-    gsap.from(".cs-visual-card .cs-section-header", {
-      y: 35,
-      opacity: 0,
-      duration: 0.8,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: ".cs-visual-card",
-        start: "top 82%",
+    gsap.fromTo(
+      ".cs-glyph",
+      { scale: 0.6, rotate: -8 },
+      {
+        scale: 1,
+        rotate: 0,
+        ease: "none",
+        scrollTrigger: { trigger: ".cs-specimen", start: "top bottom", end: "center 55%", scrub: true },
       },
-    })
+    )
 
-    // Color discs pop in with elastic bounce
-    gsap.from(".cs-color-disc-btn", {
-      scale: 0.3,
-      opacity: 0,
-      y: 30,
-      stagger: 0.08,
-      duration: 0.8,
-      ease: "back.out(2)",
-      scrollTrigger: {
-        trigger: ".cs-colors-row",
-        start: "top 86%",
-      },
-    })
-
-    gsap.from(".cs-design-specs-grid .cs-spec-box", {
-      y: 40,
-      opacity: 0,
-      stagger: 0.12,
-      duration: 0.85,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: ".cs-design-specs-grid",
-        start: "top 85%",
-      },
-    })
-
-    // -------------------------------------------------------------
-    // 6. CHAPTER 05: BUILDING THE EXPERIENCE & CODE EDITOR
-    // -------------------------------------------------------------
-    gsap.from(".cs-building-card .cs-section-header", {
-      y: 35,
-      opacity: 0,
-      duration: 0.8,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: ".cs-building-card",
-        start: "top 82%",
-      },
-    })
-
-    gsap.from(".cs-flow-steps .cs-flow-step", {
-      x: -25,
-      opacity: 0,
-      stagger: 0.14,
-      duration: 0.8,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: ".cs-flow-steps",
-        start: "top 85%",
-      },
-    })
-
-    gsap.from(".cs-flow-features .cs-feature-item", {
-      y: 20,
-      opacity: 0,
-      stagger: 0.08,
-      duration: 0.7,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: ".cs-flow-features",
-        start: "top 86%",
-      },
-    })
-
-    gsap.from(".cs-code-editor", {
+    // ---------- Build: the flow line draws, code types itself ----------
+    gsap.from(".cs-flow li", {
       y: 50,
       opacity: 0,
-      scale: 0.96,
-      duration: 0.95,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: ".cs-code-editor",
-        start: "top 82%",
-      },
-    })
-
-    // -------------------------------------------------------------
-    // 7. CHAPTER 06: THE OUTCOME & PANORAMIC PARALLAX
-    // -------------------------------------------------------------
-    gsap.from(".cs-outcome-card-group .cs-section-header", {
-      y: 35,
-      opacity: 0,
-      duration: 0.8,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: ".cs-outcome-card-group",
-        start: "top 82%",
-      },
-    })
-
-    gsap.from(".cs-outcome-card", {
-      y: 35,
-      opacity: 0,
-      stagger: 0.1,
-      duration: 0.75,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: ".cs-outcome-badges",
-        start: "top 85%",
-      },
-    })
-
-    // Panoramic cards horizontal scrub parallax
-    const panoramicCards = gsap.utils.toArray<HTMLElement>(".cs-panoramic-showcase .cs-showcase-card")
-    if (panoramicCards.length) {
-      gsap.from(panoramicCards, {
-        y: 60,
-        opacity: 0,
-        stagger: 0.12,
-        duration: 0.9,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: ".cs-panoramic-showcase",
-          start: "top 84%",
-        },
-      })
-
-      // Horizontal parallax drift on images inside the cards
-      gsap.utils.toArray<HTMLElement>(".cs-showcase-card img").forEach((img) => {
-        gsap.to(img, {
-          scale: 1.12,
-          yPercent: -10,
-          ease: "none",
-          scrollTrigger: {
-            trigger: img,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.2,
-          },
-        })
-      })
-    }
-
-    // -------------------------------------------------------------
-    // 8. CHAPTER 07: FOOTER CTA
-    // -------------------------------------------------------------
-    gsap.from(".cs-footer-cta", {
-      y: 45,
-      opacity: 0,
+      stagger: 0.15,
       duration: 0.9,
       ease: "power3.out",
-      scrollTrigger: {
-        trigger: ".cs-footer-cta",
-        start: "top 85%",
-      },
+      scrollTrigger: { trigger: ".cs-flow", start: "top 85%" },
     })
-
-    // Circular arrow button rotation scrub
-    gsap.to(".cs-cta-arrow-circle svg", {
-      rotate: 90,
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".cs-footer-cta",
-        start: "top bottom",
-        end: "bottom top",
-        scrub: 1,
-      },
+    gsap.from(".cs-features li", {
+      x: -30,
+      opacity: 0,
+      stagger: 0.08,
+      duration: 0.8,
+      ease: "power3.out",
+      scrollTrigger: { trigger: ".cs-features", start: "top 88%" },
     })
+    gsap
+      .timeline({ scrollTrigger: { trigger: ".cs-code", start: "top 88%", end: "center 50%", scrub: 1 } })
+      .from(".cs-code", { y: 80, rotate: 2, opacity: 0, ease: "power3.out" })
+      .fromTo(
+        ".cs-code-line",
+        { clipPath: "inset(0 100% 0 0)" },
+        { clipPath: "inset(0 0% 0 0)", stagger: 0.12, ease: "none" },
+        0.2,
+      )
 
-    // -------------------------------------------------------------
-    // 9. VERTICAL CHAPTER RAIL SYNCHRONIZATION
-    // -------------------------------------------------------------
-    const csRail = root.querySelector<HTMLElement>(".case-study-rail")
-    if (csRail) {
-      ScrollTrigger.create({
-        trigger: root,
-        start: "top 40%",
-        end: "bottom 30%",
-        toggleClass: { targets: csRail, className: "is-on" },
-      })
-
-      const csRailLinks = gsap.utils.toArray<HTMLElement>(".case-study-rail a")
-      const panels = gsap.utils.toArray<HTMLElement>(".cs-card-panel")
-
-      const syncRail = () => {
-        const middle = window.innerHeight / 2
-        let closest = 0
-        let best = Infinity
-        panels.forEach((panel, index) => {
-          const box = panel.getBoundingClientRect()
-          const dist = Math.abs(box.top + box.height / 2 - middle)
-          if (dist < best) {
-            best = dist
-            closest = index
-          }
-        })
-        csRailLinks.forEach((link, index) => {
-          link.classList.toggle("is-active", index === closest)
-        })
-        if (panels[closest] && onChapterChange) {
-          onChapterChange(panels[closest].id)
-        }
+    // ---------- Outcome ----------
+    q(".cs-results [data-fill]").forEach((element) => {
+      gsap.fromTo(
+        element,
+        { backgroundPositionX: "100%" },
+        {
+          backgroundPositionX: "0%",
+          ease: "none",
+          scrollTrigger: { trigger: element, start: "top 88%", end: "top 45%", scrub: true },
+        },
+      )
+    })
+    q(".cs-gallery figure").forEach((figure) => {
+      gsap.fromTo(
+        figure,
+        { clipPath: "inset(12% 6% 12% 6% round 22px)" },
+        {
+          clipPath: "inset(0% 0% 0% 0% round 22px)",
+          ease: "none",
+          scrollTrigger: { trigger: figure, start: "top bottom", end: "top 45%", scrub: true },
+        },
+      )
+      const image = figure.querySelector("img")
+      if (image) {
+        gsap.fromTo(
+          image,
+          { yPercent: -8, scale: 1.18 },
+          {
+            yPercent: 8,
+            scale: 1.08,
+            ease: "none",
+            scrollTrigger: { trigger: figure, start: "top bottom", end: "bottom top", scrub: true },
+          },
+        )
       }
+    })
 
-      syncRail()
-      ScrollTrigger.create({
-        trigger: root,
-        start: "top bottom",
-        end: "bottom top",
-        onUpdate: syncRail,
-        onToggle: syncRail,
+    // ---------- Next project + footer ----------
+    gsap.fromTo(
+      ".cs-next-card",
+      { scale: 0.88, borderRadius: 60 },
+      {
+        scale: 1,
+        borderRadius: 28,
+        ease: "none",
+        scrollTrigger: { trigger: ".cs-next-card", start: "top bottom", end: "top 35%", scrub: true },
+      },
+    )
+    gsap.from(".cs-cta > *", {
+      y: 60,
+      opacity: 0,
+      stagger: 0.12,
+      duration: 0.9,
+      ease: "power3.out",
+      scrollTrigger: { trigger: ".cs-cta", start: "top 88%" },
+    })
+    gsap.fromTo(
+      ".cs-next .footer-name",
+      { yPercent: 60 },
+      {
+        yPercent: 0,
+        ease: "none",
+        scrollTrigger: { trigger: ".cs-next .site-footer", start: "top bottom", end: "bottom bottom", scrub: true },
+      },
+    )
+
+    const mm = gsap.matchMedia()
+    // The build flow line runs horizontally on desktop, vertically on mobile
+    const flowLine = (axis: "scaleX" | "scaleY") =>
+      gsap.fromTo(
+        ".cs-flow-line i",
+        { [axis]: 0 },
+        {
+          [axis]: 1,
+          ease: "none",
+          scrollTrigger: { trigger: ".cs-flow", start: "top 85%", end: "bottom 60%", scrub: 1 },
+        },
+      )
+
+    mm.add("(min-width: 901px)", () => {
+      flowLine("scaleX")
+      // Challenge cards stack: each one sinks back as the next arrives
+      const cards = q(".cs-stack-card")
+      cards.forEach((card, index) => {
+        const next = cards[index + 1]
+        if (!next) return
+        gsap.fromTo(
+          card,
+          { scale: 1, filter: "brightness(1)" },
+          {
+            scale: 0.9 + index * 0.025,
+            filter: "brightness(0.6)",
+            ease: "none",
+            scrollTrigger: { trigger: next, start: "top bottom", end: "top 18%", scrub: true },
+          },
+        )
       })
-    }
+    })
+    mm.add("(max-width: 900px)", () => {
+      flowLine("scaleY")
+      gsap.utils.toArray<HTMLElement>(q(".cs-stack-card")).forEach((card) => {
+        gsap.from(card, {
+          y: 60,
+          opacity: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: { trigger: card, start: "top 88%" },
+        })
+      })
+    })
   }, root)
 
-  // Ensure ScrollTrigger and Lenis compute layout after layout settles
-  const refresh = () => {
-    ScrollTrigger.refresh()
-    lenis?.resize()
-  }
-  requestAnimationFrame(refresh)
-  const t1 = window.setTimeout(refresh, 250)
-  const t2 = window.setTimeout(refresh, 800)
-  root.querySelectorAll("img").forEach((img) => {
-    if (!img.complete) {
-      img.addEventListener("load", refresh, { once: true })
-    }
+  const unbindMagnetic = bindMagnetic(site)
+
+  // Measure once layout, fonts and images settle
+  const refresh = () => ScrollTrigger.refresh()
+  ScrollTrigger.refresh()
+  const settle = window.setTimeout(refresh, 400)
+  document.fonts?.ready.then(refresh)
+  const images = Array.from(root.querySelectorAll("img"))
+  images.forEach((image) => {
+    if (!image.complete) image.addEventListener("load", refresh, { once: true })
   })
 
   return () => {
-    window.clearTimeout(t1)
-    window.clearTimeout(t2)
+    window.clearTimeout(settle)
+    images.forEach((image) => image.removeEventListener("load", refresh))
     root.removeEventListener("click", onClick)
-    if (lenis) {
-      gsap.ticker.remove(raf)
-      lenis.destroy()
-    }
-    splits.forEach((s) => s.revert())
+    window.removeEventListener("scroll-lock", onLock)
+    unbindMagnetic()
     ctx.revert()
+    splits.forEach((split) => split.revert())
+    site.style.removeProperty("--scroll-progress")
+    gsap.ticker.remove(raf)
+    lenis?.destroy()
   }
 }
