@@ -1,6 +1,10 @@
 import { CircleBadge } from "../common/CircleBadge"
 import { ArrowDown } from "../common/Icon"
 import { Toolkit } from "./Toolkit"
+import collageTechBg from "@/assets/collage-tech-bg.png"
+import year2023 from "@/assets/2023.png"
+import collageTechBg2 from "@/assets/collage-tech-bg2.png"
+import rajJourneyPortrait from "@/assets/raj-journey-portrait.png"
 
 export function About() {
   return (
@@ -56,14 +60,14 @@ export function About() {
         </div>
         <div className="collage" aria-hidden="true" data-parallax="60">
           <div className="collage-back">
-            <img src="/assets/collage-tech-bg.png" alt="" />
+            <img src={collageTechBg} alt="" />
             {/* <span className="note" /> */}
             <span className="note">
-              <img className="" src="/assets/2023.png" alt="" />
+              <img className="" src={year2023} alt="" />
             </span>
           </div>
           <div className="collage-front">
-            <img src="/assets/collage-tech-bg2.png" alt="" />
+            <img src={collageTechBg2} alt="" />
             {/* <span className="tape" /> */}
           <span className="tape">
             <p>Start</p>
@@ -157,7 +161,7 @@ export function About() {
         <figure className="journey-portrait" data-parallax="50">
           <div className="portrait-card">
             <div className="portrait-frame">
-              <img alt="Black and white portrait of Raj Shekhar" src="/assets/raj-journey-portrait.png" />
+              <img alt="Black and white portrait of Raj Shekhar" src={rajJourneyPortrait} />
             </div>
           </div>
           <figcaption>Raj, 2025–2026 — still curious</figcaption>

@@ -1,6 +1,7 @@
 // import { CircleBadge } from "../common/CircleBadge"
 import { ArrowDown, Icon } from "../common/Icon"
 import { socials } from "../../data/portfolioData"
+import profileImage from "@/assets/profile-image.png"
 
 export function Hero() {
   return (
@@ -24,7 +25,7 @@ export function Hero() {
         </svg>
 
         <div className="hero-portrait">
-          <img alt="Raj Shekhar in a cream jacket" src="/assets/profile-image.png" />
+          <img alt="Raj Shekhar in a cream jacket" src={profileImage} />
         </div>
 
         {/* Mobile Vertical Floating Pill Dock (curved capsule with social links & scroll down) */}
