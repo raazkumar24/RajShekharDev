@@ -1,7 +1,15 @@
 
-import type { CaseStudyData } from "../types/portfolio"
+import type { CaseStudyData } from "../types/portfolio";
+
+// Udupi images from public folder
+import udupiDesktop from "/ProjectsImages/Udupi/desktop.png";
+import udupiMobile from "/ProjectsImages/Udupi/mobile.png";
 
 export const caseStudies: Record<string, CaseStudyData> = {
+  // ==========================================
+  // 01 — UDUPI VRINDAVAN (CLIENT PROJECT)
+  // ==========================================
+
   "01": {
     number: "01",
     title: "Udupi Vrindavan",
@@ -12,16 +20,18 @@ export const caseStudies: Record<string, CaseStudyData> = {
     year: "2025",
     role: "Design & Development",
     timeline: "2025",
-    liveUrl: "https://udupi-vrindavan.vercel.app",
+    liveUrl: "https://udupivrindavan.com",
     githubUrl: "https://github.com/raazkumar24/udupi-vrindavan",
+
     summary:
-      "A new website for Udupi Vrindavan, a pure-veg South Indian restaurant — so people can browse the menu, get a feel for the place and find the address without calling.",
+      "A new website for Udupi Vrindavan, a pure vegetarian South Indian restaurant in Dubai. Built to showcase its food, menu, dining experience and make visiting easier.",
 
     badgeText: "UDUPI VRINDAVAN / PURE VEG / SOUTH INDIAN / ",
 
     brief: {
       description:
-        "The old site didn't show the food or the space well and was hard to use on a phone. The restaurant wanted something that looked as good as the food, worked on mobile, had a blog they could update themselves, and showed up properly on Google.",
+        "The old website did not present the food or restaurant experience effectively. The goal was to build a modern, mobile-friendly experience with an accessible menu, restaurant information, blog integration and technical SEO.",
+
       client: "Udupi Vrindavan",
       timeline: "2025",
       services:
@@ -31,15 +41,14 @@ export const caseStudies: Record<string, CaseStudyData> = {
 
     experience: {
       tagline: "Menu first, everything else second",
-      desktopImg:
-        "https://images.unsplash.com/photo-1610192244261-3f33de3f55e4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600",
-      mobileImg:
-        "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1000",
-      caption: "Desktop and phone — same menu, same feel",
+      desktopImg: udupiDesktop,
+      mobileImg: udupiMobile,
+      caption: "The restaurant experience across desktop and mobile",
+
       screen: {
         nav: ["Menu", "About", "Gallery", "Contact"],
         primary: "View menu",
-        secondary: "Book a table",
+        secondary: "",
       },
     },
 
@@ -48,71 +57,101 @@ export const caseStudies: Record<string, CaseStudyData> = {
         number: "01",
         title: "The old site hid the food",
         description:
-          "Photos were small, the menu was hard to find, and nothing said what the place actually felt like.",
+          "Food photography and menu information needed more attention. Visitors should be able to understand the restaurant before arriving.",
       },
       {
         number: "02",
-        title: "It had to work on a phone",
+        title: "A better mobile experience",
         description:
-          "People look a restaurant up on the way there, so the menu, timings and directions had to work one-handed.",
+          "Customers often search for restaurants on their phones. Menu, opening hours and directions needed to be easy to access.",
       },
       {
         number: "03",
-        title: "They wanted to post on their own",
+        title: "Content the team could manage",
         description:
-          "The team wanted to publish blog posts without calling a developer, so the content lives in WordPress.",
+          "The restaurant wanted to publish blog articles without depending on a developer for every update.",
       },
     ],
 
-    visualDirection: {
-      description:
-        "Warm ivory backgrounds, the burgundy from their signboard, and big food photos doing most of the talking. The type stays plain so the menu is easy to read.",
+ 
+visualDirection: {
+  description:
+    "A premium visual identity inspired by Krishna temple aesthetics, traditional Indian craftsmanship and warm hospitality. Deep temple blue creates trust, antique gold adds richness, and warm cream surfaces keep the experience welcoming.",
 
-      colors: [
-        {
-          name: "DEEP BURGUNDY",
-          hex: "#7A0F18",
-          role: "Primary Brand Accent",
-        },
-        {
-          name: "WARM IVORY",
-          hex: "#F7F1EB",
-          role: "Background & Typography",
-          isLight: true,
-        },
-        {
-          name: "LEAF GREEN",
-          hex: "#44683A",
-          role: "Natural Accent",
-          isLight: true,
-        },
-        {
-          name: "CHARCOAL",
-          hex: "#1E1E1E",
-          role: "Contrast & Content",
-        },
-      ],
-
-      typeface: {
-        name: "PROJECT TYPOGRAPHY",
-        weights: "REGULAR / MEDIUM / SEMIBOLD / BOLD",
-        role: "Brand Communication & Readability",
-      },
-
-      sampleCard: {
-        title: "Restaurant Menu",
-        description:
-          "Dish photo, name and price — nothing else fighting for attention.",
-        image:
-          "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
-        price: "₹140",
-      },
+  colors: [
+    {
+      name: "DEEP TEMPLE BLUE",
+      hex: "#0F2F4A",
+      role: "Primary Brand, Headings & Navigation",
     },
+    {
+      name: "MIDNIGHT OCEAN INK",
+      hex: "#0A2236",
+      role: "Dark Backgrounds & Footer",
+    },
+    {
+      name: "SACRED ANTIQUE GOLD",
+      hex: "#D4A65A",
+      role: "Primary CTA & Highlights",
+    },
+    {
+      name: "SOFT CHAMPAGNE GOLD",
+      hex: "#EBCB8F",
+      role: "Soft Accents & Dark Surface Typography",
+      isLight: true,
+    },
+    {
+      name: "EARTHY BRONZE",
+      hex: "#8A672C",
+      role: "Section Labels & Eyebrows",
+    },
+    {
+      name: "WARM CREAM",
+      hex: "#F7F3E9",
+      role: "Primary Website Background",
+      isLight: true,
+    },
+    {
+      name: "SOFT IVORY",
+      hex: "#FCFAF4",
+      role: "Cards & Content Surfaces",
+      isLight: true,
+    },
+    {
+      name: "SANDSTONE",
+      hex: "#EEE5D1",
+      role: "Borders & Section Dividers",
+      isLight: true,
+    },
+    {
+      name: "WHATSAPP GREEN",
+      hex: "#25D366",
+      role: "WhatsApp Support & Contact",
+      isLight: true,
+    },
+  ],
+
+  typeface: {
+    name: "PROJECT TYPOGRAPHY",
+    weights: "REGULAR / MEDIUM / SEMIBOLD / BOLD",
+    role: "Premium Restaurant Branding & Readability",
+  },
+
+  sampleCard: {
+    title: "Restaurant Menu",
+    description:
+      "A refined menu presentation using warm ivory surfaces, deep blue typography and antique gold accents.",
+    image:
+      "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+    price: "₹140",
+  },
+},
+
 
     building: {
       title: "How it is put together",
       description:
-        "A React front end that pulls blog posts from WordPress over its REST API, hosted on Vercel. Each page gets its own title, meta tags and structured data.",
+        "A React frontend connected to WordPress through its REST API. The website is deployed on Vercel with dedicated metadata and structured data for important pages.",
 
       steps: [
         {
@@ -122,7 +161,7 @@ export const caseStudies: Record<string, CaseStudyData> = {
         },
         {
           tag: "WORDPRESS",
-          title: "REST API",
+          title: "Content API",
           desc: "Blog & Content Integration",
         },
         {
@@ -151,22 +190,22 @@ export async function getPosts() {
       features: [
         {
           title: "Responsive Design",
-          desc: "Checked on phone, tablet and desktop",
+          desc: "Optimized for phone, tablet and desktop",
           icon: "device",
         },
         {
           title: "WordPress Integration",
-          desc: "Posts come straight from WordPress",
+          desc: "Blog content managed through WordPress",
           icon: "cms",
         },
         {
           title: "Vercel Deployment",
-          desc: "Every push goes live on Vercel",
+          desc: "Production hosting and deployment",
           icon: "speed",
         },
         {
           title: "Technical SEO",
-          desc: "Titles, meta tags and schema",
+          desc: "Metadata, structured data and indexing",
           icon: "seo",
         },
       ],
@@ -174,20 +213,20 @@ export async function getPosts() {
 
     outcome: {
       description:
-        "A faster, mobile-friendly site with a WordPress blog the team can update on their own, and the technical SEO basics in place.",
+        "A modern, mobile-friendly restaurant website with an integrated WordPress blog, clear restaurant information and a stronger digital presentation.",
 
       highlights: [
         {
           title: "RESPONSIVE EXPERIENCE",
-          desc: "Works the same on every screen",
+          desc: "A consistent experience across devices",
         },
         {
-          title: "A BLOG THEY RUN",
-          desc: "New posts go live from WordPress",
+          title: "A BLOG THEY MANAGE",
+          desc: "New articles published through WordPress",
         },
         {
           title: "SEO FOUNDATION",
-          desc: "Proper titles, meta tags and schema",
+          desc: "Page metadata and structured data",
         },
       ],
 
@@ -195,190 +234,201 @@ export async function getPosts() {
         {
           url: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1400",
           title: "Restaurant Experience",
-          caption:
-            "The dining room, front and centre.",
+          caption: "A welcoming dining experience.",
         },
         {
           url: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200",
           title: "Food & Menu Presentation",
-          caption:
-            "Big photos, short descriptions, clear prices.",
+          caption: "Food photography takes centre stage.",
         },
         {
           url: "https://images.unsplash.com/photo-1610192244261-3f33de3f55e4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200",
           title: "Digital Restaurant Identity",
-          caption:
-            "The same look carried through every page.",
+          caption: "A consistent visual experience.",
         },
       ],
     },
   },
 
+  // ==========================================
+  // 02 — GENZ STORE (REAL PROJECT)
+  // ==========================================
+
   "02": {
     number: "02",
-    title: "Pulse Commerce",
-    titleSolid: "PULSE",
-    titleStroke: "COMMERCE",
-    tagline: "AN ONLINE STORE I BUILT TO LEARN HOW ONE WORKS",
-    category: "MERN Stack Application",
+    title: "Genz Store",
+    titleSolid: "GENZ",
+    titleStroke: "STORE",
+    tagline: "STREETWEAR BUILT FOR THE NEXT GENERATION",
+    category: "E-commerce Website",
     year: "2025",
-    role: "Full-Stack Development",
+    role: "Design & Development",
     timeline: "2025",
-    summary:
-      "A concept online store I built end to end — product listing, filters, cart and checkout, with a Node and MongoDB backend behind it.",
+    liveUrl: "https://genz-store-seven.vercel.app/",
 
-    badgeText: "MONGODB / EXPRESS / REACT / NODE / ",
+    summary:
+      "A modern streetwear e-commerce experience focused on product discovery, clean presentation and a smooth shopping journey.",
+
+    badgeText: "STREETWEAR / E-COMMERCE / SHOPPING / ",
 
     brief: {
       description:
-        "I wanted to understand how a real store fits together, so I built one: browsing and filtering products on the front, and an Express API with products and orders stored in MongoDB on the back.",
-      client: "Personal Concept Project",
+        "An online fashion store designed to bring products, collections and shopping functionality together in a modern storefront. The experience focuses on product presentation, easy browsing and a responsive shopping journey.",
+
+      client: "Personal Project",
       timeline: "2025",
       services:
-        "UI Design, Frontend Development, Backend Development",
-      platform: "MongoDB, Express.js, React, Node.js",
+        "UI Design, Frontend Development, E-commerce Development",
+      platform: "React, JavaScript, Vercel",
     },
 
     experience: {
-      tagline: "Browse, add to cart, check out",
+      tagline: "Discover your next favourite fit",
+
       desktopImg:
-        "https://images.unsplash.com/photo-1531297484001-80022131f5a1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600",
+        "https://images.unsplash.com/photo-1441986300917-64674bd600d8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600",
+
       mobileImg:
-        "https://images.unsplash.com/photo-1556742049-0a67c5574f73?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1000",
-      caption: "Storefront on desktop and phone",
+        "https://images.unsplash.com/photo-1483985988355-763728e1935b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1000",
+
+      caption: "Streetwear storefront across desktop and mobile",
+
       screen: {
-        nav: ["Shop", "New in", "Sale", "Cart"],
-        primary: "Shop now",
-        secondary: "View cart",
+        nav: ["Home", "Shop", "Collections", "Cart"],
+        primary: "Shop collection",
+        secondary: "Explore",
       },
     },
 
     challenges: [
       {
         number: "01",
-        title: "Finding the right product",
+        title: "Making products stand out",
         description:
-          "Categories and filters had to narrow things down quickly, without a full page reload every time.",
+          "The storefront needed strong product presentation without unnecessary visual distractions.",
       },
       {
         number: "02",
-        title: "A cart that does not get lost",
+        title: "A smoother shopping journey",
         description:
-          "The cart had to survive a refresh and keep prices and quantities in sync with the server.",
+          "Customers should be able to browse products, explore collections and add items to their cart easily.",
       },
       {
         number: "03",
-        title: "Front end meets back end",
+        title: "Responsive shopping experience",
         description:
-          "Products and orders live in MongoDB behind an Express API, and the React app talks to it with plain fetch calls.",
+          "The shopping experience needed to remain clear and usable across desktop and smaller mobile screens.",
       },
     ],
 
     visualDirection: {
       description:
-        "A dark background, one loud lime colour for buttons, and plenty of room around each product.",
+        "A bold streetwear-inspired visual direction using dark surfaces, sharp typography and a bright lime accent. The layout gives product imagery room to stand out.",
 
       colors: [
         {
-          name: "VOID SLATE",
-          hex: "#0A0B10",
+          name: "VOID BLACK",
+          hex: "#101010",
           role: "Primary Background",
+        },
+        {
+          name: "OFF WHITE",
+          hex: "#F5F5F0",
+          role: "Typography & Contrast",
+          isLight: true,
         },
         {
           name: "ELECTRIC LIME",
           hex: "#D0F030",
-          role: "Primary Accent",
+          role: "Accent & Highlights",
           isLight: true,
         },
         {
-          name: "PULSE GREEN",
-          hex: "#00D26A",
-          role: "Success & Active States",
-          isLight: true,
-        },
-        {
-          name: "SIGNAL CRIMSON",
-          hex: "#E62832",
-          role: "Alerts & Warnings",
+          name: "GRAPHITE",
+          hex: "#292929",
+          role: "Secondary Surface",
         },
       ],
 
       typeface: {
-        name: "ARCHIVO & JETBRAINS MONO",
-        weights: "BOLD / SEMIBOLD / MEDIUM",
-        role: "Product Presentation & Technical Details",
+        name: "MODERN SANS SERIF",
+        weights: "REGULAR / MEDIUM / BOLD",
+        role: "Fashion & Product Typography",
       },
 
       sampleCard: {
-        title: "Product Card",
+        title: "Streetwear Collection",
         description:
-          "Photo, name, price and an add-to-cart button.",
+          "A minimal product card with clear pricing and product imagery.",
         image:
-          "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
-        price: "$180",
+          "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+        price: "₹1,499",
       },
     },
 
     building: {
-      title: "The MERN stack, end to end",
+      title: "Building the shopping experience",
       description:
-        "React on the front, an Express API on Node in the middle, and MongoDB for products and orders.",
+        "A component-based storefront with product presentation, shopping interactions and responsive layouts.",
 
       steps: [
         {
           tag: "REACT",
           title: "Frontend",
-          desc: "Components & State",
+          desc: "Reusable UI Components",
         },
         {
-          tag: "NODE.JS",
-          title: "Backend",
-          desc: "Express REST APIs",
+          tag: "JAVASCRIPT",
+          title: "Interactions",
+          desc: "Shopping & Cart Logic",
         },
         {
-          tag: "MONGODB",
-          title: "Database",
-          desc: "Products & Orders",
+          tag: "VERCEL",
+          title: "Deployment",
+          desc: "Production Hosting",
         },
       ],
 
-      codeFile: "checkout.ts",
+      codeFile: "CartContext.tsx",
 
-      codeSnippet: `export async function createOrder(cartItems: CartItem[]) {
-  const response = await fetch("/api/orders", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ items: cartItems }),
-  })
+      codeSnippet: `function addToCart(product, cartItems) {
+  const existingItem = cartItems.find(
+    item => item.id === product.id
+  )
 
-  if (!response.ok) {
-    throw new Error("Unable to create order")
+  if (existingItem) {
+    return cartItems.map(item =>
+      item.id === product.id
+        ? { ...item, quantity: item.quantity + 1 }
+        : item
+    )
   }
 
-  return response.json()
+  return [...cartItems, {
+    ...product,
+    quantity: 1
+  }]
 }`,
 
       features: [
         {
-          title: "Responsive UI",
-          desc: "Designed for phones first",
+          title: "Responsive Storefront",
+          desc: "Layouts for different screen sizes",
           icon: "device",
         },
         {
-          title: "Product Management",
-          desc: "Products with categories and stock",
+          title: "Product Discovery",
+          desc: "Organized product presentation",
           icon: "cms",
         },
         {
           title: "Shopping Cart",
-          desc: "Add, remove, change quantity",
+          desc: "Add and manage shopping items",
           icon: "speed",
         },
         {
-          title: "REST API",
-          desc: "Express routes for products and orders",
+          title: "Modern UI",
+          desc: "Bold typography and visual hierarchy",
           icon: "seo",
         },
       ],
@@ -386,138 +436,162 @@ export async function getPosts() {
 
     outcome: {
       description:
-        "A working MERN store where you can browse, add to cart and place an order — and a much better understanding of how the pieces talk to each other.",
+        "A modern e-commerce storefront concept with a responsive layout and a shopping-focused user experience.",
 
       highlights: [
         {
           title: "PRODUCT EXPERIENCE",
-          desc: "A catalogue you can filter",
+          desc: "Clear product presentation",
         },
         {
           title: "SHOPPING WORKFLOW",
-          desc: "From cart to order in a few taps",
+          desc: "An intuitive shopping journey",
         },
         {
-          title: "FULL-STACK STRUCTURE",
-          desc: "React frontend with Node.js backend",
+          title: "RESPONSIVE DESIGN",
+          desc: "A consistent experience across screens",
         },
       ],
 
       galleryImages: [
         {
-          url: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1400",
-          title: "Storefront Interface",
-          caption: "The storefront.",
+          url: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1400",
+          title: "Storefront Design",
+          caption: "The overall shopping experience.",
         },
         {
-          url: "https://images.unsplash.com/photo-1556742049-0a67c5574f73?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200",
-          title: "Shopping Workflow",
-          caption: "From product page to checkout.",
+          url: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200",
+          title: "Fashion Collection",
+          caption: "Fashion and product presentation.",
+        },
+        {
+          url: "https://images.unsplash.com/photo-1483985988355-763728e1935b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200",
+          title: "Shopping Experience",
+          caption: "A modern fashion experience.",
         },
       ],
     },
   },
 
+  // ==========================================
+  // 03 — NOVA FINANCE (SAMPLE PROJECT)
+  // ==========================================
+
   "03": {
     number: "03",
-    title: "Atlas Dashboard",
-    titleSolid: "ATLAS",
-    titleStroke: "DASHBOARD",
-    tagline: "A DASHBOARD YOU CAN READ IN FIVE SECONDS",
-    category: "SaaS Analytics",
-    year: "2024",
-    role: "Frontend Development",
-    timeline: "2024",
-    summary:
-      "A concept analytics dashboard that takes a pile of numbers and lays them out as cards and charts you can scan in a few seconds.",
+    title: "Nova Finance",
+    titleSolid: "NOVA",
+    titleStroke: "FINANCE",
+    tagline: "FINANCIAL CLARITY WITHOUT THE CLUTTER",
+    category: "Fintech Dashboard",
+    year: "2026",
+    role: "UI/UX & Frontend Development",
+    timeline: "3 Weeks",
 
-    badgeText: "REACT / TYPESCRIPT / CHARTS / ",
+    summary:
+      "A conceptual finance dashboard designed to make personal finance easier to understand through clear metrics, spending charts and budget tracking.",
+
+    badgeText: "FINTECH / REACT / TYPESCRIPT / ",
 
     brief: {
       description:
-        "Dashboards get cluttered fast. The goal here was to show a lot of data without it feeling overwhelming — clear metric cards, simple charts and a layout that still works on smaller screens.",
+        "A fictional fintech dashboard concept focused on simplifying personal finance. The interface brings spending insights, account summaries and budget information into one organized workspace.",
+
       client: "Personal Concept Project",
-      timeline: "2024",
+      timeline: "3 Weeks",
       services:
         "UI Design, Frontend Development, Data Visualization",
       platform: "React, TypeScript, Tailwind CSS",
     },
 
     experience: {
-      tagline: "Numbers first, decoration last",
+      tagline: "Your money, at a glance",
+
       desktopImg:
         "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600",
+
       mobileImg:
-        "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1000",
-      caption: "Dashboard on desktop and phone",
+        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1000",
+
+      caption: "Financial overview across devices",
+
       screen: {
-        nav: ["Overview", "Reports", "Users", "Settings"],
-        primary: "Open dashboard",
-        secondary: "Export",
+        nav: ["Overview", "Transactions", "Budgets", "Settings"],
+        primary: "View analytics",
+        secondary: "Export report",
       },
     },
 
     challenges: [
       {
         number: "01",
-        title: "Too many numbers",
+        title: "Too much financial information",
         description:
-          "Every metric wants to be on top. I had to decide what shows first and what can wait one click.",
+          "Important financial metrics needed a clear visual hierarchy so users could understand their finances quickly.",
       },
       {
         number: "02",
-        title: "Charts that say one thing",
+        title: "Making data understandable",
         description:
-          "Each chart answers one question, with labels you can read without hovering.",
+          "Charts and spending categories needed to communicate information without overwhelming the interface.",
       },
       {
         number: "03",
-        title: "Still usable on a laptop",
+        title: "A dashboard for every screen",
         description:
-          "Cards reflow from four columns down to one, so nothing gets squashed on smaller screens.",
+          "The interface needed to adapt to smaller screens while keeping important financial information accessible.",
       },
     ],
 
     visualDirection: {
       description:
-        "A dark graphite background so the cyan and green data colours stand out, with red saved for things that need attention.",
+        "A clean financial interface with deep navy typography, electric blue accents and subtle green indicators. Light surfaces keep the dashboard calm and readable.",
 
       colors: [
         {
-          name: "MIDNIGHT GRAPHITE",
-          hex: "#0E1117",
-          role: "Primary Background",
+          name: "MIDNIGHT NAVY",
+          hex: "#172554",
+          role: "Primary Brand",
         },
         {
-          name: "CYAN VECTOR",
-          hex: "#00E5FF",
-          role: "Data Visualization",
+          name: "CLOUD WHITE",
+          hex: "#F8FAFC",
+          role: "Background",
           isLight: true,
         },
         {
-          name: "EMERALD ACTIVE",
-          hex: "#00E676",
+          name: "ELECTRIC BLUE",
+          hex: "#2563EB",
+          role: "Primary Accent",
+        },
+        {
+          name: "MINT GREEN",
+          hex: "#10B981",
           role: "Positive Indicators",
           isLight: true,
-        },
-        {
-          name: "CRIMSON THRESHOLD",
-          hex: "#FF1744",
-          role: "Alerts & Warnings",
         },
       ],
 
       typeface: {
-        name: "PLUS JAKARTA SANS & JETBRAINS MONO",
-        weights: "SEMIBOLD / MEDIUM / REGULAR",
-        role: "Dashboard Typography & Data Labels",
+        name: "INTER",
+        weights: "REGULAR / MEDIUM / SEMIBOLD",
+        role: "Dashboard & Data Typography",
+      },
+
+      sampleCard: {
+        title: "Monthly Overview",
+        description:
+          "A clear summary of income, expenses and savings.",
+        image:
+          "https://images.unsplash.com/photo-1554224155-6726b3ff858f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+        price: "$4,250",
       },
     },
 
     building: {
-      title: "Small parts, reused everywhere",
+      title: "Designed around financial data",
       description:
-        "Each card, chart and table is its own React component with typed props, styled with Tailwind.",
+        "A modular React interface using typed data models and reusable components to present financial information.",
 
       steps: [
         {
@@ -537,7 +611,7 @@ export async function getPosts() {
         },
       ],
 
-      codeFile: "chart-engine.ts",
+      codeFile: "MetricCard.tsx",
 
       codeSnippet: `type Metric = {
   label: string
@@ -557,23 +631,23 @@ function MetricCard({ metric }: { metric: Metric }) {
 
       features: [
         {
-          title: "Responsive Dashboard",
-          desc: "Reflows from four columns to one",
+          title: "Financial Overview",
+          desc: "Important metrics in one place",
           icon: "device",
         },
         {
           title: "Data Visualization",
-          desc: "One question per chart",
+          desc: "Readable charts and insights",
           icon: "speed",
         },
         {
           title: "Reusable Components",
-          desc: "Same card, many metrics",
+          desc: "A modular interface system",
           icon: "cms",
         },
         {
           title: "TypeScript",
-          desc: "Typed data, fewer surprises",
+          desc: "Structured and typed data",
           icon: "seo",
         },
       ],
@@ -581,12 +655,12 @@ function MetricCard({ metric }: { metric: Metric }) {
 
     outcome: {
       description:
-        "A tidy, component-based dashboard built in React and TypeScript, with reusable metric cards and a layout that adapts to the screen.",
+        "A conceptual finance dashboard with a clear information hierarchy, reusable components and a responsive interface.",
 
       highlights: [
         {
           title: "CLEAR DATA PRESENTATION",
-          desc: "Key numbers up top",
+          desc: "Key numbers at a glance",
         },
         {
           title: "MODULAR INTERFACE",
@@ -594,7 +668,7 @@ function MetricCard({ metric }: { metric: Metric }) {
         },
         {
           title: "RESPONSIVE LAYOUT",
-          desc: "Works down to phone width",
+          desc: "Designed for different screen sizes",
         },
       ],
 
@@ -602,111 +676,136 @@ function MetricCard({ metric }: { metric: Metric }) {
         {
           url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1400",
           title: "Analytics Overview",
-          caption: "The overview screen.",
+          caption: "Financial information in one view.",
+        },
+        {
+          url: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200",
+          title: "Data Visualization",
+          caption: "Charts and financial insights.",
         },
       ],
     },
   },
 
+  // ==========================================
+  // 04 — FORMA STUDIO (SAMPLE PROJECT)
+  // ==========================================
+
   "04": {
     number: "04",
-    title: "Forma Archive",
+    title: "Forma Studio",
     titleSolid: "FORMA",
-    titleStroke: "ARCHIVE",
-    tagline: "A GALLERY EXPERIMENT IN SCROLL, TYPE AND 3D",
-    category: "3D Editorial Gallery",
-    year: "2024",
+    titleStroke: "STUDIO",
+    tagline: "SPACES DESIGNED TO MAKE A STATEMENT",
+    category: "Architecture Portfolio",
+    year: "2026",
     role: "Creative Development",
-    timeline: "2024",
-    summary:
-      "A personal experiment: a digital gallery of architectural forms and objects, where scrolling and motion do most of the storytelling.",
+    timeline: "2 Weeks",
 
-    badgeText: "THREE.JS / GSAP / REACT / ",
+    summary:
+      "An editorial-style architecture portfolio concept showcasing contemporary spaces through large photography, refined typography and immersive layouts.",
+
+    badgeText: "ARCHITECTURE / GSAP / REACT / ",
 
     brief: {
       description:
-        "I wanted to see how far scroll, type and a bit of 3D could go in presenting objects like a museum would. Forma Archive is where I tried that out with React, Three.js and GSAP.",
-      client: "Personal Creative Project",
-      timeline: "2024",
+        "A fictional architecture studio website designed around visual storytelling. The experience combines large project imagery, minimal typography and thoughtful motion to present architectural work.",
+
+      client: "Personal Concept Project",
+      timeline: "2 Weeks",
       services:
-        "Creative Development, UI Design, Interactive Experiences",
-      platform: "React, Three.js, WebGL, GSAP",
+        "UI Design, Frontend Development, Motion Design",
+      platform: "React, GSAP, Tailwind CSS",
     },
 
     experience: {
-      tagline: "Scroll is the tour guide",
+      tagline: "Architecture deserves its own space",
+
       desktopImg:
-        "https://images.unsplash.com/photo-1565626424178-c699f6601afd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600",
+        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600",
+
       mobileImg:
-        "https://images.unsplash.com/photo-1507679799987-c73779587ccf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1000",
-      caption: "Gallery on desktop and phone",
+        "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1000",
+
+      caption: "Architectural portfolio across desktop and mobile",
+
       screen: {
-        nav: ["Archive", "Forms", "Objects", "Visit"],
-        primary: "Enter archive",
-        secondary: "Collections",
+        nav: ["Studio", "Projects", "Approach", "Contact"],
+        primary: "Explore projects",
+        secondary: "Our studio",
       },
     },
 
     challenges: [
       {
         number: "01",
-        title: "One object at a time",
+        title: "Let the architecture speak",
         description:
-          "Each piece gets the whole screen, with just enough text to know what you are looking at.",
+          "Large images needed enough room to communicate the character and details of each architectural project.",
       },
       {
         number: "02",
-        title: "Motion with a reason",
+        title: "Motion with a purpose",
         description:
-          "Animation only where it helps you look — revealing, zooming, turning an object round.",
+          "Subtle transitions and scroll-based animations help guide visitors without distracting from the photography.",
       },
       {
         number: "03",
-        title: "Keep it smooth",
+        title: "An editorial experience",
         description:
-          "3D and big images are heavy, so they load only when needed and motion calms down for people who ask for less.",
+          "Typography, spacing and image composition needed to work together like a carefully designed architecture publication.",
       },
     ],
 
     visualDirection: {
       description:
-        "Mostly black, white and concrete grey, with one rust colour for labels. Big type and lots of space, like an empty gallery.",
+        "Warm stone backgrounds, deep charcoal typography and muted terracotta accents create a refined architectural identity. Spacious layouts and strong photography define the experience.",
 
       colors: [
         {
-          name: "RAW CONCRETE",
-          hex: "#1A1A1A",
+          name: "RAW STONE",
+          hex: "#E8E3DA",
           role: "Primary Background",
-        },
-        {
-          name: "TITANIUM CHALK",
-          hex: "#F0EFEB",
-          role: "Typography & Contrast",
           isLight: true,
         },
         {
-          name: "OXIDE RUST",
-          hex: "#C84B31",
-          role: "Editorial Accent",
+          name: "CHARCOAL",
+          hex: "#252525",
+          role: "Typography",
         },
         {
-          name: "MUSEUM DARK",
-          hex: "#0E0E0E",
-          role: "Gallery Surface",
+          name: "TERRACOTTA",
+          hex: "#B66A4B",
+          role: "Brand Accent",
+        },
+        {
+          name: "PAPER WHITE",
+          hex: "#FAF9F6",
+          role: "Surface",
+          isLight: true,
         },
       ],
 
       typeface: {
-        name: "ARCHIVO & JETBRAINS MONO",
-        weights: "BOLD / MEDIUM / REGULAR",
-        role: "Editorial Typography & Details",
+        name: "MANROPE & PLAYFAIR DISPLAY",
+        weights: "REGULAR / MEDIUM / SEMIBOLD",
+        role: "Editorial Typography",
+      },
+
+      sampleCard: {
+        title: "Modern Architecture",
+        description:
+          "A visual-first presentation of contemporary spaces.",
+        image:
+          "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+        price: "PROJECT 01",
       },
     },
 
     building: {
-      title: "React, Three.js and GSAP",
+      title: "A visual experience built with motion",
       description:
-        "React handles the pages, Three.js renders the 3D pieces, and GSAP ties the motion to the scroll.",
+        "React manages the interface, GSAP handles scroll-based animation and Tailwind CSS provides a responsive design system.",
 
       steps: [
         {
@@ -715,56 +814,54 @@ function MetricCard({ metric }: { metric: Metric }) {
           desc: "Component Architecture",
         },
         {
-          tag: "THREE.JS",
-          title: "3D Experience",
-          desc: "Interactive WebGL",
-        },
-        {
           tag: "GSAP",
           title: "Animation",
           desc: "Scroll-linked Motion",
         },
+        {
+          tag: "TAILWIND",
+          title: "Styling",
+          desc: "Responsive Design",
+        },
       ],
 
-      codeFile: "sculpture-viewer.ts",
+      codeFile: "ScrollAnimation.tsx",
 
-      codeSnippet: `import * as THREE from "three"
+      codeSnippet: `import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 
-const scene = new THREE.Scene()
+gsap.registerPlugin(ScrollTrigger)
 
-const camera = new THREE.PerspectiveCamera(
-  45,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  100
-)
-
-const renderer = new THREE.WebGLRenderer({
-  antialias: true,
-  alpha: true,
-})
-
-renderer.setSize(window.innerWidth, window.innerHeight)`,
+gsap.from(".project-image", {
+  y: 80,
+  opacity: 0,
+  duration: 1,
+  ease: "power3.out",
+  scrollTrigger: {
+    trigger: ".project-section",
+    start: "top 80%",
+  },
+})`,
 
       features: [
         {
-          title: "Responsive Layout",
-          desc: "Works on phone and desktop",
+          title: "Editorial Layout",
+          desc: "Typography-led visual storytelling",
           icon: "device",
         },
         {
-          title: "Interactive 3D",
-          desc: "Objects you can turn around",
+          title: "Scroll Animations",
+          desc: "Motion powered by GSAP",
           icon: "speed",
         },
         {
-          title: "Motion Design",
-          desc: "Motion tied to scroll",
+          title: "Project Gallery",
+          desc: "Large architectural imagery",
           icon: "cms",
         },
         {
-          title: "Editorial Layout",
-          desc: "Big type, lots of space",
+          title: "Responsive Design",
+          desc: "Optimized for every screen",
           icon: "seo",
         },
       ],
@@ -772,30 +869,35 @@ renderer.setSize(window.innerWidth, window.innerHeight)`,
 
     outcome: {
       description:
-        "An editorial-style gallery that mixes layout, motion and a little WebGL — mostly a playground for ideas I now use in client work.",
+        "A conceptual architecture portfolio that combines editorial typography, immersive photography and scroll-based interactions into one visual experience.",
 
       highlights: [
         {
           title: "EDITORIAL EXPERIENCE",
-          desc: "Feels like a printed catalogue",
+          desc: "A refined, publication-inspired layout",
         },
         {
-          title: "INTERACTIVE DESIGN",
-          desc: "Scroll, zoom and rotate",
+          title: "VISUAL STORYTELLING",
+          desc: "Architecture presented through imagery",
         },
         {
-          title: "CREATIVE DEVELOPMENT",
-          desc: "A playground for client work",
+          title: "MOTION & INTERACTION",
+          desc: "Purposeful scroll-based animation",
         },
       ],
 
       galleryImages: [
         {
-          url: "https://images.unsplash.com/photo-1565626424178-c699f6601afd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1400",
-          title: "Architectural Forms",
-          caption: "Architectural forms, one per screen.",
+          url: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1400",
+          title: "Architectural Living",
+          caption: "Contemporary architectural spaces.",
+        },
+        {
+          url: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200",
+          title: "Interior Details",
+          caption: "Materials, light and composition.",
         },
       ],
     },
   },
-}
+};

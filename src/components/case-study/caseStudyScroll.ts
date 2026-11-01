@@ -197,18 +197,6 @@ export function setupCaseStudyScroll({ root, onHeader }: CaseStudyScrollOptions)
       ease: "none",
       scrollTrigger: { trigger: ".cs-devices", start: "center 55%", end: "bottom top", scrub: true },
     })
-    q(".cs-browser-view img, .cs-phone-view img").forEach((image) => {
-      gsap.fromTo(
-        image,
-        { yPercent: -6, scale: 1.12 },
-        {
-          yPercent: 6,
-          scale: 1.12,
-          ease: "none",
-          scrollTrigger: { trigger: image, start: "top bottom", end: "bottom top", scrub: true },
-        },
-      )
-    })
 
     // ---------- Visual direction ----------
     gsap.fromTo(
