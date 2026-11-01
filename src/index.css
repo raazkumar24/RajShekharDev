@@ -6528,6 +6528,7 @@ button:focus-visible {
     max-width: calc(100% - 48px);
     bottom: 96px;
   }
+  /* fix */
 
   .cs-cta {
     align-items: flex-start;
