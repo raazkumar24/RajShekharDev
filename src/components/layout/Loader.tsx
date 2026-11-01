@@ -7,7 +7,7 @@ export function Loader() {
           <span>SHEKHAR.</span>
         </p>
         <div className="loader-meta">
-          <span>Creative code &amp; architecture</span>
+          <span>Portfolio — 2026</span>
           <span className="loader-count">0</span>
         </div>
         <div className="loader-bar">

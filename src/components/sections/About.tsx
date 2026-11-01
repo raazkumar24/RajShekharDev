@@ -21,7 +21,7 @@ export function About() {
 
       <div className="journey-head">
         <p className="mono-eyebrow">
-          <i /> Editorial portfolio
+          <i /> How I got here
         </p>
         <h2 className="outline-title" data-split>
           MY JOURNEY
@@ -34,16 +34,21 @@ export function About() {
       </div>
 
       <article className="milestone milestone--one" id="journey-2023">
+        <span aria-hidden="true" className="milestone-year" data-fill>
+          2023
+        </span>
         <div className="milestone-copy">
-          <span className="milestone-chapter">Chapter 01 — The spark</span>
-          <h3>2023 — The spark</h3>
+          <span className="milestone-chapter">
+            Chapter 01 <em>/ 03</em>
+          </span>
+          <h3>The spark</h3>
           <p>
-            Driven by a relentless curiosity about how the web actually works under the hood, I
-            embarked on my journey from ground zero. Mastered HTML, CSS, and modern JavaScript
-            fundamentals. Determined to forge my path as an independent web developer, I enrolled
-            in an online BCA degree to build strong computer science foundations while committing
-            every day to building and writing code.
+            This is where it started — from zero. I wanted to know how websites actually work, so
+            I learned HTML, CSS and JavaScript properly, one small project at a time. I also
+            enrolled in an online BCA to get the computer-science basics right, and kept writing
+            code every day.
           </p>
+          <span className="milestone-label">What I picked up</span>
           <ul className="milestone-tags">
             <li>HTML &amp; CSS</li>
             <li>JavaScript</li>
@@ -83,15 +88,21 @@ export function About() {
       </svg>
 
       <article className="milestone milestone--two" id="journey-2024">
+        <span aria-hidden="true" className="milestone-year" data-fill>
+          2024
+        </span>
         <div className="milestone-copy">
-          <span className="milestone-chapter">Chapter 02 — The craft</span>
-          <h3>2024 — Scaling up</h3>
+          <span className="milestone-chapter">
+            Chapter 02 <em>/ 03</em>
+          </span>
+          <h3>Real apps</h3>
           <p>
-            Turned core fundamentals into scalable frontend architecture. Immersed myself in
-            reactive state management, component hierarchies, and modern web frameworks. Mastered
-            React, Next.js, TypeScript, and Tailwind CSS—evolving from static pages to crafting
-            high-performance, production-ready interfaces with fluid motion and robust REST APIs.
+            Static pages turned into real apps. I picked up React, Next.js, TypeScript and Tailwind
+            CSS, learned how to split a UI into components and manage state, and started pulling
+            data from REST APIs. This is the year I went from making pages to building things
+            people could actually use.
           </p>
+          <span className="milestone-label">What I picked up</span>
           <ul className="milestone-tags">
             <li>React</li>
             <li>Next.js</li>
@@ -115,14 +126,14 @@ export function About() {
                 <i />
                 <i />
               </span>
-              <p>Architecture.tsx</p>
+              <p>journey.ts</p>
             </div>
             <div className="code-lines">
-              <p><b>1</b><em className="k">import</em> {"{ createEngine }"} <em className="k">from</em> <em className="s">"@raj/core"</em></p>
+              <p><b>1</b><em className="k">const</em> focus = <em className="s">"frontend"</em></p>
               <p><b>2</b><em className="k">const</em> stack = [<em className="s">"React"</em>, <em className="s">"Next.js"</em>]</p>
-              <p><b>3</b><em className="c">// Fluid spring physics &amp; APIs</em></p>
-              <p><b>4</b><em className="f">async function</em> <em className="y">deploySystem</em>() {"{"}</p>
-              <p><b>5</b>&nbsp;&nbsp;<em className="k">return await</em> createEngine({"{ speed }"})</p>
+              <p><b>3</b><em className="c">// one project at a time</em></p>
+              <p><b>4</b><em className="f">function</em> <em className="y">learn</em>(topic) {"{"}</p>
+              <p><b>5</b>&nbsp;&nbsp;<em className="k">return</em> build(topic).ship()</p>
               <p><b>6</b>{"}"}<i className="caret" /></p>
             </div>
             <div className="window-status">
@@ -141,16 +152,20 @@ export function About() {
       </svg>
 
       <article className="milestone milestone--three" id="journey-2025">
+        <span aria-hidden="true" className="milestone-year" data-fill>
+          2025
+        </span>
         <div className="milestone-copy">
-          <span className="milestone-chapter">Chapter 03 — The full picture</span>
-          <h3>2025–2026 — Full-stack expansion</h3>
+          <span className="milestone-chapter">
+            Chapter 03 <em>/ 03</em>
+          </span>
+          <h3>The whole stack</h3>
           <p>
-            Stepped beyond the frontend to engineer complete, end-to-end full-stack applications.
-            Architected and shipped production-grade software powered by Next.js and the MERN stack
-            (MongoDB, Express, React, Node.js). Designed secure backends, scalable RESTful APIs, and
-            real-time database flows that bridge high-impact visual design with resilient system
-            engineering.
+            Now I work on both ends. With Next.js and the MERN stack (MongoDB, Express, React,
+            Node.js) I build the database, the API and the login flow alongside the interface — so
+            a project can go from idea to a live product without changing hands.
           </p>
+          <span className="milestone-label">What I work with now</span>
           <ul className="milestone-tags">
             <li>MERN Stack</li>
             <li>Next.js</li>
@@ -165,7 +180,7 @@ export function About() {
               <img alt="Black and white portrait of Raj Shekhar" src={rajJourneyPortrait} />
             </div>
           </div>
-          <figcaption>Raj, 2025–2026 — still curious</figcaption>
+          <figcaption>Raj — still curious</figcaption>
           <svg className="connector connector-portrait" viewBox="0 0 80 85" aria-hidden="true">
             <path className="glow" d="M10 14C42 14 62 36 62 68" />
             <path className="arrowhead" d="M52 58L62 68L72 58" />
@@ -178,26 +193,25 @@ export function About() {
 
       <div className="who-scene" id="who">
         <p className="who-kicker mono-eyebrow">
-          <i /> The person behind the pixels
+          <i /> A bit about me
         </p>
         <h2 className="outline-title who-title">WHO IS RAJ?</h2>
       </div>
 
       <div className="who-grid">
         <p className="who-lead">
-          A developer who thinks like a designer — obsessed with the details between pixels,
-          performance, and people.
+          I&apos;m a developer who cares how things look as much as how they work.
         </p>
         <div className="who-copy">
           <p>
-            I build products that look considered and work flawlessly. My process starts with
-            structure and story, then moves into systems, motion, and engineering until every
-            interaction feels inevitable.
+            I start with the content and the people who&apos;ll use it, sketch the structure, then
+            build it properly — clean code, fast pages, and animation only where it helps. If
+            something feels off, I keep at it until it doesn&apos;t.
           </p>
           <dl>
             <div>
               <dt data-count="3">3+</dt>
-              <dd>Years crafting for the web</dd>
+              <dd>Years building for the web</dd>
             </div>
             <div>
               <dt data-count="40">40+</dt>
@@ -205,7 +219,7 @@ export function About() {
             </div>
             <div>
               <dt data-count="15">15</dt>
-              <dd>Happy clients worldwide</dd>
+              <dd>Clients so far</dd>
             </div>
           </dl>
         </div>

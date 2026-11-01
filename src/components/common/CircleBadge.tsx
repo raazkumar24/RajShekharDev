@@ -11,10 +11,10 @@ export function CircleBadge({ id }: CircleBadgeProps) {
         </defs>
         <circle cx="60" cy="60" r="56" />
         <text>
-          <textPath href={`#${id}`}>MADE FOR WEB • FOCUSED ON IMPACT •</textPath>
+          <textPath href={`#${id}`}>DESIGN • BUILD • SHIP • REPEAT •</textPath>
         </text>
       </svg>
-      <span>✦</span>
+      <span>RS</span>
     </div>
   )
 }

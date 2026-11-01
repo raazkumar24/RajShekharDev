@@ -11,7 +11,7 @@ export function Works({ onSelectProject }: WorksProps) {
   return (
     <section className="work" data-section id="work">
       <div className="work-ghost" aria-hidden="true">
-        SELECTED WORKS ✦ SELECTED WORKS
+        SELECTED WORKS / SELECTED WORKS
       </div>
       <div className="work-hud" aria-hidden="true">
         <span className="work-counter">
@@ -30,8 +30,7 @@ export function Works({ onSelectProject }: WorksProps) {
             <span>works.</span>
           </h2>
           <p>
-            Products, platforms, and experiments where design intent and engineering quality
-            carry equal weight.
+            A few things I&apos;ve designed and built — client work and personal projects.
           </p>
           <span className="work-hint">
             Keep scrolling <ArrowUpRight />

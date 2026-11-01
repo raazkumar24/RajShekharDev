@@ -1,5 +1,5 @@
 import { useState } from "react"
-import type { FormEvent, ReactNode } from "react"
+import type { FormEvent } from "react"
 import type { EnquiryForm, FormStatus } from "../../types/portfolio"
 import {
   budgetOptions,
@@ -25,36 +25,12 @@ const emptyForm: EnquiryForm = {
   message: "",
 }
 
-const serviceMeta: Record<string, { hint: string; icon: ReactNode }> = {
-  "Web design": {
-    hint: "UI, UX & art direction",
-    icon: (
-      <>
-        <rect height="16" rx="2" width="20" x="2" y="4" />
-        <path d="M2 9h20M8 20V9" />
-      </>
-    ),
-  },
-  Development: {
-    hint: "React, Next.js & MERN",
-    icon: <path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16" />,
-  },
-  "Creative systems": {
-    hint: "Design systems & CMS",
-    icon: (
-      <>
-        <rect height="7" rx="1.5" width="7" x="3" y="3" />
-        <rect height="7" rx="1.5" width="7" x="14" y="3" />
-        <rect height="7" rx="1.5" width="7" x="3" y="14" />
-        <circle cx="17.5" cy="17.5" r="3.5" />
-      </>
-    ),
-  },
-  "Something else": {
-    hint: "Tell me what you need",
-    icon: <path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6" />,
-  },
-}
+
+const today = new Intl.DateTimeFormat("en-IN", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+}).format(new Date())
 
 export function Contact({ time }: ContactProps) {
   const [form, setForm] = useState<EnquiryForm>(emptyForm)
@@ -79,11 +55,11 @@ export function Contact({ time }: ContactProps) {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const next: Partial<Record<keyof EnquiryForm, string>> = {}
-    if (!form.name.trim()) next.name = "Please tell me your name."
+    if (!form.name.trim()) next.name = "I'd love to know your name."
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
       next.email = "That email doesn't look right."
     }
-    if (form.services.length === 0) next.services = "Pick at least one option."
+    if (form.services.length === 0) next.services = "Tap at least one of the options above."
     if (form.message.trim().length < 10) {
       next.message = "A few more words, please (10+ characters)."
     }
@@ -163,8 +139,8 @@ export function Contact({ time }: ContactProps) {
             worth <span>building?</span>
           </h2>
           <p className="contact-lead">
-            Tell me what you&apos;re building, where you need help, and what success looks like.
-            Fill the brief, or just drop a line, whichever feels easier.
+            Tell me a little about your project and I&apos;ll get back to you within two days.
+            Prefer plain email? That works too.
           </p>
 
           <div className="availability">
@@ -225,7 +201,7 @@ export function Contact({ time }: ContactProps) {
                     <Icon size={18}>{social.icon}</Icon>
                   </span>
                   <span className="contact-link-label">{social.label}</span>
-                  <span className="contact-link-handle">@rajshekhar</span>
+                  <span className="contact-link-handle">{social.handle ?? "Profile"}</span>
                   <span className="contact-link-arrow">
                     <ArrowUpRight />
                   </span>
@@ -235,21 +211,28 @@ export function Contact({ time }: ContactProps) {
           </ul>
         </div>
 
-        <form className="brief" id="enquiry" noValidate onSubmit={handleSubmit}>
+        <form className="letter" id="enquiry" noValidate onSubmit={handleSubmit}>
+          <div aria-hidden="true" className="letter-stamp">
+            <span>RS</span>
+            <small>Reply in 48h</small>
+          </div>
+
           {status === "sent" ? (
-            <div className="brief-success" role="status">
-              <svg aria-hidden="true" className="success-check" viewBox="0 0 64 64">
-                <circle cx="32" cy="32" r="29" />
-                <path d="m20 33 8 8 16-18" />
-              </svg>
-              <span className="brief-kicker">Brief received</span>
-              <h3>Thanks, {form.name.trim().split(" ")[0]}.</h3>
-              <p>
-                I&apos;ll review your note and reply within 48 hours. Want it in my inbox right now?
-                Send the same brief from your email app.
+            <div className="letter-sent" role="status">
+              <p className="letter-meta">
+                <span>Status</span> Delivered — {today}
               </p>
-              <div className="brief-success-actions">
-                <a className="brief-submit" href={mailtoHref}>
+              <h3>
+                Got it,
+                <br />
+                <span>{form.name.trim().split(" ")[0]}.</span>
+              </h3>
+              <p>
+                I&apos;ll read it properly and reply within two days. Want a copy in your own inbox?
+                Send the same note from your email app.
+              </p>
+              <div className="letter-actions">
+                <a className="letter-send" href={mailtoHref}>
                   <span className="roll" data-text="Open in email app">
                     Open in email app
                   </span>
@@ -258,46 +241,30 @@ export function Contact({ time }: ContactProps) {
                   </i>
                 </a>
                 <button className="text-button" onClick={resetForm} type="button">
-                  Start a new brief
+                  Write another
                 </button>
               </div>
             </div>
           ) : (
             <>
-              <header className="brief-head brief-anim">
-                <div>
-                  <span className="brief-kicker">
-                    <i /> Project brief
-                  </span>
-                  <h3>
-                    Tell me
-                    <br />
-                    <span>everything.</span>
-                  </h3>
-                </div>
-                <div
-                  aria-label={`${filledSteps} of 4 required steps complete`}
-                  className="brief-meter"
-                  role="img"
-                >
-                  <svg aria-hidden="true" viewBox="0 0 64 64">
-                    <circle cx="32" cy="32" r="28" />
-                    <circle
-                      cx="32"
-                      cy="32"
-                      r="28"
-                      style={{ strokeDashoffset: 176 - (176 * filledSteps) / 4 }}
-                    />
-                  </svg>
-                  <strong>
-                    {filledSteps}
-                    <small>/4</small>
-                  </strong>
-                </div>
-              </header>
+              <div className="letter-meta letter-anim">
+                <p>
+                  <span>To</span> Raj Shekhar
+                </p>
+                <p>
+                  <span>Date</span> {today}
+                </p>
+                <p>
+                  <span>Re</span> A new project
+                </p>
+              </div>
 
-              <div className="brief-pair brief-anim">
-                <div className={errors.name ? "brief-field has-error" : "brief-field"}>
+              <p className="letter-line letter-anim">
+                Hi Raj, I&apos;m{" "}
+                <span className={errors.name ? "blank has-error" : "blank"}>
+                  <label className="sr-only" htmlFor="enquiry-name">
+                    Your name
+                  </label>
                   <input
                     aria-describedby={errors.name ? "enquiry-name-error" : undefined}
                     aria-invalid={Boolean(errors.name)}
@@ -305,20 +272,17 @@ export function Contact({ time }: ContactProps) {
                     data-field="name"
                     id="enquiry-name"
                     onChange={(event) => updateField("name", event.target.value)}
-                    placeholder=" "
+                    placeholder="your name"
+                    size={Math.max(9, form.name.length + 1)}
                     type="text"
                     value={form.name}
                   />
-                  <label htmlFor="enquiry-name">
-                    <b>01</b> Your name
+                </span>{" "}
+                and you can reach me at{" "}
+                <span className={errors.email ? "blank has-error" : "blank"}>
+                  <label className="sr-only" htmlFor="enquiry-email">
+                    Your email
                   </label>
-                  {errors.name && (
-                    <p className="field-error" id="enquiry-name-error">
-                      {errors.name}
-                    </p>
-                  )}
-                </div>
-                <div className={errors.email ? "brief-field has-error" : "brief-field"}>
                   <input
                     aria-describedby={errors.email ? "enquiry-email-error" : undefined}
                     aria-invalid={Boolean(errors.email)}
@@ -326,93 +290,72 @@ export function Contact({ time }: ContactProps) {
                     data-field="email"
                     id="enquiry-email"
                     onChange={(event) => updateField("email", event.target.value)}
-                    placeholder=" "
+                    placeholder="you@email.com"
+                    size={Math.max(13, form.email.length + 1)}
                     type="email"
                     value={form.email}
                   />
-                  <label htmlFor="enquiry-email">
-                    <b>02</b> Email address
-                  </label>
-                  {errors.email && (
-                    <p className="field-error" id="enquiry-email-error">
-                      {errors.email}
-                    </p>
-                  )}
-                </div>
-              </div>
+                </span>
+                .
+              </p>
+              {(errors.name || errors.email) && (
+                <p className="letter-error" id={errors.name ? "enquiry-name-error" : "enquiry-email-error"}>
+                  {errors.name || errors.email}
+                </p>
+              )}
 
-              <fieldset className={errors.services ? "brief-group has-error" : "brief-group"}>
-                <legend className="brief-anim">
-                  <b>03</b> What do you need? <em>Pick any</em>
-                </legend>
-                <div className="brief-tiles brief-anim">
-                  {serviceOptions.map((option, index) => (
+              <fieldset className="letter-line letter-anim">
+                <legend className="sr-only">What do you need?</legend>
+                I&apos;d like help with{" "}
+                {serviceOptions.map((option, index) => (
+                  <span key={option}>
                     <button
                       aria-pressed={form.services.includes(option)}
-                      className="brief-tile"
+                      className="pick"
                       data-field={index === 0 ? "services" : undefined}
-                      key={option}
                       onClick={() => toggleService(option)}
                       type="button"
                     >
-                      <span className="brief-tile-icon">
-                        <Icon size={20}>{serviceMeta[option]?.icon}</Icon>
-                      </span>
-                      <strong>{option}</strong>
-                      <small>{serviceMeta[option]?.hint}</small>
-                      <span aria-hidden="true" className="brief-tile-check">
-                        <Icon size={12}>
-                          <path d="m5 12 5 5 9-10" />
-                        </Icon>
-                      </span>
+                      {option.toLowerCase()}
                     </button>
-                  ))}
-                </div>
-                {errors.services && <p className="field-error">{errors.services}</p>}
+                    {index < serviceOptions.length - 2 ? ", " : index === serviceOptions.length - 2 ? " or " : ""}
+                  </span>
+                ))}
+                .
+              </fieldset>
+              {errors.services && <p className="letter-error">{errors.services}</p>}
+
+              <fieldset className="letter-line letter-anim">
+                <legend className="sr-only">Budget and timeline (optional)</legend>
+                My budget is roughly{" "}
+                {budgetOptions.map((option) => (
+                  <button
+                    aria-pressed={form.budget === option}
+                    className="pick pick--small"
+                    key={option}
+                    onClick={() => updateField("budget", form.budget === option ? "" : option)}
+                    type="button"
+                  >
+                    {option}
+                  </button>
+                ))}{" "}
+                and I&apos;d like to start{" "}
+                {timelineOptions.map((option) => (
+                  <button
+                    aria-pressed={form.timeline === option}
+                    className="pick pick--small"
+                    key={option}
+                    onClick={() => updateField("timeline", form.timeline === option ? "" : option)}
+                    type="button"
+                  >
+                    {option === "ASAP" ? option : option.toLowerCase()}
+                  </button>
+                ))}
+                .
               </fieldset>
 
-              <div className="brief-pair brief-pair--options brief-anim">
-                <fieldset className="brief-group">
-                  <legend>
-                    <b>04</b> Budget <em>Optional</em>
-                  </legend>
-                  <div className="brief-segments">
-                    {budgetOptions.map((option) => (
-                      <button
-                        aria-pressed={form.budget === option}
-                        key={option}
-                        onClick={() => updateField("budget", form.budget === option ? "" : option)}
-                        type="button"
-                      >
-                        {option}
-                      </button>
-                    ))}
-                  </div>
-                </fieldset>
-                <fieldset className="brief-group">
-                  <legend>
-                    <b>05</b> Timeline <em>Optional</em>
-                  </legend>
-                  <div className="brief-segments">
-                    {timelineOptions.map((option) => (
-                      <button
-                        aria-pressed={form.timeline === option}
-                        key={option}
-                        onClick={() =>
-                          updateField("timeline", form.timeline === option ? "" : option)
-                        }
-                        type="button"
-                      >
-                        {option}
-                      </button>
-                    ))}
-                  </div>
-                </fieldset>
-              </div>
-
-              <div
-                className={`brief-field brief-field--area brief-anim ${errors.message ? "has-error" : ""}`}
-              >
+              <div className={errors.message ? "letter-note has-error letter-anim" : "letter-note letter-anim"}>
+                <label htmlFor="enquiry-message">Here&apos;s the idea:</label>
                 <textarea
                   aria-describedby={errors.message ? "enquiry-message-error" : undefined}
                   aria-invalid={Boolean(errors.message)}
@@ -420,43 +363,38 @@ export function Contact({ time }: ContactProps) {
                   id="enquiry-message"
                   maxLength={600}
                   onChange={(event) => updateField("message", event.target.value)}
-                  placeholder=" "
-                  rows={4}
+                  placeholder="What are you making, who is it for, any links or deadlines…"
+                  rows={5}
                   value={form.message}
                 />
-                <label htmlFor="enquiry-message">
-                  <b>06</b> Tell me about the project
-                </label>
-                <div className="field-foot">
+                <div className="letter-note-foot">
                   {errors.message ? (
-                    <p className="field-error" id="enquiry-message-error">
+                    <p className="letter-error" id="enquiry-message-error">
                       {errors.message}
                     </p>
                   ) : (
-                    <span className="brief-hint">Idea, goals, links — anything helps.</span>
+                    <span />
                   )}
                   <span className="char-count">{form.message.length} / 600</span>
                 </div>
               </div>
 
-              <div className="brief-foot brief-anim">
+              <div className="letter-foot letter-anim">
+                <p className="letter-sign">
+                  Thanks,
+                  <br />
+                  <span>{form.name.trim() || "you"}</span>
+                </p>
                 <button
-                  className={status === "sending" ? "brief-submit is-sending" : "brief-submit"}
+                  className={status === "sending" ? "letter-send is-sending" : "letter-send"}
                   disabled={status === "sending"}
                   type="submit"
                 >
-                  <span className="roll" data-text={status === "sending" ? "Sending brief…" : "Send enquiry"}>
-                    {status === "sending" ? "Sending brief…" : "Send enquiry"}
+                  <span className="roll" data-text={status === "sending" ? "Sending…" : "Send it to Raj"}>
+                    {status === "sending" ? "Sending…" : "Send it to Raj"}
                   </span>
                   <i>{status === "sending" ? <span className="spinner" aria-hidden="true" /> : <ArrowUpRight />}</i>
                 </button>
-                <p>
-                  <Icon size={14}>
-                    <rect height="10" rx="2" width="14" x="5" y="11" />
-                    <path d="M8 11V7a4 4 0 0 1 8 0v4" />
-                  </Icon>
-                  Reply within 48 hrs. Your details stay private.
-                </p>
               </div>
             </>
           )}

@@ -50,13 +50,15 @@ const featureIcons: Record<CaseStudyData["building"]["features"][number]["icon"]
   ),
 }
 
-/** Perceived brightness — decides whether a swatch needs dark or light text. */
+/** True when dark text reads better than white on this colour (WCAG contrast). */
 function isLightColor(hex: string) {
   const value = parseInt(hex.replace("#", ""), 16)
-  const r = (value >> 16) & 255
-  const g = (value >> 8) & 255
-  const b = value & 255
-  return 0.299 * r + 0.587 * g + 0.114 * b > 150
+  const channel = (shift: number) => {
+    const c = ((value >> shift) & 255) / 255
+    return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4
+  }
+  const luminance = 0.2126 * channel(16) + 0.7152 * channel(8) + 0.0722 * channel(0)
+  return (luminance + 0.05) / 0.05 > 1.05 / (luminance + 0.05)
 }
 
 function hostOf(url: string) {
@@ -104,9 +106,10 @@ export function CaseStudySection({
   const nextProject = allProjects[(index + 1) % allProjects.length]
   const titleSolid = study.titleSolid ?? study.title.split(" ")[0]
   const titleStroke = study.titleStroke ?? study.title.split(" ").slice(1).join(" ")
-  const host = hostOf(study.liveUrl)
+  // Concept projects are not deployed — show where they actually run
+  const host = study.liveUrl ? hostOf(study.liveUrl) : "localhost:3000"
   const { visualDirection: visual, building, outcome } = study
-  const bandText = `${[...project.tags, study.category].join(" ✦ ").toUpperCase()} ✦ `
+  const bandText = `${[...project.tags, study.category].join(" / ").toUpperCase()} / `
   const codeLines = building.codeSnippet.split("\n")
   const screen = study.experience.screen
 
@@ -188,20 +191,27 @@ export function CaseStudySection({
             <p className="cs-tagline">{study.tagline}</p>
             <p className="cs-summary">{study.summary}</p>
             <div className="cs-actions">
-              <a className="cs-btn cs-btn--solid" data-magnetic href={study.liveUrl} rel="noreferrer" target="_blank">
-                <span className="roll" data-text="Live site">
-                  Live site
-                </span>
-                <i>
+              {study.liveUrl && (
+                <a className="cs-btn cs-btn--solid" data-magnetic href={study.liveUrl} rel="noreferrer" target="_blank">
+                  <span className="roll" data-text="Live site">
+                    Live site
+                  </span>
+                  <i>
+                    <ArrowUpRight />
+                  </i>
+                </a>
+              )}
+              {study.githubUrl && (
+                <a className="cs-btn" href={study.githubUrl} rel="noreferrer" target="_blank">
+                  <span className="roll" data-text="Source code">
+                    Source code
+                  </span>
                   <ArrowUpRight />
-                </i>
-              </a>
-              <a className="cs-btn" href={study.githubUrl} rel="noreferrer" target="_blank">
-                <span className="roll" data-text="Source code">
-                  Source code
-                </span>
-                <ArrowUpRight />
-              </a>
+                </a>
+              )}
+              {!study.liveUrl && !study.githubUrl && (
+                <p className="cs-private">Concept project — not public yet. Happy to walk you through it.</p>
+              )}
             </div>
           </div>
           <dl className="cs-hero-meta cs-fade">
@@ -249,11 +259,11 @@ export function CaseStudySection({
               </defs>
               <text>
                 <textPath href={`#cs-stamp-${study.number}`} lengthAdjust="spacing" textLength="285">
-                  {study.badgeText ?? "MADE FOR WEB ✦ FOCUSED ON IMPACT ✦ "}
+                  {study.badgeText ?? "DESIGN / BUILD / SHIP / "}
                 </textPath>
               </text>
             </svg>
-            <span>✦</span>
+            <span>{study.number}</span>
           </div>
         </figure>
       </header>

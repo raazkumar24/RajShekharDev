@@ -7,21 +7,21 @@ export const caseStudies: Record<string, CaseStudyData> = {
     title: "Udupi Vrindavan",
     titleSolid: "UDUPI",
     titleStroke: "VRINDAVAN",
-    tagline: "A DIGITAL EXPERIENCE FOR AUTHENTIC SOUTH INDIAN DINING",
+    tagline: "A RESTAURANT WEBSITE THAT FINALLY SHOWS THE FOOD",
     category: "Restaurant Website",
     year: "2025",
     role: "Design & Development",
     timeline: "2025",
     liveUrl: "https://udupi-vrindavan.vercel.app",
-    githubUrl: "https://github.com/rajshekhar/udupi-vrindavan",
+    githubUrl: "https://github.com/raazkumar24/udupi-vrindavan",
     summary:
-      "A complete digital experience for Udupi Vrindavan, bringing its restaurant identity, South Indian cuisine and dining experience online through a modern, responsive website.",
+      "A new website for Udupi Vrindavan, a pure-veg South Indian restaurant — so people can browse the menu, get a feel for the place and find the address without calling.",
 
-    badgeText: "AUTHENTIC TASTE ✦ MODERN EXPERIENCE ✦ ",
+    badgeText: "UDUPI VRINDAVAN / PURE VEG / SOUTH INDIAN / ",
 
     brief: {
       description:
-        "Udupi Vrindavan needed a modern website that better represented its restaurant and made it easier for visitors to discover the menu, explore the dining experience and find essential restaurant information. The project focused on improving visual presentation, mobile usability, content structure and search visibility.",
+        "The old site didn't show the food or the space well and was hard to use on a phone. The restaurant wanted something that looked as good as the food, worked on mobile, had a blog they could update themselves, and showed up properly on Google.",
       client: "Udupi Vrindavan",
       timeline: "2025",
       services:
@@ -30,12 +30,12 @@ export const caseStudies: Record<string, CaseStudyData> = {
     },
 
     experience: {
-      tagline: "A FRESH DIGITAL TAKE ON TRADITION",
+      tagline: "Menu first, everything else second",
       desktopImg:
         "https://images.unsplash.com/photo-1610192244261-3f33de3f55e4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600",
       mobileImg:
         "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1000",
-      caption: "RESPONSIVE RESTAURANT EXPERIENCE",
+      caption: "Desktop and phone — same menu, same feel",
       screen: {
         nav: ["Menu", "About", "Gallery", "Contact"],
         primary: "View menu",
@@ -46,27 +46,27 @@ export const caseStudies: Record<string, CaseStudyData> = {
     challenges: [
       {
         number: "01",
-        title: "Outdated Digital Presence",
+        title: "The old site hid the food",
         description:
-          "The existing website needed a more polished visual identity that could communicate the restaurant's food, atmosphere and hospitality.",
+          "Photos were small, the menu was hard to find, and nothing said what the place actually felt like.",
       },
       {
         number: "02",
-        title: "Better Mobile Experience",
+        title: "It had to work on a phone",
         description:
-          "Menu discovery, restaurant information and navigation needed to feel intuitive across mobile, tablet and desktop screens.",
+          "People look a restaurant up on the way there, so the menu, timings and directions had to work one-handed.",
       },
       {
         number: "03",
-        title: "Connected Content Management",
+        title: "They wanted to post on their own",
         description:
-          "The website needed a practical content workflow with WordPress blog integration, allowing content to be managed independently of the frontend.",
+          "The team wanted to publish blog posts without calling a developer, so the content lives in WordPress.",
       },
     ],
 
     visualDirection: {
       description:
-        "A restaurant-focused visual experience balancing traditional South Indian identity with contemporary web design. The interface prioritizes food photography, warm surfaces, clear typography, thoughtful spacing and intuitive navigation.",
+        "Warm ivory backgrounds, the burgundy from their signboard, and big food photos doing most of the talking. The type stays plain so the menu is easy to read.",
 
       colors: [
         {
@@ -102,7 +102,7 @@ export const caseStudies: Record<string, CaseStudyData> = {
       sampleCard: {
         title: "Restaurant Menu",
         description:
-          "Food-focused presentation with clear information and pricing.",
+          "Dish photo, name and price — nothing else fighting for attention.",
         image:
           "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
         price: "₹140",
@@ -110,9 +110,9 @@ export const caseStudies: Record<string, CaseStudyData> = {
     },
 
     building: {
-      title: "FROM DESIGN TO DEPLOYMENT",
+      title: "How it is put together",
       description:
-        "A modern frontend connected to WordPress through its REST API, deployed on Vercel with a focus on responsive performance, content accessibility and technical SEO.",
+        "A React front end that pulls blog posts from WordPress over its REST API, hosted on Vercel. Each page gets its own title, meta tags and structured data.",
 
       steps: [
         {
@@ -151,22 +151,22 @@ export async function getPosts() {
       features: [
         {
           title: "Responsive Design",
-          desc: "Adapted for mobile, tablet and desktop",
+          desc: "Checked on phone, tablet and desktop",
           icon: "device",
         },
         {
           title: "WordPress Integration",
-          desc: "Blog content through REST API",
+          desc: "Posts come straight from WordPress",
           icon: "cms",
         },
         {
           title: "Vercel Deployment",
-          desc: "Production hosting and deployment",
+          desc: "Every push goes live on Vercel",
           icon: "speed",
         },
         {
           title: "Technical SEO",
-          desc: "Metadata, structured data and crawlability",
+          desc: "Titles, meta tags and schema",
           icon: "seo",
         },
       ],
@@ -174,20 +174,20 @@ export async function getPosts() {
 
     outcome: {
       description:
-        "A redesigned restaurant website with an improved browsing experience, integrated blog architecture and a more structured technical SEO foundation.",
+        "A faster, mobile-friendly site with a WordPress blog the team can update on their own, and the technical SEO basics in place.",
 
       highlights: [
         {
           title: "RESPONSIVE EXPERIENCE",
-          desc: "Consistent layouts across devices",
+          desc: "Works the same on every screen",
         },
         {
-          title: "CONNECTED CONTENT",
-          desc: "WordPress-powered blog integration",
+          title: "A BLOG THEY RUN",
+          desc: "New posts go live from WordPress",
         },
         {
           title: "SEO FOUNDATION",
-          desc: "Structured metadata and technical optimization",
+          desc: "Proper titles, meta tags and schema",
         },
       ],
 
@@ -196,19 +196,19 @@ export async function getPosts() {
           url: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1400",
           title: "Restaurant Experience",
           caption:
-            "A visual direction inspired by authentic dining and hospitality.",
+            "The dining room, front and centre.",
         },
         {
           url: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200",
           title: "Food & Menu Presentation",
           caption:
-            "Food photography and a clear menu browsing experience.",
+            "Big photos, short descriptions, clear prices.",
         },
         {
           url: "https://images.unsplash.com/photo-1610192244261-3f33de3f55e4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200",
           title: "Digital Restaurant Identity",
           caption:
-            "A cohesive digital presentation across the website.",
+            "The same look carried through every page.",
         },
       ],
     },
@@ -219,21 +219,19 @@ export async function getPosts() {
     title: "Pulse Commerce",
     titleSolid: "PULSE",
     titleStroke: "COMMERCE",
-    tagline: "A MODERN E-COMMERCE EXPERIENCE",
+    tagline: "AN ONLINE STORE I BUILT TO LEARN HOW ONE WORKS",
     category: "MERN Stack Application",
     year: "2025",
     role: "Full-Stack Development",
     timeline: "2025",
-    liveUrl: "https://pulse-commerce-demo.vercel.app",
-    githubUrl: "https://github.com/rajshekhar/pulse-commerce",
     summary:
-      "A modern e-commerce concept built around a clean shopping experience, intuitive product discovery and a streamlined cart and checkout workflow.",
+      "A concept online store I built end to end — product listing, filters, cart and checkout, with a Node and MongoDB backend behind it.",
 
-    badgeText: "SMART SHOPPING ✦ SIMPLE CHECKOUT ✦ ",
+    badgeText: "MONGODB / EXPRESS / REACT / NODE / ",
 
     brief: {
       description:
-        "Pulse Commerce explores how a modern online store can combine product discovery, responsive shopping interfaces and a structured backend architecture into one cohesive experience.",
+        "I wanted to understand how a real store fits together, so I built one: browsing and filtering products on the front, and an Express API with products and orders stored in MongoDB on the back.",
       client: "Personal Concept Project",
       timeline: "2025",
       services:
@@ -242,12 +240,12 @@ export async function getPosts() {
     },
 
     experience: {
-      tagline: "SHOPPING MADE SIMPLE",
+      tagline: "Browse, add to cart, check out",
       desktopImg:
         "https://images.unsplash.com/photo-1531297484001-80022131f5a1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600",
       mobileImg:
         "https://images.unsplash.com/photo-1556742049-0a67c5574f73?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1000",
-      caption: "E-COMMERCE EXPERIENCE — DESKTOP & MOBILE",
+      caption: "Storefront on desktop and phone",
       screen: {
         nav: ["Shop", "New in", "Sale", "Cart"],
         primary: "Shop now",
@@ -258,27 +256,27 @@ export async function getPosts() {
     challenges: [
       {
         number: "01",
-        title: "Product Discovery",
+        title: "Finding the right product",
         description:
-          "Creating a simple and intuitive way for users to explore products, browse categories and find relevant items.",
+          "Categories and filters had to narrow things down quickly, without a full page reload every time.",
       },
       {
         number: "02",
-        title: "Shopping Experience",
+        title: "A cart that does not get lost",
         description:
-          "Designing a convenient cart and checkout experience with clear product information and pricing.",
+          "The cart had to survive a refresh and keep prices and quantities in sync with the server.",
       },
       {
         number: "03",
-        title: "Application Architecture",
+        title: "Front end meets back end",
         description:
-          "Connecting frontend interfaces with backend APIs and maintaining structured product and order data.",
+          "Products and orders live in MongoDB behind an Express API, and the React app talks to it with plain fetch calls.",
       },
     ],
 
     visualDirection: {
       description:
-        "A bold contemporary e-commerce direction using dark surfaces, electric lime accents and clear product-focused layouts.",
+        "A dark background, one loud lime colour for buttons, and plenty of room around each product.",
 
       colors: [
         {
@@ -314,7 +312,7 @@ export async function getPosts() {
       sampleCard: {
         title: "Product Card",
         description:
-          "Clean product presentation with pricing and shopping actions.",
+          "Photo, name, price and an add-to-cart button.",
         image:
           "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
         price: "$180",
@@ -322,9 +320,9 @@ export async function getPosts() {
     },
 
     building: {
-      title: "A MODULAR MERN ARCHITECTURE",
+      title: "The MERN stack, end to end",
       description:
-        "A full-stack application concept combining a React frontend, Node.js and Express APIs, and MongoDB for application data management.",
+        "React on the front, an Express API on Node in the middle, and MongoDB for products and orders.",
 
       steps: [
         {
@@ -365,22 +363,22 @@ export async function getPosts() {
       features: [
         {
           title: "Responsive UI",
-          desc: "Mobile-first shopping experience",
+          desc: "Designed for phones first",
           icon: "device",
         },
         {
           title: "Product Management",
-          desc: "Structured product catalog",
+          desc: "Products with categories and stock",
           icon: "cms",
         },
         {
           title: "Shopping Cart",
-          desc: "Interactive cart experience",
+          desc: "Add, remove, change quantity",
           icon: "speed",
         },
         {
           title: "REST API",
-          desc: "Connected backend services",
+          desc: "Express routes for products and orders",
           icon: "seo",
         },
       ],
@@ -388,16 +386,16 @@ export async function getPosts() {
 
     outcome: {
       description:
-        "A full-stack e-commerce concept demonstrating product browsing, shopping interactions and a connected application architecture.",
+        "A working MERN store where you can browse, add to cart and place an order — and a much better understanding of how the pieces talk to each other.",
 
       highlights: [
         {
           title: "PRODUCT EXPERIENCE",
-          desc: "Organized catalog and product discovery",
+          desc: "A catalogue you can filter",
         },
         {
           title: "SHOPPING WORKFLOW",
-          desc: "Cart and checkout interactions",
+          desc: "From cart to order in a few taps",
         },
         {
           title: "FULL-STACK STRUCTURE",
@@ -409,12 +407,12 @@ export async function getPosts() {
         {
           url: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1400",
           title: "Storefront Interface",
-          caption: "A contemporary digital shopping interface.",
+          caption: "The storefront.",
         },
         {
           url: "https://images.unsplash.com/photo-1556742049-0a67c5574f73?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200",
           title: "Shopping Workflow",
-          caption: "A simplified and intuitive shopping journey.",
+          caption: "From product page to checkout.",
         },
       ],
     },
@@ -425,21 +423,19 @@ export async function getPosts() {
     title: "Atlas Dashboard",
     titleSolid: "ATLAS",
     titleStroke: "DASHBOARD",
-    tagline: "A CLEANER WAY TO UNDERSTAND COMPLEX DATA",
+    tagline: "A DASHBOARD YOU CAN READ IN FIVE SECONDS",
     category: "SaaS Analytics",
     year: "2024",
     role: "Frontend Development",
     timeline: "2024",
-    liveUrl: "https://atlas-analytics-demo.vercel.app",
-    githubUrl: "https://github.com/rajshekhar/atlas-dashboard",
     summary:
-      "An analytics dashboard concept designed to turn complex datasets into clear, organized and actionable visual information.",
+      "A concept analytics dashboard that takes a pile of numbers and lays them out as cards and charts you can scan in a few seconds.",
 
-    badgeText: "DATA IN FOCUS ✦ CLARITY IN EVERY DETAIL ✦ ",
+    badgeText: "REACT / TYPESCRIPT / CHARTS / ",
 
     brief: {
       description:
-        "Atlas Dashboard explores a modern analytics interface with customizable data views, visual reporting and a structured layout designed to make complex information easier to understand.",
+        "Dashboards get cluttered fast. The goal here was to show a lot of data without it feeling overwhelming — clear metric cards, simple charts and a layout that still works on smaller screens.",
       client: "Personal Concept Project",
       timeline: "2024",
       services:
@@ -448,12 +444,12 @@ export async function getPosts() {
     },
 
     experience: {
-      tagline: "SEE THE BIGGER PICTURE",
+      tagline: "Numbers first, decoration last",
       desktopImg:
         "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600",
       mobileImg:
         "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1000",
-      caption: "ANALYTICS INTERFACE — DESKTOP & MOBILE",
+      caption: "Dashboard on desktop and phone",
       screen: {
         nav: ["Overview", "Reports", "Users", "Settings"],
         primary: "Open dashboard",
@@ -464,27 +460,27 @@ export async function getPosts() {
     challenges: [
       {
         number: "01",
-        title: "Information Overload",
+        title: "Too many numbers",
         description:
-          "Presenting multiple data points without making the interface feel overwhelming or difficult to navigate.",
+          "Every metric wants to be on top. I had to decide what shows first and what can wait one click.",
       },
       {
         number: "02",
-        title: "Data Visualization",
+        title: "Charts that say one thing",
         description:
-          "Turning numerical information into understandable charts, summaries and visual indicators.",
+          "Each chart answers one question, with labels you can read without hovering.",
       },
       {
         number: "03",
-        title: "Dashboard Usability",
+        title: "Still usable on a laptop",
         description:
-          "Building a flexible layout that keeps important information accessible and easy to scan.",
+          "Cards reflow from four columns down to one, so nothing gets squashed on smaller screens.",
       },
     ],
 
     visualDirection: {
       description:
-        "A dark, minimal analytics interface using graphite surfaces, crisp typography and bright data accents to create a focused workspace.",
+        "A dark graphite background so the cyan and green data colours stand out, with red saved for things that need attention.",
 
       colors: [
         {
@@ -519,9 +515,9 @@ export async function getPosts() {
     },
 
     building: {
-      title: "BUILDING THE ANALYTICS INTERFACE",
+      title: "Small parts, reused everywhere",
       description:
-        "A component-driven dashboard architecture designed around reusable interface elements, organized data and clear visual hierarchy.",
+        "Each card, chart and table is its own React component with typed props, styled with Tailwind.",
 
       steps: [
         {
@@ -562,22 +558,22 @@ function MetricCard({ metric }: { metric: Metric }) {
       features: [
         {
           title: "Responsive Dashboard",
-          desc: "Flexible layouts for different screens",
+          desc: "Reflows from four columns to one",
           icon: "device",
         },
         {
           title: "Data Visualization",
-          desc: "Clear charts and metric summaries",
+          desc: "One question per chart",
           icon: "speed",
         },
         {
           title: "Reusable Components",
-          desc: "Consistent component architecture",
+          desc: "Same card, many metrics",
           icon: "cms",
         },
         {
           title: "TypeScript",
-          desc: "Structured and maintainable code",
+          desc: "Typed data, fewer surprises",
           icon: "seo",
         },
       ],
@@ -585,12 +581,12 @@ function MetricCard({ metric }: { metric: Metric }) {
 
     outcome: {
       description:
-        "An analytics dashboard concept demonstrating how thoughtful information architecture and data visualization can make complex information easier to explore.",
+        "A tidy, component-based dashboard built in React and TypeScript, with reusable metric cards and a layout that adapts to the screen.",
 
       highlights: [
         {
           title: "CLEAR DATA PRESENTATION",
-          desc: "Structured metric cards and visual summaries",
+          desc: "Key numbers up top",
         },
         {
           title: "MODULAR INTERFACE",
@@ -598,7 +594,7 @@ function MetricCard({ metric }: { metric: Metric }) {
         },
         {
           title: "RESPONSIVE LAYOUT",
-          desc: "Designed for multiple screen sizes",
+          desc: "Works down to phone width",
         },
       ],
 
@@ -606,7 +602,7 @@ function MetricCard({ metric }: { metric: Metric }) {
         {
           url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1400",
           title: "Analytics Overview",
-          caption: "An organized view of important business metrics.",
+          caption: "The overview screen.",
         },
       ],
     },
@@ -617,21 +613,19 @@ function MetricCard({ metric }: { metric: Metric }) {
     title: "Forma Archive",
     titleSolid: "FORMA",
     titleStroke: "ARCHIVE",
-    tagline: "AN EXPERIMENT IN DIGITAL ART & INTERACTIVE SPACES",
+    tagline: "A GALLERY EXPERIMENT IN SCROLL, TYPE AND 3D",
     category: "3D Editorial Gallery",
     year: "2024",
     role: "Creative Development",
     timeline: "2024",
-    liveUrl: "https://forma-archive-demo.vercel.app",
-    githubUrl: "https://github.com/rajshekhar/forma-archive",
     summary:
-      "An experimental digital gallery concept exploring the relationship between architecture, visual storytelling and immersive web interactions.",
+      "A personal experiment: a digital gallery of architectural forms and objects, where scrolling and motion do most of the storytelling.",
 
-    badgeText: "DIGITAL ARTIFACTS ✦ EXPERIMENTAL SPACES ✦ ",
+    badgeText: "THREE.JS / GSAP / REACT / ",
 
     brief: {
       description:
-        "Forma Archive explores the idea of a digital museum where visitors can discover architectural forms, industrial objects and visual artifacts through an editorial interface and immersive interactions.",
+        "I wanted to see how far scroll, type and a bit of 3D could go in presenting objects like a museum would. Forma Archive is where I tried that out with React, Three.js and GSAP.",
       client: "Personal Creative Project",
       timeline: "2024",
       services:
@@ -640,12 +634,12 @@ function MetricCard({ metric }: { metric: Metric }) {
     },
 
     experience: {
-      tagline: "EXPLORE FORM BEYOND THE FRAME",
+      tagline: "Scroll is the tour guide",
       desktopImg:
         "https://images.unsplash.com/photo-1565626424178-c699f6601afd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600",
       mobileImg:
         "https://images.unsplash.com/photo-1507679799987-c73779587ccf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1000",
-      caption: "EXPERIMENTAL DIGITAL GALLERY",
+      caption: "Gallery on desktop and phone",
       screen: {
         nav: ["Archive", "Forms", "Objects", "Visit"],
         primary: "Enter archive",
@@ -656,27 +650,27 @@ function MetricCard({ metric }: { metric: Metric }) {
     challenges: [
       {
         number: "01",
-        title: "Visual Storytelling",
+        title: "One object at a time",
         description:
-          "Creating an editorial presentation that allows each artifact to feel distinct and visually important.",
+          "Each piece gets the whole screen, with just enough text to know what you are looking at.",
       },
       {
         number: "02",
-        title: "Interactive Experiences",
+        title: "Motion with a reason",
         description:
-          "Exploring ways to make digital objects and gallery spaces feel more engaging through web interactions.",
+          "Animation only where it helps you look — revealing, zooming, turning an object round.",
       },
       {
         number: "03",
-        title: "Performance & Accessibility",
+        title: "Keep it smooth",
         description:
-          "Balancing immersive visual elements with responsive layouts and a comfortable browsing experience.",
+          "3D and big images are heavy, so they load only when needed and motion calms down for people who ask for less.",
       },
     ],
 
     visualDirection: {
       description:
-        "A monochromatic editorial direction inspired by architectural archives, concrete textures, gallery spaces and experimental typography.",
+        "Mostly black, white and concrete grey, with one rust colour for labels. Big type and lots of space, like an empty gallery.",
 
       colors: [
         {
@@ -710,9 +704,9 @@ function MetricCard({ metric }: { metric: Metric }) {
     },
 
     building: {
-      title: "EXPLORING INTERACTIVE WEB EXPERIENCES",
+      title: "React, Three.js and GSAP",
       description:
-        "An experimental frontend architecture combining modern component development, interactive visual elements and animation-driven storytelling.",
+        "React handles the pages, Three.js renders the 3D pieces, and GSAP ties the motion to the scroll.",
 
       steps: [
         {
@@ -755,22 +749,22 @@ renderer.setSize(window.innerWidth, window.innerHeight)`,
       features: [
         {
           title: "Responsive Layout",
-          desc: "Adaptive gallery experience",
+          desc: "Works on phone and desktop",
           icon: "device",
         },
         {
           title: "Interactive 3D",
-          desc: "Exploring Three.js and WebGL",
+          desc: "Objects you can turn around",
           icon: "speed",
         },
         {
           title: "Motion Design",
-          desc: "Smooth GSAP animations",
+          desc: "Motion tied to scroll",
           icon: "cms",
         },
         {
           title: "Editorial Layout",
-          desc: "Typography-led visual storytelling",
+          desc: "Big type, lots of space",
           icon: "seo",
         },
       ],
@@ -778,20 +772,20 @@ renderer.setSize(window.innerWidth, window.innerHeight)`,
 
     outcome: {
       description:
-        "An experimental digital gallery concept combining editorial design, interactive elements and creative frontend development.",
+        "An editorial-style gallery that mixes layout, motion and a little WebGL — mostly a playground for ideas I now use in client work.",
 
       highlights: [
         {
           title: "EDITORIAL EXPERIENCE",
-          desc: "A distinctive visual presentation",
+          desc: "Feels like a printed catalogue",
         },
         {
           title: "INTERACTIVE DESIGN",
-          desc: "Exploration of immersive web interactions",
+          desc: "Scroll, zoom and rotate",
         },
         {
           title: "CREATIVE DEVELOPMENT",
-          desc: "A combination of design and technology",
+          desc: "A playground for client work",
         },
       ],
 
@@ -799,7 +793,7 @@ renderer.setSize(window.innerWidth, window.innerHeight)`,
         {
           url: "https://images.unsplash.com/photo-1565626424178-c699f6601afd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1400",
           title: "Architectural Forms",
-          caption: "An exploration of digital space and sculptural design.",
+          caption: "Architectural forms, one per screen.",
         },
       ],
     },

@@ -6,7 +6,7 @@ export function Services() {
   return (
     <section className="services" data-section id="services">
       <div className="services-intro">
-        <SectionLabel number="03">Services / This is my thing</SectionLabel>
+        <SectionLabel number="03">Services / What I can help with</SectionLabel>
         <h2 className="big-title" data-split>
           WHAT I DO
         </h2>
@@ -53,13 +53,13 @@ export function Services() {
 
       <div className="process">
         <div className="process-head">
-          <SectionLabel number="3.1">Process / How we get there</SectionLabel>
+          <SectionLabel number="3.1">Process / How a project runs</SectionLabel>
           <h2 className="big-title" data-split>
             HOW I WORK
           </h2>
           <p data-rise>
-            A clear, collaborative rhythm — you always know what is happening, what comes next and
-            what it needs from you.
+            No black box. You&apos;ll always know what I&apos;m working on and what I need from you
+            next.
           </p>
         </div>
         <ol className="process-steps">

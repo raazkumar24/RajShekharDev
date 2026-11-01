@@ -79,6 +79,11 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
 
     if (reduced) return
 
+    // The portrait is centred with translateX(-50%). GSAP would bake that into pixels using
+    // the width at this moment — 0 while the photo is still downloading on a first visit —
+    // which leaves it stuck off to the right. Keep the offset relative instead.
+    gsap.set(".hero-portrait", { xPercent: -50, x: 0 })
+
     // ---------- Loader → hero intro ----------
     // The full loader plays once per visit; returning from a case study gets a quick hero reveal.
     const heroLines = q(".hero-name span")
@@ -199,7 +204,8 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
 
     // ---------- Big split headings rise char by char ----------
     q("[data-split]").forEach((title) => {
-      const split = SplitText.create(title, { type: "chars", mask: "chars" })
+      // Split words first so a heading can only wrap between words, never mid-word
+      const split = SplitText.create(title, { type: "words,chars", mask: "chars" })
       splits.push(split)
       gsap.from(split.chars, {
         yPercent: 115,
@@ -238,6 +244,18 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
         ease: "none",
         scrollTrigger: { trigger: element, start: "top bottom", end: "bottom top", scrub: true },
       })
+    })
+    // Ghost years drift against the scroll for depth
+    q(".milestone-year").forEach((year) => {
+      gsap.fromTo(
+        year,
+        { yPercent: 18 },
+        {
+          yPercent: -18,
+          ease: "none",
+          scrollTrigger: { trigger: year.parentElement, start: "top bottom", end: "bottom top", scrub: true },
+        },
+      )
     })
     q(".milestone-copy").forEach((copy) => {
       gsap.from(copy.children, {
@@ -423,15 +441,23 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
       scrollTrigger: { trigger: ".process-steps", start: "top 85%" },
     })
 
-    // ---------- Contact brief: fields arrive one after another ----------
-    gsap.from(".brief-anim", {
-      y: 40,
+    // ---------- Contact letter: the page slides in, then each line ----------
+    gsap.from(".letter", {
+      y: 80,
+      rotate: 4,
+      duration: 1.2,
+      ease: "power3.out",
+      clearProps: "transform",
+      scrollTrigger: { trigger: ".letter", start: "top 85%" },
+    })
+    gsap.from(".letter-anim", {
+      y: 30,
       opacity: 0,
-      stagger: 0.08,
+      stagger: 0.09,
       duration: 0.8,
       ease: "power3.out",
       clearProps: "transform,opacity",
-      scrollTrigger: { trigger: ".brief", start: "top 80%" },
+      scrollTrigger: { trigger: ".letter", start: "top 75%" },
     })
 
     const mm = gsap.matchMedia()
@@ -704,6 +730,15 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
   }
   const onLoad = () => ScrollTrigger.refresh()
   window.addEventListener("load", onLoad)
+  // Re-measure pinned scenes when the viewport width really changes (rotation, preview resize)
+  let lastWidth = window.innerWidth
+  const onResize = () => {
+    if (Math.abs(window.innerWidth - lastWidth) < 2) return
+    lastWidth = window.innerWidth
+    window.scrollTo({ top: window.scrollY, left: 0, behavior: "instant" })
+    ScrollTrigger.refresh()
+  }
+  window.addEventListener("resize", onResize)
   document.fonts?.ready.then(onLoad)
   root.querySelectorAll("img").forEach((image) => {
     if (!image.complete) image.addEventListener("load", onLoad, { once: true })
@@ -715,6 +750,7 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
     unbindMagnetic()
     cleanups.forEach((cleanup) => cleanup())
     window.removeEventListener("load", onLoad)
+    window.removeEventListener("resize", onResize)
     ctx.revert()
     root.style.removeProperty("--scroll-progress")
     splits.forEach((split) => split.revert())

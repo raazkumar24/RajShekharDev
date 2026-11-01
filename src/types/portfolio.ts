@@ -48,6 +48,7 @@ export interface NowItem {
 export interface SocialLink {
   label: string
   href: string
+  handle?: string
   icon: ReactNode
 }
 
@@ -91,8 +92,9 @@ export interface CaseStudyData {
   year: string
   role: string
   timeline: string
-  liveUrl: string
-  githubUrl: string
+  /** Only set when the project is actually public */
+  liveUrl?: string
+  githubUrl?: string
   summary: string
   badgeText?: string
   

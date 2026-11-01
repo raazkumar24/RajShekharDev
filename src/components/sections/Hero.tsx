@@ -9,9 +9,9 @@ export function Hero() {
       <div className="hero-inner">
         <div className="hero-eyebrow hero-fade">
           <p>
-            <i /> Editorial portfolio
+            <i /> Portfolio — 2026
           </p>
-          <span>Creative code &amp; architecture</span>
+          <span>Web developer from India</span>
         </div>
         {/* <div className="hero-fade">
           <CircleBadge id="hero-badge-path" />

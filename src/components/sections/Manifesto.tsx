@@ -14,9 +14,9 @@ export function Manifesto() {
         ))}
       </h2>
       <div className="manifesto-foot">
-        <span>Professional overthinker</span>
-        <span>Detail obsessed</span>
-        <span>Allergic to generic</span>
+        <span>Self-taught since 2023</span>
+        <span>Design + code</span>
+        <span>Fussy about details</span>
       </div>
     </section>
   )

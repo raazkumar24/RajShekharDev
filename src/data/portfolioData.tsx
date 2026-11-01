@@ -22,25 +22,25 @@ export const toolkit: ToolkitGroup[] = [
   {
     number: "01",
     title: "Frontend",
-    note: "Interfaces that feel fast and precise",
+    note: "What you see and click",
     tools: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Redux"],
   },
   {
     number: "02",
     title: "Backend",
-    note: "Reliable APIs and real-time flows",
+    note: "APIs, data and logins",
     tools: ["Node.js", "Express", "MongoDB", "REST APIs", "Socket.io"],
   },
   {
     number: "03",
     title: "Design & Motion",
-    note: "Systems, hierarchy, and movement",
+    note: "Layout, type and animation",
     tools: ["Figma", "Design tokens", "GSAP", "Framer Motion", "Three.js"],
   },
   {
     number: "04",
     title: "Workflow",
-    note: "Clean shipping from idea to production",
+    note: "Getting code live",
     tools: ["Git & GitHub", "Vercel", "Postman", "Docker", "Jest"],
   },
 ]
@@ -52,7 +52,7 @@ export const projects: Project[] = [
     category: "Restaurant website",
     year: "2025",
     description:
-      "A modern digital experience for an authentic South Indian restaurant with menu discovery, ambience showcase, and headless WordPress.",
+      "Website for a pure-veg South Indian restaurant — menu, photos and a WordPress blog they run themselves.",
     tags: ["Next.js", "React", "WordPress", "SEO"],
     image:
       "https://images.unsplash.com/photo-1610192244261-3f33de3f55e4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1400",
@@ -64,7 +64,7 @@ export const projects: Project[] = [
     category: "MERN e-commerce",
     year: "2025",
     description:
-      "A full-stack storefront with real-time inventory, secure checkout, and a custom admin.",
+      "A MERN online store I built to learn how carts, orders and APIs fit together.",
     tags: ["MongoDB", "Express", "React"],
     image:
       "https://images.unsplash.com/photo-1531297484001-80022131f5a1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200",
@@ -76,7 +76,7 @@ export const projects: Project[] = [
     category: "SaaS analytics",
     year: "2024",
     description:
-      "A data-dense analytics product with modular widgets and a scalable design system.",
+      "A concept dashboard that turns a pile of numbers into cards and charts.",
     tags: ["TypeScript", "Charts", "Design system"],
     image:
       "https://images.unsplash.com/photo-1525373698358-041e3a460346?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200",
@@ -88,7 +88,7 @@ export const projects: Project[] = [
     category: "Interactive gallery",
     year: "2023",
     description:
-      "A tactile digital archive where scroll, type, and motion guide every discovery.",
+      "A personal gallery experiment with scroll, big type and a bit of 3D.",
     tags: ["React", "Three.js", "Motion"],
     image:
       "https://images.unsplash.com/photo-1565626424178-c699f6601afd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200",
@@ -101,15 +101,15 @@ export const services: Service[] = [
     number: "01",
     title: "Web design",
     description:
-      "Clear, expressive interfaces shaped around your story, your audience, and the moments that matter.",
+      "Pages designed around your content and the people using them — clear layouts, good type, nothing in the way.",
     tags: ["Art direction", "UI / UX", "Prototyping"],
-    deliverables: ["Brand-led UI design", "Responsive layouts", "Clickable prototypes", "Design handoff"],
+    deliverables: ["UI design in Figma", "Responsive layouts", "Clickable prototypes", "Design handoff"],
   },
   {
     number: "02",
     title: "Development",
     description:
-      "Fast, responsive builds with thoughtful interactions and a clean technical foundation made to scale.",
+      "I turn the design into a fast, responsive site or app in React and Next.js, with a backend when you need one.",
     tags: ["React", "Next.js", "Motion"],
     deliverables: ["Production React / Next.js", "APIs & databases", "Scroll & motion design", "SEO & performance"],
   },
@@ -117,7 +117,7 @@ export const services: Service[] = [
     number: "03",
     title: "Creative systems",
     description:
-      "Flexible visual and component systems that keep every page consistent without making it predictable.",
+      "Reusable components and a simple CMS, so your team can add pages without breaking the look.",
     tags: ["Design systems", "CMS", "Accessibility"],
     deliverables: ["Component libraries", "Design tokens", "Headless CMS setup", "Accessibility audits"],
   },
@@ -128,39 +128,40 @@ export const process: ProcessStep[] = [
     number: "01",
     title: "Discover",
     duration: "Week 1",
-    description: "Goals, audience and scope. We agree on what success looks like before a single pixel moves.",
+    description: "We talk about what you need, who it is for and what “done” looks like.",
   },
   {
     number: "02",
     title: "Design",
     duration: "Week 1–2",
-    description: "Structure, art direction and interactive prototypes you can click through and react to.",
+    description: "I design the key pages in Figma and share a prototype you can click through.",
   },
   {
     number: "03",
     title: "Build",
     duration: "Week 2–6",
-    description: "Production code with motion, CMS and performance baked in — with a review every week.",
+    description: "I build it in small steps and show you progress every week.",
   },
   {
     number: "04",
     title: "Launch",
     duration: "Ongoing",
-    description: "Deploy, measure and refine. Clear handover docs and support so it keeps getting better.",
+    description: "We go live, I fix whatever comes up, and you get everything you need to run it.",
   },
 ]
 
 export const nowItems: NowItem[] = [
-  { label: "Currently building", value: "Full-stack products with Next.js & MERN" },
-  { label: "Exploring", value: "Three.js, WebGL & motion systems" },
-  { label: "Based in", value: "India — working worldwide" },
-  { label: "Open to", value: "Freelance projects & full-time roles" },
+  { label: "Currently building", value: "Full-stack apps with Next.js & MERN" },
+  { label: "Learning", value: "Three.js and WebGL" },
+  { label: "Based in", value: "India, working remotely" },
+  { label: "Open to", value: "Freelance work & full-time roles" },
 ]
 
 export const socials: SocialLink[] = [
   {
     label: "GitHub",
-    href: "https://github.com/",
+    href: "https://github.com/raazkumar24",
+    handle: "@raazkumar24",
     icon: (
       <path d="M9 19c-4 1.4-4-2-6-2.5M15 21v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 0 0-6.2 0C6.6 2.8 5.6 3.1 5.6 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4.2 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21" />
     ),
@@ -197,23 +198,23 @@ export const socials: SocialLink[] = [
 
 export const manifesto: [string, string][] = [
   ["I", ""],
-  ["turn", ""],
-  ["bold", "accent"],
-  ["ideas", "accent"],
-  ["into", ""],
-  ["websites", "outline"],
+  ["build", ""],
+  ["websites", "accent"],
+  ["and", ""],
+  ["web", "accent"],
+  ["apps", "accent"],
   ["that", ""],
   ["look", ""],
-  ["suspiciously", "accent"],
-  ["good", ""],
+  ["sharp,", "outline"],
+  ["load", ""],
+  ["fast", ""],
   ["and", ""],
-  ["work", ""],
-  ["even", ""],
-  ["better.", "outline"],
+  ["just", ""],
+  ["work.", "outline"],
 ]
 
-export const bandOne = "CREATIVE CODE ✦ FULL-STACK ✦ MADE FOR IMPACT ✦ "
-export const bandTwo = "REACT ✦ NEXT.JS ✦ MERN STACK ✦ MOTION ✦ DESIGN SYSTEMS ✦ "
+export const bandOne = "WEB DESIGN / FULL-STACK / BASED IN INDIA / "
+export const bandTwo = "REACT / NEXT.JS / MERN / GSAP / FIGMA / "
 
 export const serviceOptions = ["Web design", "Development", "Creative systems", "Something else"]
 export const budgetOptions = ["< ₹50k", "₹50k – 1L", "₹1L – 3L", "₹3L+", "Not sure yet"]

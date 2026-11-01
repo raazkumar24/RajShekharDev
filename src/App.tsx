@@ -226,7 +226,7 @@ export default function App() {
     if (initialTarget) window.scrollTo({ top: 0, behavior: "instant" })
     const fontsReady = Promise.race([
       document.fonts?.ready ?? Promise.resolve(),
-      new Promise((resolve) => setTimeout(resolve, 1200)),
+      new Promise((resolve) => setTimeout(resolve, 2500)),
     ])
     fontsReady.then(() => {
       if (cancelled) return
