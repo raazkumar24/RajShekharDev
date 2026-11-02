@@ -54,21 +54,19 @@ export const projects: Project[] = [
     description:
       "Website for a pure-veg South Indian restaurant — menu, photos and a WordPress blog they run themselves.",
     tags: ["Next.js", "React", "WordPress", "SEO"],
-    image:
-      "https://images.unsplash.com/photo-1610192244261-3f33de3f55e4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1400",
-    alt: "Authentic South Indian Cuisine feast on banana leaf",
+    image: "/ProjectsImages/Udupi/desktop.png",
+    alt: "Udupi Vrindavan restaurant website preview",
   },
   {
     number: "02",
-    title: "Pulse Commerce",
-    category: "MERN e-commerce",
+    title: "Genz Store",
+    category: "Streetwear e-commerce",
     year: "2025",
     description:
-      "A MERN online store I built to learn how carts, orders and APIs fit together.",
-    tags: ["MongoDB", "Express", "React"],
-    image:
-      "https://images.unsplash.com/photo-1531297484001-80022131f5a1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200",
-    alt: "Laptop on a dark desk",
+      "A raw brutalist streetwear store with product discovery, cart, size selection and full-stack commerce architecture.",
+    tags: ["React", "Node.js", "Express", "MongoDB"],
+    image: "/ProjectsImages/Genz/desktop.png",
+    alt: "Genz Store streetwear e-commerce preview",
   },
   {
     number: "03",
