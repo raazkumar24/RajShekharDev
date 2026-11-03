@@ -198,8 +198,6 @@
   gap: 16px;
   padding: 16px var(--pad);
   color: var(--nav-fg);
-  transform: translate3d(0, 0, 0);
-  will-change: transform;
   transition:
     background 300ms ease,
     padding 300ms ease,
@@ -208,7 +206,7 @@
 }
 
 .site-header.is-hidden {
-  transform: translate3d(0, -115%, 0);
+  transform: translateY(-115%);
 }
 
 .site-header.is-scrolled {
@@ -221,6 +219,7 @@
 .site-header.is-menu {
   color: #fff;
   background: transparent;
+  -webkit-backdrop-filter: none;
   backdrop-filter: none;
 }
 
@@ -367,6 +366,7 @@ button:focus-visible .roll::after {
   border: 1px solid var(--nav-line);
   border-radius: 99px;
   background: var(--nav-pill);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
 
@@ -1093,6 +1093,7 @@ button:focus-visible .roll::after {
   border: 1px solid color-mix(in srgb, currentColor 28%, transparent);
   border-radius: 99px;
   background: color-mix(in srgb, currentColor 8%, transparent);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   transition:
     background 350ms ease,
@@ -2219,6 +2220,7 @@ svg.head-arrow.connector {
   border: 1px solid color-mix(in srgb, var(--about-fg) 18%, transparent);
   border-radius: 99px;
   background: color-mix(in srgb, var(--about-solid) 70%, transparent);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   opacity: 0;
   pointer-events: none;
@@ -4063,7 +4065,7 @@ button:focus-visible {
 
   .hero-portrait {
     height: 70%;
-    left: 58%;
+    left: 50%;
   }
 
   .scroll-cue {
@@ -4234,7 +4236,7 @@ button:focus-visible {
   }
 
   .hero-portrait {
-    left: 54%;
+    left: 50%;
     right: auto;
     bottom: 0;
     height: clamp(54%, 48svh, 63%);
@@ -5035,6 +5037,7 @@ button:focus-visible {
   border: 1px solid rgb(255 255 255 / 10%);
   border-radius: 99px;
   background: rgb(17 17 17 / 55%);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   opacity: 0;
   pointer-events: none;
@@ -5395,6 +5398,7 @@ button:focus-visible {
   border: 1px solid rgb(255 255 255 / 28%);
   border-radius: 99px;
   background: rgb(0 0 0 / 30%);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   font-family: var(--mono);
   font-size: 11px;
