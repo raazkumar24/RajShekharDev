@@ -20,10 +20,12 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
   const lenis = reduced ? null : new Lenis({ lerp: 0.075, wheelMultiplier: 0.95, touchMultiplier: 1.2 })
   const raf = (time: number) => lenis?.raf(time * 1000)
 
+  ScrollTrigger.config({ ignoreMobileResize: true })
+
   if (lenis) {
     lenis.on("scroll", ScrollTrigger.update)
     gsap.ticker.add(raf)
-    gsap.ticker.lagSmoothing(0)
+    gsap.ticker.lagSmoothing(500, 33)
   }
 
   // The menu overlay pauses smooth scrolling while open
@@ -193,6 +195,7 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
           scrub: true,
           pin: true,
           pinSpacing: false,
+          anticipatePin: 1,
         },
       })
       .fromTo(".hero-inner", { scale: 1, borderRadius: 0 }, { scale: 0.86, borderRadius: 36, ease: "none" }, 0)
@@ -215,6 +218,7 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
           end: "+=160%",
           scrub: true,
           pin: true,
+          anticipatePin: 1,
         },
       },
     )

@@ -22,10 +22,12 @@ export function setupCaseStudyScroll({ root, onHeader }: CaseStudyScrollOptions)
   const raf = (time: number) => lenis?.raf(time * 1000)
   window.scrollTo({ top: 0, behavior: "instant" })
 
+  ScrollTrigger.config({ ignoreMobileResize: true })
+
   if (lenis) {
     lenis.on("scroll", ScrollTrigger.update)
     gsap.ticker.add(raf)
-    gsap.ticker.lagSmoothing(0)
+    gsap.ticker.lagSmoothing(500, 33)
   }
 
   // The menu overlay pauses smooth scrolling while open
