@@ -56,15 +56,47 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
   const q = gsap.utils.selector(root)
 
   const ctx = gsap.context(() => {
-    // Header + active section tracking
+    // Header + active section tracking (smooth hysteresis to avoid mobile jitter)
+    let lastScroll = 0
+    let scrollAccumulator = 0
+    let isHidden = false
+
     ScrollTrigger.create({
       start: 0,
       end: "max",
       onUpdate: (self) => {
         root.style.setProperty("--scroll-progress", self.progress.toFixed(4))
+        const currentScroll = self.scroll()
+        const delta = currentScroll - lastScroll
+        const heroHeight = window.innerHeight * 0.9
+
+        if (currentScroll <= 30) {
+          isHidden = false
+          scrollAccumulator = 0
+        } else if (currentScroll < heroHeight) {
+          // Keep header comfortably stable while scrolling in the hero section
+          isHidden = false
+          scrollAccumulator = 0
+        } else {
+          // Beyond the hero, hide on continuous downward scroll, show on gentle upward scroll
+          if (delta > 0) {
+            scrollAccumulator = Math.max(0, scrollAccumulator + delta)
+            if (scrollAccumulator > 35) {
+              isHidden = true
+            }
+          } else if (delta < 0) {
+            scrollAccumulator = Math.min(0, scrollAccumulator + delta)
+            if (scrollAccumulator < -15) {
+              isHidden = false
+            }
+          }
+        }
+
+        lastScroll = currentScroll
+
         onHeader({
-          scrolled: self.scroll() > 40,
-          hidden: self.direction === 1 && self.scroll() > window.innerHeight * 0.6,
+          scrolled: currentScroll > 30,
+          hidden: isHidden,
         })
       },
     })

@@ -193,7 +193,7 @@ export function About() {
 
       <div className="who-scene" id="who">
         <p className="who-kicker mono-eyebrow">
-          <i /> A bit about me
+          <i /> The person behind the pixel
         </p>
         <h2 className="outline-title who-title">WHO IS RAJ?</h2>
       </div>
