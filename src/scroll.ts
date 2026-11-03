@@ -369,7 +369,7 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
     // WHO IS RAJ? scales in while the outline fills
     gsap
       .timeline({
-        scrollTrigger: { trigger: ".who-scene", start: "top top", end: "+=130%", scrub: true, pin: true },
+        scrollTrigger: { trigger: ".who-scene", start: "top top", end: "+=130%", scrub: true, pin: true, anticipatePin: 1 },
       })
       .fromTo(".who-title", { scale: 0.42, letterSpacing: "0.12em" }, { scale: 1, letterSpacing: "-0.035em", ease: "power2.out" })
       .fromTo(".who-title", { backgroundPositionX: "100%" }, { backgroundPositionX: "0%", ease: "none" }, 0.35)
@@ -416,6 +416,7 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
       stagger: 0.1,
       duration: 0.9,
       ease: "power3.out",
+      clearProps: "transform,opacity",
       scrollTrigger: { trigger: ".who-copy", start: "top 85%" },
     })
     q("[data-count]").forEach((stat) => {
@@ -442,6 +443,7 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
       stagger: 0.08,
       duration: 0.8,
       ease: "power3.out",
+      clearProps: "transform,opacity",
       scrollTrigger: { trigger: ".now-strip", start: "top 90%" },
     })
 
@@ -471,6 +473,7 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
       stagger: 0.12,
       duration: 0.9,
       ease: "power3.out",
+      clearProps: "transform,opacity",
       scrollTrigger: { trigger: ".process-steps", start: "top 85%" },
     })
 
@@ -603,6 +606,7 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
         stagger: 0.09,
         duration: 0.7,
         ease: "power3.out",
+        clearProps: "transform,opacity",
         scrollTrigger: {
           trigger: ".work-intro",
           start: "top 85%",
@@ -663,6 +667,7 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
             opacity: 0,
             duration: 0.55,
             ease: "power2.out",
+            clearProps: "transform,opacity",
             scrollTrigger: {
               trigger: card,
               start: "top 70%",
@@ -731,6 +736,7 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
       stagger: 0.08,
       duration: 0.8,
       ease: "power3.out",
+      clearProps: "transform,opacity,visibility",
       scrollTrigger: { trigger: ".contact-links", start: "top 88%" },
     })
     gsap.fromTo(".footer-name", { yPercent: 60 }, {

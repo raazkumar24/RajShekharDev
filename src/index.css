@@ -4515,7 +4515,7 @@ button:focus-visible {
   }
 
   .manifesto {
-    min-height: 100vh;
+    min-height: 100svh;
     padding: clamp(70px, 9.5vh, 90px) var(--pad) clamp(34px, 5vh, 48px);
     justify-content: center;
   }

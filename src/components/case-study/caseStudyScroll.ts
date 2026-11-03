@@ -173,6 +173,7 @@ export function setupCaseStudyScroll({ root, onHeader }: CaseStudyScrollOptions)
       stagger: 0.1,
       duration: 0.9,
       ease: "power3.out",
+      clearProps: "transform,opacity",
       scrollTrigger: { trigger: ".cs-facts", start: "top 88%" },
     })
 
@@ -249,6 +250,7 @@ export function setupCaseStudyScroll({ root, onHeader }: CaseStudyScrollOptions)
       stagger: 0.12,
       duration: 0.9,
       ease: "power3.out",
+      clearProps: "transform,opacity",
       scrollTrigger: { trigger: ".cs-specimen", start: "top 88%" },
     })
     gsap.fromTo(
@@ -269,6 +271,7 @@ export function setupCaseStudyScroll({ root, onHeader }: CaseStudyScrollOptions)
       stagger: 0.15,
       duration: 0.9,
       ease: "power3.out",
+      clearProps: "transform,opacity",
       scrollTrigger: { trigger: ".cs-flow", start: "top 85%" },
     })
     gsap.from(".cs-features li", {
@@ -277,6 +280,7 @@ export function setupCaseStudyScroll({ root, onHeader }: CaseStudyScrollOptions)
       stagger: 0.08,
       duration: 0.8,
       ease: "power3.out",
+      clearProps: "transform,opacity",
       scrollTrigger: { trigger: ".cs-features", start: "top 88%" },
     })
     gsap
@@ -343,6 +347,7 @@ export function setupCaseStudyScroll({ root, onHeader }: CaseStudyScrollOptions)
       stagger: 0.12,
       duration: 0.9,
       ease: "power3.out",
+      clearProps: "transform,opacity",
       scrollTrigger: { trigger: ".cs-cta", start: "top 88%" },
     })
     gsap.fromTo(
@@ -396,6 +401,7 @@ export function setupCaseStudyScroll({ root, onHeader }: CaseStudyScrollOptions)
           opacity: 0,
           duration: 0.8,
           ease: "power3.out",
+          clearProps: "transform,opacity",
           scrollTrigger: { trigger: card, start: "top 88%" },
         })
       })
