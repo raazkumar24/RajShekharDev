@@ -17,7 +17,7 @@ type Options = {
 /** Builds every scroll scene. Returns a cleanup function. */
 export function setupScroll({ root, onSection, onHeader, initialTarget }: Options) {
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  const lenis = reduced ? null : new Lenis({ lerp: 0.09, wheelMultiplier: 0.9 })
+  const lenis = reduced ? null : new Lenis({ lerp: 0.075, wheelMultiplier: 0.95, touchMultiplier: 1.2 })
   const raf = (time: number) => lenis?.raf(time * 1000)
 
   if (lenis) {
@@ -44,7 +44,8 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
     event.preventDefault()
     if (lenis) {
       lenis.start()
-      lenis.scrollTo(target as HTMLElement, { duration: 1.6 })
+      // Quintic ease-out: a confident start that settles softly on the section
+      lenis.scrollTo(target as HTMLElement, { duration: 1.8, easing: (t) => 1 - Math.pow(1 - t, 5) })
     }
     else target.scrollIntoView()
   }
@@ -115,8 +116,8 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
         .to(loaderSplit.chars, { yPercent: -110, duration: 0.6, stagger: 0.015, ease: "power3.in" }, 1.35)
         .to(".loader", { yPercent: -100, duration: 0.9, ease: "expo.inOut" }, 1.6)
         .set(".loader", { display: "none" })
-        .from(heroSplit.chars, { yPercent: 110, duration: 1.3, stagger: 0.04 }, 1.95)
-        .from(".hero-portrait img", { yPercent: 16, opacity: 0, duration: 1.4 }, 2.05)
+        .from(heroSplit.chars, { yPercent: 110, rotate: 6, duration: 1.4, stagger: 0.035 }, 1.95)
+        .from(".hero-portrait img", { yPercent: 12, scale: 1.06, opacity: 0, duration: 1.6, ease: "expo.out" }, 2.05)
         .from(".hero-fade", { y: 24, opacity: 0, duration: 0.9, stagger: 0.07, clearProps: "transform,opacity" }, 2.25)
     }
 
@@ -162,12 +163,8 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
           pinSpacing: false,
         },
       })
-      .fromTo(
-        ".hero-inner",
-        { scale: 1, borderRadius: 0, filter: "brightness(1)" },
-        { scale: 0.86, borderRadius: 36, filter: "brightness(0.5)", ease: "none" },
-        0,
-      )
+      .fromTo(".hero-inner", { scale: 1, borderRadius: 0 }, { scale: 0.86, borderRadius: 36, ease: "none" }, 0)
+      .fromTo(".hero-dim", { opacity: 0 }, { opacity: 0.5, ease: "none" }, 0)
       .to(".hero-name span:first-child", { xPercent: -28, ease: "none" }, 0)
       .to(".hero-name span:last-child", { xPercent: 16, ease: "none" }, 0)
       .fromTo(".hero-portrait", { yPercent: 0, scale: 1 }, { yPercent: 8, scale: 1.06, ease: "none" }, 0)
@@ -554,12 +551,9 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
       cards.forEach((card, index) => {
         const next = cards[index + 1]
         if (!next) return
-        gsap.fromTo(card, { scale: 1, filter: "brightness(1)" }, {
-          scale: 0.9 + index * 0.025,
-          filter: "brightness(0.55)",
-          ease: "none",
-          scrollTrigger: { trigger: next, start: "top bottom", end: "top 18%", scrub: true },
-        })
+        const trigger = { trigger: next, start: "top bottom", end: "top 18%", scrub: true }
+        gsap.fromTo(card, { scale: 1 }, { scale: 0.9 + index * 0.025, ease: "none", scrollTrigger: trigger })
+        gsap.fromTo(card.querySelector(".card-dim"), { opacity: 0 }, { opacity: 0.45, ease: "none", scrollTrigger: { ...trigger } })
       })
     })
 
