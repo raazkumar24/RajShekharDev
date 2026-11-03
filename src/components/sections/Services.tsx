@@ -14,6 +14,7 @@ export function Services() {
       <div className="stack">
         {services.map((service, index) => (
           <article className={`stack-card stack-card--${index + 1}`} key={service.number}>
+            <span aria-hidden="true" className="card-dim" />
             <div className="stack-top">
               <span>({service.number})</span>
               <span>

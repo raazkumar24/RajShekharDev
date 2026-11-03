@@ -11,8 +11,8 @@ export function setupCursor(root: HTMLElement) {
   const cursor = root.querySelector<HTMLElement>(".cursor")
   if (!cursor || !finePointer()) return () => {}
 
-  const x = gsap.quickTo(cursor, "x", { duration: 0.35, ease: "power3" })
-  const y = gsap.quickTo(cursor, "y", { duration: 0.35, ease: "power3" })
+  const x = gsap.quickTo(cursor, "x", { duration: 0.45, ease: "power3" })
+  const y = gsap.quickTo(cursor, "y", { duration: 0.45, ease: "power3" })
   const onMove = (event: PointerEvent) => {
     x(event.clientX)
     y(event.clientY)
@@ -44,7 +44,7 @@ export function setupCursor(root: HTMLElement) {
   }
 }
 
-/** Elastic "magnetic" pull for every [data-magnetic] element inside `scope`. */
+/** Soft, weighted "magnetic" pull for every [data-magnetic] element inside `scope`. */
 export function bindMagnetic(scope: ParentNode) {
   if (!finePointer() || reducedMotion()) return () => {}
   const removers: Array<() => void> = []
@@ -52,20 +52,20 @@ export function bindMagnetic(scope: ParentNode) {
   scope.querySelectorAll<HTMLElement>("[data-magnetic]").forEach((element) => {
     const inner = element.querySelector<HTMLElement>(".social-icon, [data-magnetic-inner]")
     const strength = Number(element.dataset.magnetic || 0) || 0.35
-    const mx = gsap.quickTo(element, "x", { duration: 0.5, ease: "elastic.out(1, 0.4)" })
-    const my = gsap.quickTo(element, "y", { duration: 0.5, ease: "elastic.out(1, 0.4)" })
+    const mx = gsap.quickTo(element, "x", { duration: 0.8, ease: "power3.out" })
+    const my = gsap.quickTo(element, "y", { duration: 0.8, ease: "power3.out" })
     const move = (event: PointerEvent) => {
       const box = element.getBoundingClientRect()
       const dx = event.clientX - (box.left + box.width / 2)
       const dy = event.clientY - (box.top + box.height / 2)
       mx(dx * strength)
       my(dy * (strength + 0.1))
-      if (inner) gsap.to(inner, { x: dx * 0.12, y: dy * 0.12, duration: 0.3 })
+      if (inner) gsap.to(inner, { x: dx * 0.12, y: dy * 0.12, duration: 0.6, ease: "power3.out", overwrite: "auto" })
     }
     const leave = () => {
       mx(0)
       my(0)
-      if (inner) gsap.to(inner, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.4)" })
+      if (inner) gsap.to(inner, { x: 0, y: 0, duration: 1, ease: "power4.out", overwrite: "auto" })
     }
     element.addEventListener("pointermove", move)
     element.addEventListener("pointerleave", leave)
