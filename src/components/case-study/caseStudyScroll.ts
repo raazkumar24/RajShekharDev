@@ -18,7 +18,7 @@ export function setupCaseStudyScroll({ root, onHeader }: CaseStudyScrollOptions)
   site.classList.add("is-loaded")
 
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  const lenis = reduced ? null : new Lenis({ lerp: 0.09, wheelMultiplier: 0.9 })
+  const lenis = reduced ? null : new Lenis({ lerp: 0.075, wheelMultiplier: 0.95, touchMultiplier: 1.2 })
   const raf = (time: number) => lenis?.raf(time * 1000)
   window.scrollTo({ top: 0, behavior: "instant" })
 
@@ -343,16 +343,17 @@ export function setupCaseStudyScroll({ root, onHeader }: CaseStudyScrollOptions)
       cards.forEach((card, index) => {
         const next = cards[index + 1]
         if (!next) return
-        gsap.fromTo(
-          card,
-          { scale: 1, filter: "brightness(1)" },
-          {
-            scale: 0.9 + index * 0.025,
-            filter: "brightness(0.6)",
-            ease: "none",
-            scrollTrigger: { trigger: next, start: "top bottom", end: "top 18%", scrub: true },
-          },
-        )
+        // Dim layer fades in as the card sinks; opacity is far cheaper to scrub than a filter
+        let dim = card.querySelector<HTMLElement>(".card-dim")
+        if (!dim) {
+          dim = document.createElement("span")
+          dim.className = "card-dim"
+          dim.setAttribute("aria-hidden", "true")
+          card.prepend(dim)
+        }
+        const trigger = { trigger: next, start: "top bottom", end: "top 18%", scrub: true }
+        gsap.fromTo(card, { scale: 1 }, { scale: 0.9 + index * 0.025, ease: "none", scrollTrigger: trigger })
+        gsap.fromTo(dim, { opacity: 0 }, { opacity: 0.4, ease: "none", scrollTrigger: { ...trigger } })
       })
     })
     mm.add("(max-width: 900px)", () => {
