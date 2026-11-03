@@ -64,6 +64,8 @@ export function Hero() {
           </a>
         </div>
 
+        <div aria-hidden="true" className="hero-dim" />
+
         {/* Desktop Bottom Bar */}
         <div className="hero-bar hero-fade">
           <div className="hero-status">
