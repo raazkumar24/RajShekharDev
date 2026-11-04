@@ -197,15 +197,21 @@
   gap: 16px;
   padding: 16px var(--pad);
   color: var(--nav-fg);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   transition:
     background 300ms ease,
     padding 300ms ease,
     color 300ms ease,
-    transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+    transform 380ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .site-header.is-hidden {
-  transform: translateY(-115%);
+  -webkit-transform: translate3d(0, -115%, 0);
+  transform: translate3d(0, -115%, 0);
 }
 
 .site-header.is-scrolled {
@@ -718,6 +724,10 @@ button:focus-visible .roll::after {
   color: var(--hero-fg);
   background: var(--hero-bg);
   transform-origin: 50% 30%;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   will-change: transform;
 }
 
@@ -2007,6 +2017,9 @@ svg.head-arrow.connector {
   background: var(--manifesto-bg);
   box-shadow: 0 -40px 80px rgb(0 0 0 / 35%);
   isolation: isolate;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
 }
 
 .manifesto::before {
@@ -4056,6 +4069,15 @@ button:focus-visible {
   .site-header {
     grid-template-columns: 1fr auto;
     padding: 12px var(--pad);
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transition:
+      background 300ms ease,
+      color 300ms ease,
+      transform 380ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .site-header.is-scrolled {
@@ -4524,6 +4546,10 @@ button:focus-visible {
     min-height: 100svh;
     padding: clamp(70px, 9.5vh, 90px) var(--pad) clamp(34px, 5vh, 48px);
     justify-content: center;
+    box-shadow: 0 -20px 40px rgb(0 0 0 / 28%);
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
   }
 
   .manifesto-text {

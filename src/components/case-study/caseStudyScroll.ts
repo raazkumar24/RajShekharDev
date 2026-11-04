@@ -18,7 +18,16 @@ export function setupCaseStudyScroll({ root, onHeader }: CaseStudyScrollOptions)
   site.classList.add("is-loaded")
 
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  const lenis = reduced ? null : new Lenis({ lerp: 0.075, wheelMultiplier: 0.95, touchMultiplier: 1.2 })
+  const isTouch = typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches
+  const lenis = reduced
+    ? null
+    : new Lenis({
+        lerp: isTouch ? 0.09 : 0.075,
+        wheelMultiplier: 0.95,
+        touchMultiplier: 1,
+        syncTouch: true,
+        syncTouchLerp: 0.09,
+      })
   const raf = (time: number) => lenis?.raf(time * 1000)
   window.scrollTo({ top: 0, behavior: "instant" })
 
@@ -27,7 +36,7 @@ export function setupCaseStudyScroll({ root, onHeader }: CaseStudyScrollOptions)
   if (lenis) {
     lenis.on("scroll", ScrollTrigger.update)
     gsap.ticker.add(raf)
-    gsap.ticker.lagSmoothing(500, 33)
+    gsap.ticker.lagSmoothing(0)
   }
 
   // The menu overlay pauses smooth scrolling while open
@@ -57,6 +66,8 @@ export function setupCaseStudyScroll({ root, onHeader }: CaseStudyScrollOptions)
     let lastScroll = 0
     let scrollAccumulator = 0
     let isHidden = false
+    let lastEmittedScrolled = false
+    let lastEmittedHidden = false
 
     ScrollTrigger.create({
       start: 0,
@@ -65,7 +76,7 @@ export function setupCaseStudyScroll({ root, onHeader }: CaseStudyScrollOptions)
         site.style.setProperty("--scroll-progress", self.progress.toFixed(4))
         const currentScroll = self.scroll()
         const delta = currentScroll - lastScroll
-        const heroHeight = window.innerHeight * 0.9
+        const heroHeight = window.innerHeight * 0.95
 
         if (currentScroll <= 30) {
           isHidden = false
@@ -76,12 +87,12 @@ export function setupCaseStudyScroll({ root, onHeader }: CaseStudyScrollOptions)
         } else {
           if (delta > 0) {
             scrollAccumulator = Math.max(0, scrollAccumulator + delta)
-            if (scrollAccumulator > 35) {
+            if (scrollAccumulator > 60) {
               isHidden = true
             }
           } else if (delta < 0) {
             scrollAccumulator = Math.min(0, scrollAccumulator + delta)
-            if (scrollAccumulator < -15) {
+            if (scrollAccumulator < -30) {
               isHidden = false
             }
           }
@@ -89,10 +100,15 @@ export function setupCaseStudyScroll({ root, onHeader }: CaseStudyScrollOptions)
 
         lastScroll = currentScroll
 
-        onHeader?.({
-          scrolled: currentScroll > 30,
-          hidden: isHidden,
-        })
+        const nextScrolled = currentScroll > 30
+        if (nextScrolled !== lastEmittedScrolled || isHidden !== lastEmittedHidden) {
+          lastEmittedScrolled = nextScrolled
+          lastEmittedHidden = isHidden
+          onHeader?.({
+            scrolled: nextScrolled,
+            hidden: isHidden,
+          })
+        }
       },
     })
 
