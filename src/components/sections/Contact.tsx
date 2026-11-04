@@ -36,6 +36,7 @@ export function Contact({ time }: ContactProps) {
   const [form, setForm] = useState<EnquiryForm>(emptyForm)
   const [errors, setErrors] = useState<Partial<Record<keyof EnquiryForm, string>>>({})
   const [status, setStatus] = useState<FormStatus>("idle")
+  const [serverError, setServerError] = useState<string | null>(null)
   const [copied, setCopied] = useState(false)
 
   const updateField = <K extends keyof EnquiryForm>(key: K, value: EnquiryForm[K]) => {
@@ -52,7 +53,7 @@ export function Contact({ time }: ContactProps) {
     )
   }
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const next: Partial<Record<keyof EnquiryForm, string>> = {}
     if (!form.name.trim()) next.name = "I'd love to know your name."
@@ -69,14 +70,51 @@ export function Contact({ time }: ContactProps) {
       event.currentTarget.querySelector<HTMLElement>(`[data-field="${first}"]`)?.focus()
       return
     }
+
     setStatus("sending")
-    window.setTimeout(() => setStatus("sent"), 1100)
+    setServerError(null)
+
+    try {
+      const accessKey =
+        import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || "2410c80d-9bea-48cd-9ce9-5b678f1cced4"
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: form.name.trim(),
+          email: form.email.trim(),
+          services: form.services.join(", "),
+          budget: form.budget || "Not specified",
+          timeline: form.timeline || "Not specified",
+          message: form.message.trim(),
+          subject: `New Project Enquiry from ${form.name.trim()}`,
+          from_name: form.name.trim(),
+        }),
+      })
+
+      const data = await response.json()
+      if (response.ok && data.success) {
+        setStatus("sent")
+      } else {
+        setStatus("error")
+        setServerError(data.message || "Something went wrong. Please try again or reach out directly.")
+      }
+    } catch {
+      setStatus("error")
+      setServerError("Network error. Please check your connection or send via direct email.")
+    }
   }
 
   const resetForm = () => {
     setForm(emptyForm)
     setErrors({})
     setStatus("idle")
+    setServerError(null)
   }
 
   const copyEmail = () => {
@@ -385,16 +423,23 @@ export function Contact({ time }: ContactProps) {
                   <br />
                   <span>{form.name.trim() || "you"}</span>
                 </p>
-                <button
-                  className={status === "sending" ? "letter-send is-sending" : "letter-send"}
-                  disabled={status === "sending"}
-                  type="submit"
-                >
-                  <span className="roll" data-text={status === "sending" ? "Sending…" : "Send it to Raj"}>
-                    {status === "sending" ? "Sending…" : "Send it to Raj"}
-                  </span>
-                  <i>{status === "sending" ? <span className="spinner" aria-hidden="true" /> : <ArrowUpRight />}</i>
-                </button>
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "8px" }}>
+                  <button
+                    className={status === "sending" ? "letter-send is-sending" : "letter-send"}
+                    disabled={status === "sending"}
+                    type="submit"
+                  >
+                    <span className="roll" data-text={status === "sending" ? "Sending…" : "Send it to Raj"}>
+                      {status === "sending" ? "Sending…" : "Send it to Raj"}
+                    </span>
+                    <i>{status === "sending" ? <span className="spinner" aria-hidden="true" /> : <ArrowUpRight />}</i>
+                  </button>
+                  {serverError && (
+                    <p className="letter-error" role="alert" style={{ margin: 0, textAlign: "right" }}>
+                      {serverError}
+                    </p>
+                  )}
+                </div>
               </div>
             </>
           )}

@@ -61,7 +61,7 @@ export interface EnquiryForm {
   message: string
 }
 
-export type FormStatus = "idle" | "sending" | "sent"
+export type FormStatus = "idle" | "sending" | "sent" | "error"
 
 export interface ColorToken {
   name: string

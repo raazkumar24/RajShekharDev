@@ -8,7 +8,7 @@ import type {
   ToolkitGroup,
 } from "../types/portfolio"
 
-export const EMAIL = "hello@rajshekhar.dev"
+export const EMAIL = "hello@rajshekhar.codes"
 
 export const navItems: NavItem[] = [
   { id: "home", label: "Home" },
