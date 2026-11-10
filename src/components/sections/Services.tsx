@@ -6,7 +6,7 @@ export function Services() {
   return (
     <section className="services" data-section id="services">
       <div className="services-intro">
-        <SectionLabel number="03">Services / What I can help with</SectionLabel>
+        <SectionLabel number="03">How I can help</SectionLabel>
         <h2 className="big-title" data-split>
           WHAT I DO
         </h2>
@@ -32,7 +32,7 @@ export function Services() {
                 </ul>
               </div>
               <div className="stack-deliver">
-                <span>What you get</span>
+                <span>Usually includes</span>
                 <ol>
                   {service.deliverables.map((item) => (
                     <li key={item}>{item}</li>
@@ -40,8 +40,8 @@ export function Services() {
                 </ol>
               </div>
               <a className="stack-cta" href="#contact">
-                <span className="roll" data-text="Start a project">
-                  Start a project
+                <span className="roll" data-text="Ask about this">
+                  Ask about this
                 </span>
                 <i>
                   <ArrowUpRight />
@@ -54,13 +54,13 @@ export function Services() {
 
       <div className="process">
         <div className="process-head">
-          <SectionLabel number="3.1">Process / How a project runs</SectionLabel>
+          <SectionLabel number="04">How a project usually goes</SectionLabel>
           <h2 className="big-title" data-split>
             HOW I WORK
           </h2>
           <p data-rise>
-            No black box. You&apos;ll always know what I&apos;m working on and what I need from you
-            next.
+            Small steps, a live link you can check any time, and straight answers when you ask
+            where things are.
           </p>
         </div>
         <ol className="process-steps">

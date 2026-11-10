@@ -11,7 +11,7 @@ export function CircleBadge({ id }: CircleBadgeProps) {
         </defs>
         <circle cx="60" cy="60" r="56" />
         <text>
-          <textPath href={`#${id}`}>DESIGN • BUILD • SHIP • REPEAT •</textPath>
+          <textPath href={`#${id}`}>MADE IN CHANDIGARH • SINCE 2023 •</textPath>
         </text>
       </svg>
       <span>RS</span>

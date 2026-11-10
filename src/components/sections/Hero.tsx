@@ -9,9 +9,9 @@ export function Hero() {
       <div className="hero-inner">
         <div className="hero-eyebrow hero-fade">
           <p>
-            <i /> Portfolio — 2026
+            <i /> Chandigarh, India
           </p>
-          <span>Web developer from India</span>
+          <span>Building for the web since 2023</span>
         </div>
         {/* <div className="hero-fade">
           <CircleBadge id="hero-badge-path" />
@@ -60,7 +60,7 @@ export function Hero() {
           </h2>
           <p>React • Next.js • MERN stack</p>
           <a className="hero-resume-btn" href="#contact">
-            Resume <ArrowDown />
+            Say hello <ArrowDown />
           </a>
         </div>
 

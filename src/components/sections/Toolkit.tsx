@@ -5,7 +5,7 @@ export function Toolkit() {
   return (
     <div className="toolkit" id="toolkit">
       <div className="toolkit-intro">
-        <SectionLabel number="01">About / Toolkit</SectionLabel>
+        <SectionLabel number="01">What I reach for</SectionLabel>
         <h2 className="big-title" data-split>
           MY TOOLKIT
         </h2>

@@ -41,7 +41,7 @@ export default function App() {
       : null,
   )
   const transitioning = useRef(false)
-  const [theme, setTheme] = useState<Theme>("red")
+  const [theme, setTheme] = useState<Theme>("concrete")
   const [view, setView] = useState<View>(() =>
     initialHash.startsWith("#case-study") ? "case-study" : "home",
   )
@@ -250,7 +250,7 @@ export default function App() {
 
   return (
     <div className="site" data-theme={theme} ref={rootRef}>
-      <Loader />
+      <Loader time={time} />
       <PageCurtain kicker={curtain.kicker} ref={curtainRef} title={curtain.title} />
       <CustomCursor />
       <Header

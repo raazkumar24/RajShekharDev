@@ -67,9 +67,10 @@ export function MobileMenu({
           <p>India — {time || "--:--"} IST</p>
         </div>
         <div className="theme-switch menu-theme" aria-label="Color theme">
-          {(["red", "concrete"] as Theme[]).map((option) => (
+          {(["concrete", "red"] as Theme[]).map((option) => (
             <button
               aria-pressed={theme === option}
+              data-option={option}
               className={theme === option ? "is-active" : ""}
               key={option}
               onClick={() => setTheme(option)}
@@ -77,7 +78,7 @@ export function MobileMenu({
               type="button"
             >
               <span />
-              {option === "red" ? "Red 01" : "Concrete 02"}
+              {option === "concrete" ? "Concrete 01" : "Red 02"}
             </button>
           ))}
         </div>

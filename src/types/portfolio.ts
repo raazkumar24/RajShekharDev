@@ -23,6 +23,13 @@ export interface Project {
   tags: string[]
   image: string
   alt: string
+  /** Real screenshots for the Works showcase; without them a drawn wireframe stands in */
+  screens?: {
+    desktop: string
+    mobile?: string
+  }
+  liveUrl?: string
+  repoUrl?: string
 }
 
 export interface Service {

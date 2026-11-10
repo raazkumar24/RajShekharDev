@@ -76,16 +76,17 @@ export function Header({
 
       <div className="header-actions">
         <div className="theme-switch" aria-label="Color theme">
-          {(["red", "concrete"] as Theme[]).map((option) => (
+          {(["concrete", "red"] as Theme[]).map((option) => (
             <button
               aria-pressed={theme === option}
+              data-option={option}
               className={theme === option ? "is-active" : ""}
               key={option}
               onClick={() => setTheme(option)}
               type="button"
             >
               <span />
-              {option === "red" ? "Red 01" : "Concrete 02"}
+              {option === "concrete" ? "Concrete 01" : "Red 02"}
             </button>
           ))}
         </div>

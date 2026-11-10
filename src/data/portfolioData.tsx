@@ -35,7 +35,7 @@ export const toolkit: ToolkitGroup[] = [
     number: "03",
     title: "Design & Motion",
     note: "Layout, type and animation",
-    tools: ["Figma", "Design tokens", "GSAP", "Framer Motion", "Three.js"],
+    tools: ["Figma", "GSAP", "Lenis", "Framer Motion"],
   },
   {
     number: "04",
@@ -56,6 +56,12 @@ export const projects: Project[] = [
     tags: ["Next.js", "React", "WordPress", "SEO"],
     image: "/ProjectsImages/Udupi/desktop.png",
     alt: "Udupi Vrindavan restaurant website preview",
+    screens: {
+      desktop: "/ProjectsImages/Udupi/desktop.png",
+      mobile: "/ProjectsImages/Udupi/mobile.png",
+    },
+    liveUrl: "https://udupivrindavan.com/",
+    repoUrl: "https://github.com/raazkumar24/udupi-vrindavan",
   },
   {
     number: "02",
@@ -67,91 +73,104 @@ export const projects: Project[] = [
     tags: ["React", "Node.js", "Express", "MongoDB"],
     image: "/ProjectsImages/Genz/desktop.png",
     alt: "Genz Store streetwear e-commerce preview",
+    screens: {
+      desktop: "/ProjectsImages/Genz/desktop.png",
+      mobile: "/ProjectsImages/Genz/mobile.png",
+    },
+    liveUrl: "https://genz-store-seven.vercel.app/",
+    repoUrl: "https://github.com/raazkumar24/Genz-Store",
   },
   {
     number: "03",
-    title: "Atlas Dashboard",
-    category: "SaaS analytics",
-    year: "2024",
+    title: "Aayam Strength Studio",
+    category: "Gym website",
+    year: "2026",
     description:
-      "A concept dashboard that turns a pile of numbers into cards and charts.",
-    tags: ["TypeScript", "Charts", "Design system"],
-    image:
-      "https://images.unsplash.com/photo-1525373698358-041e3a460346?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200",
-    alt: "Laptop with a glowing screen",
+      "A demo site for a Bengaluru strength studio — earthy, editorial design, rupee pricing with a billing toggle, and a trial form that opens WhatsApp.",
+    tags: ["React", "TypeScript", "Motion", "Lenis"],
+    image: "/ProjectsImages/Aayam/desktop.png",
+    alt: "Aayam Strength Studio website hero with the headline Strength, held with intention",
+    screens: {
+      desktop: "/ProjectsImages/Aayam/desktop.png",
+      mobile: "/ProjectsImages/Aayam/mobile.png",
+    },
+    liveUrl: "https://gymsitedemo-ecru.vercel.app",
+    repoUrl: "https://github.com/raazkumar24/GYM",
   },
   {
     number: "04",
-    title: "Forma Archive",
-    category: "Interactive gallery",
-    year: "2023",
+    title: "ShopNest",
+    category: "MERN e-commerce",
+    year: "2025",
     description:
-      "A personal gallery experiment with scroll, big type and a bit of 3D.",
-    tags: ["React", "Three.js", "Motion"],
+      "My first full-stack store — login, a cart saved to your account, a three-step checkout and an admin panel for products, orders and users.",
+    tags: ["React", "Express", "MongoDB", "JWT"],
     image:
-      "https://images.unsplash.com/photo-1565626424178-c699f6601afd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200",
-    alt: "Grayscale concrete blocks",
+      "https://images.unsplash.com/photo-1563013544-824ae1b704d3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200",
+    alt: "Person paying online with a card at a laptop",
+    liveUrl: "https://my-shop-r71y.onrender.com/",
+    repoUrl: "https://github.com/raazkumar24/ecommerce-project",
   },
 ]
 
 export const services: Service[] = [
   {
     number: "01",
-    title: "Web design",
+    title: "Websites",
     description:
-      "Pages designed around your content and the people using them — clear layouts, good type, nothing in the way.",
-    tags: ["Art direction", "UI / UX", "Prototyping"],
-    deliverables: ["UI design in Figma", "Responsive layouts", "Clickable prototypes", "Design handoff"],
+      "For restaurants, shops and small studios. Your photos, your menu, pages that open fast on a phone, and a blog or CMS you can update yourself — like the Udupi Vrindavan site.",
+    tags: ["Next.js", "WordPress", "SEO"],
+    deliverables: ["Design in Figma first", "Next.js build", "WordPress or headless CMS", "Basic SEO setup"],
   },
   {
     number: "02",
-    title: "Development",
+    title: "Web apps",
     description:
-      "I turn the design into a fast, responsive site or app in React and Next.js, with a backend when you need one.",
-    tags: ["React", "Next.js", "Motion"],
-    deliverables: ["Production React / Next.js", "APIs & databases", "Scroll & motion design", "SEO & performance"],
+      "Logins, carts, dashboards and admin panels. I handle the whole MERN stack — database, API and the screens people click.",
+    tags: ["React", "Node.js", "MongoDB"],
+    deliverables: ["React / Next.js front end", "Node & Express API", "MongoDB database", "Deployed and handed over"],
   },
   {
     number: "03",
-    title: "Creative systems",
+    title: "Fixes & polish",
     description:
-      "Reusable components and a simple CMS, so your team can add pages without breaking the look.",
-    tags: ["Design systems", "CMS", "Accessibility"],
-    deliverables: ["Component libraries", "Design tokens", "Headless CMS setup", "Accessibility audits"],
+      "Already have a site that feels slow, breaks on phones or looks dated? I'll clean it up, speed it up and add motion only where it helps.",
+    tags: ["Speed", "Mobile", "GSAP"],
+    deliverables: ["Speed and Lighthouse fixes", "Mobile layout fixes", "Scroll animation with GSAP", "Accessibility basics"],
   },
 ]
 
 export const process: ProcessStep[] = [
   {
     number: "01",
-    title: "Discover",
-    duration: "Week 1",
-    description: "We talk about what you need, who it is for and what “done” looks like.",
+    title: "Talk",
+    duration: "A short call",
+    description: "You tell me what you want and who it’s for. I ask a lot of questions and tell you honestly if I’m the right fit.",
   },
   {
     number: "02",
-    title: "Design",
-    duration: "Week 1–2",
-    description: "I design the key pages in Figma and share a prototype you can click through.",
+    title: "Sketch",
+    duration: "A few days",
+    description: "I lay out the main pages in Figma. You click through, we change what feels off before any code is written.",
   },
   {
     number: "03",
     title: "Build",
-    duration: "Week 2–6",
-    description: "I build it in small steps and show you progress every week.",
+    duration: "Depends on size",
+    description: "I build in small pieces and send you a live link you can open on your phone whenever you like.",
   },
   {
     number: "04",
-    title: "Launch",
-    duration: "Ongoing",
-    description: "We go live, I fix whatever comes up, and you get everything you need to run it.",
+    title: "Hand over",
+    duration: "After launch",
+    description: "We go live, I fix whatever shows up in the first weeks, and you get the code and logins — it’s yours.",
   },
 ]
 
 export const nowItems: NowItem[] = [
   { label: "Currently building", value: "Full-stack apps with Next.js & MERN" },
   { label: "Learning", value: "Three.js and WebGL" },
-  { label: "Based in", value: "India, working remotely" },
+  { label: "Based in", value: "Chandigarh, India — happy to work remote" },
   { label: "Open to", value: "Freelance work & full-time roles" },
 ]
 
@@ -211,10 +230,9 @@ export const manifesto: [string, string][] = [
   ["work.", "outline"],
 ]
 
-export const bandOne = "WEB DESIGN / FULL-STACK / BASED IN INDIA / "
+export const bandOne = "CHANDIGARH / FULL-STACK / BUILDING SINCE 2023 / OPEN TO WORK / "
 export const bandTwo = "REACT / NEXT.JS / MERN / GSAP / FIGMA / "
 
-export const serviceOptions = ["Web design", "Development", "Creative systems", "Something else"]
+export const serviceOptions = ["A website", "A web app", "Fixing a site", "Something else"]
 export const budgetOptions = ["< ₹50k", "₹50k – 1L", "₹1L – 3L", "₹3L+", "Not sure yet"]
 export const timelineOptions = ["ASAP", "1–3 months", "3+ months", "Flexible"]
-

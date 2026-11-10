@@ -147,28 +147,35 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
         .from(".hero-portrait img", { yPercent: 10, opacity: 0, duration: 1.1 }, 0.2)
         .from(".hero-fade", { y: 20, opacity: 0, duration: 0.8, stagger: 0.06, clearProps: "transform,opacity" }, 0.35)
     } else {
-      const loaderSplit = SplitText.create(q(".loader-name span"), { type: "chars", mask: "chars" })
-      splits.push(loaderSplit)
-      const counter = { value: 0 }
-      const countEl = root.querySelector(".loader-count")
-      gsap
+      // Signed-sheet intro: notes settle, the name is written, underlined and stamped,
+      // then the page lifts off like a sheet pulled from a pad.
+      const statusLines = q(".loader-status span")
+      const intro = gsap
         .timeline({ defaults: { ease: "expo.out" }, onComplete: () => root.classList.add("is-loaded") })
-        .from(loaderSplit.chars, { yPercent: 110, duration: 0.9, stagger: 0.03 })
-        .to(counter, {
-          value: 100,
-          duration: 1.2,
-          ease: "power2.inOut",
-          onUpdate: () => {
-            if (countEl) countEl.textContent = String(Math.round(counter.value))
-          },
-        }, 0.1)
-        .fromTo(".loader-bar i", { scaleX: 0 }, { scaleX: 1, duration: 1.2, ease: "power2.inOut" }, 0.1)
-        .to(loaderSplit.chars, { yPercent: -110, duration: 0.6, stagger: 0.015, ease: "power3.in" }, 1.35)
-        .to(".loader", { yPercent: -100, duration: 0.9, ease: "expo.inOut" }, 1.6)
+        .to(".loader-note > span", { opacity: 1, y: 0, duration: 0.7, stagger: 0.06, startAt: { y: 10 } }, 0)
+        .to(".loader-signature", { clipPath: "inset(-20% 0% -20% 0)", duration: 1.15, ease: "power1.inOut" }, 0.15)
+        .to(".loader-swash path", { strokeDashoffset: 0, duration: 0.55, ease: "power2.inOut" }, 1.05)
+        .fromTo(
+          ".loader-stamp",
+          { opacity: 0, scale: 1.9, rotate: -32 },
+          { opacity: 0.92, scale: 1, rotate: -14, duration: 0.32, ease: "power4.in" },
+          1.3,
+        )
+        // The thump of the stamp landing
+        .fromTo(".loader-paper", { scale: 1 }, { scale: 0.992, duration: 0.07, yoyo: true, repeat: 1, ease: "power1.out" }, 1.62)
+      statusLines.forEach((line, index) => {
+        const at = index * 0.62
+        intro.to(line, { yPercent: 0, y: 0, duration: 0.45, ease: "power3.out", startAt: { yPercent: 110 } }, at)
+        if (index < statusLines.length - 1) {
+          intro.to(line, { yPercent: -110, duration: 0.4, ease: "power3.in" }, at + 0.5)
+        }
+      })
+      intro
+        .to(".loader", { yPercent: -112, rotate: -4, transformOrigin: "0% 100%", duration: 1.05, ease: "expo.inOut" }, 2.05)
         .set(".loader", { display: "none" })
-        .from(heroSplit.chars, { yPercent: 110, rotate: 6, duration: 1.4, stagger: 0.035 }, 1.95)
-        .from(".hero-portrait img", { yPercent: 12, scale: 1.06, opacity: 0, duration: 1.6, ease: "expo.out" }, 2.05)
-        .from(".hero-fade", { y: 24, opacity: 0, duration: 0.9, stagger: 0.07, clearProps: "transform,opacity" }, 2.25)
+        .from(heroSplit.chars, { yPercent: 110, rotate: 6, duration: 1.4, stagger: 0.035 }, 2.45)
+        .from(".hero-portrait img", { yPercent: 12, scale: 1.06, opacity: 0, duration: 1.6, ease: "expo.out" }, 2.55)
+        .from(".hero-fade", { y: 24, opacity: 0, duration: 0.9, stagger: 0.07, clearProps: "transform,opacity" }, 2.75)
     }
 
     // Hero responds to the pointer: the star drifts and the portrait leans in
@@ -266,26 +273,7 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
     })
 
     // ---------- Journey ----------
-    q(".connector").forEach((svg) => {
-      const path = svg.querySelector<SVGPathElement>(".glow")
-      const head = svg.querySelector<SVGElement>(".arrowhead")
-      if (!path) return
-      const length = path.getTotalLength()
-      gsap.set(path, { strokeDasharray: length, strokeDashoffset: length })
-      if (head) gsap.set(head, { opacity: 0 })
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: svg,
-          start: "top 86%",
-          end: "bottom 48%",
-          scrub: 0.8,
-        },
-      })
-      tl.to(path, { strokeDashoffset: 0, ease: "none", duration: 1 })
-      if (head) {
-        tl.to(head, { opacity: 1, ease: "power1.out", duration: 0.2 }, 0.8)
-      }
-    })
+    // The ribbon itself is drawn by the Journey component; these are its passengers
     q("[data-parallax]").forEach((element) => {
       const amount = Number(element.dataset.parallax || 80)
       gsap.fromTo(element, { y: amount }, {
@@ -293,18 +281,6 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
         ease: "none",
         scrollTrigger: { trigger: element, start: "top bottom", end: "bottom top", scrub: true },
       })
-    })
-    // Ghost years drift against the scroll for depth
-    q(".milestone-year").forEach((year) => {
-      gsap.fromTo(
-        year,
-        { yPercent: 18 },
-        {
-          yPercent: -18,
-          ease: "none",
-          scrollTrigger: { trigger: year.parentElement, start: "top bottom", end: "bottom top", scrub: true },
-        },
-      )
     })
     q(".milestone-copy").forEach((copy) => {
       gsap.from(copy.children, {
@@ -324,17 +300,13 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
       .from(".collage-back .note", { y: -80, rotate: -28, opacity: 0, ease: "back.out(2)" }, 0.35)
       .from(".collage-front .tape", { scaleX: 0, transformOrigin: "0 50%", ease: "power2.out" }, 0.55)
 
-    // 2023 code window types itself line by line
+    // 2024: the stacked screen comes apart into its layers
     gsap
-      .timeline({ scrollTrigger: { trigger: ".code-stack", start: "top 85%", end: "center 50%", scrub: 1 } })
-      .from(".window--back", { y: 60, rotate: -6, opacity: 0, ease: "power3.out" }, 0)
-      .from(".window--front", { y: 90, rotate: 4, opacity: 0, ease: "power3.out" }, 0.1)
-      .fromTo(
-        ".code-lines p",
-        { clipPath: "inset(0 100% 0 0)" },
-        { clipPath: "inset(0 0% 0 0)", stagger: 0.18, ease: "none" },
-        0.35,
-      )
+      .timeline({ scrollTrigger: { trigger: ".layers", start: "top 85%", end: "center 45%", scrub: 1 } })
+      .fromTo(".layer--mid", { "--z": "0em" }, { "--z": "6.5em", ease: "power2.out" }, 0)
+      .fromTo(".layer--top", { "--z": "0em" }, { "--z": "13em", ease: "power2.out" }, 0)
+      .from(".layer-card", { opacity: 0, scale: 0.6, stagger: 0.08, ease: "back.out(1.6)" }, 0.15)
+      .from(".layer-label", { opacity: 0, x: -24, stagger: 0.1, ease: "power3.out" }, 0.4)
 
     // 2025 portrait wipes up out of the dark
     gsap
@@ -526,81 +498,6 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
 
     mm.add("(min-width: 901px)", () => {
       processLine("scaleX")
-      // ---------- Works: horizontal pinned gallery ----------
-      const track = root.querySelector<HTMLElement>(".work-track")
-      if (track) {
-        const distance = () => track.scrollWidth - window.innerWidth
-        const horizontal = gsap.to(track, {
-          x: () => -distance(),
-          ease: "none",
-          scrollTrigger: {
-            trigger: ".work",
-            start: "top top",
-            end: () => `+=${distance()}`,
-            scrub: true,
-            pin: true,
-            invalidateOnRefresh: true,
-          },
-        })
-        gsap.fromTo(".work-progress i", { scaleX: 0 }, {
-          scaleX: 1,
-          ease: "none",
-          scrollTrigger: {
-            trigger: ".work",
-            start: "top top",
-            end: () => `+=${distance()}`,
-            scrub: true,
-            onUpdate: (self) => {
-              const current = root.querySelector(".work-counter b")
-              const total = q(".project-card").length
-              if (current) current.textContent = String(Math.min(total, Math.floor(self.progress * total) + 1)).padStart(2, "0")
-            },
-          },
-        })
-        gsap.to(".work-ghost", {
-          xPercent: -35,
-          ease: "none",
-          scrollTrigger: {
-            trigger: ".work",
-            start: "top top",
-            end: () => `+=${distance()}`,
-            scrub: true,
-          },
-        })
-        // Cards rise and straighten as they slide into view
-        const workCards = q(".project-card, .work-more")
-        workCards.forEach((card, index) => {
-          // The final card never travels far left, so let it settle earlier
-          const isLast = index === workCards.length - 1
-          gsap.fromTo(card, { scale: 0.86, rotate: 3, opacity: 0.4 }, {
-            scale: 1,
-            rotate: 0,
-            opacity: 1,
-            ease: "none",
-            scrollTrigger: {
-              trigger: card,
-              containerAnimation: horizontal,
-              start: "left right",
-              end: isLast ? "left 92%" : "left 60%",
-              scrub: true,
-            },
-          })
-        })
-        q(".project-card img").forEach((image) => {
-          gsap.fromTo(image, { xPercent: -8 }, {
-            xPercent: 8,
-            ease: "none",
-            scrollTrigger: {
-              trigger: image.closest(".project-card"),
-              containerAnimation: horizontal,
-              start: "left right",
-              end: "right left",
-              scrub: true,
-            },
-          })
-        })
-      }
-
       // ---------- Services: stacked sticky cards shrink as the next arrives ----------
       const cards = q(".stack-card")
       cards.forEach((card, index) => {
@@ -614,123 +511,37 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
 
     mm.add("(max-width: 900px)", () => {
       processLine("scaleY")
-      // ---------- Mobile Works Animation ----------
-      // 1. Intro header stagger reveal
-      gsap.from(".work-intro > *", {
-        y: 35,
-        opacity: 0,
-        stagger: 0.09,
-        duration: 0.7,
-        ease: "power3.out",
-        clearProps: "transform,opacity",
-        scrollTrigger: {
-          trigger: ".work-intro",
-          start: "top 85%",
-          toggleActions: "play none none none",
-        },
-      })
+    })
 
-      // 2. Project cards: smooth scale lift, fade & image parallax depth
-      const mobileCards = q(".project-card")
-      mobileCards.forEach((card) => {
-        // Card entry: scales and rises smoothly as you scroll into view
-        gsap.fromTo(
-          card,
-          {
-            y: 45,
-            scale: 0.93,
-            opacity: 0.4,
-          },
-          {
-            y: 0,
-            scale: 1,
-            opacity: 1,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 92%",
-              end: "top 55%",
-              scrub: 0.7,
-            },
-          },
-        )
-
-        // Internal image parallax movement (tactile depth on mobile)
-        const img = card.querySelector<HTMLImageElement>(".project-media img")
-        if (img) {
-          gsap.fromTo(
-            img,
-            { yPercent: -7, scale: 1.12 },
-            {
-              yPercent: 7,
-              scale: 1.04,
-              ease: "none",
-              scrollTrigger: {
-                trigger: card,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: true,
-              },
-            },
-          )
-        }
-
-        // Title and content reveal inside the card
-        const bottom = card.querySelector(".project-bottom")
-        if (bottom) {
-          gsap.from(bottom, {
-            y: 20,
-            opacity: 0,
-            duration: 0.55,
-            ease: "power2.out",
-            clearProps: "transform,opacity",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 70%",
-              toggleActions: "play none none none",
-            },
-          })
-        }
-      })
-
-      // 3. CTA "Let's build yours next" card animation
-      const moreCard = root.querySelector<HTMLElement>("a.work-more")
-      if (moreCard) {
-        gsap.fromTo(
-          moreCard,
-          { y: 45, scale: 0.92, opacity: 0.4 },
-          {
-            y: 0,
-            scale: 1,
-            opacity: 1,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: moreCard,
-              start: "top 90%",
-              end: "top 60%",
-              scrub: 0.7,
-            },
-          },
-        )
-
-        const arrow = moreCard.querySelector("i")
-        if (arrow) {
-          gsap.fromTo(
-            arrow,
-            { rotate: -60, scale: 0.7 },
-            {
-              rotate: 0,
-              scale: 1,
-              duration: 0.7,
-              ease: "back.out(2)",
-              scrollTrigger: {
-                trigger: moreCard,
-                start: "top 75%",
-                toggleActions: "play none none none",
-              },
-            },
-          )
-        }
+    // ---------- Works: browser windows settle in, phones drift past them ----------
+    gsap.from(".wk-index li", {
+      y: 30,
+      autoAlpha: 0,
+      stagger: 0.06,
+      duration: 0.8,
+      ease: "power3.out",
+      clearProps: "transform,opacity,visibility",
+      scrollTrigger: { trigger: ".wk-index", start: "top 88%" },
+    })
+    q(".wk-item").forEach((item) => {
+      const shot = item.querySelector(".wk-shot")
+      const phone = item.querySelector(".wk-phone")
+      if (shot) {
+        gsap.fromTo(shot, { y: 90, rotate: 2.5, scale: 0.92, opacity: 0.35 }, {
+          y: 0,
+          rotate: 0,
+          scale: 1,
+          opacity: 1,
+          ease: "none",
+          scrollTrigger: { trigger: item, start: "top bottom", end: "top 30%", scrub: 1 },
+        })
+      }
+      if (phone) {
+        gsap.fromTo(phone, { y: 120 }, {
+          y: -50,
+          ease: "none",
+          scrollTrigger: { trigger: item, start: "top bottom", end: "bottom top", scrub: true },
+        })
       }
     })
 

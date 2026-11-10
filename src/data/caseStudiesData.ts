@@ -535,173 +535,379 @@ const discountPercent = isSaleActive
   },
 
   // ============================================================
-  // 03 — NOVA FINANCE | SAMPLE / CONCEPT PROJECT
+  // 03 — AAYAM STRENGTH STUDIO | DEMO GYM WEBSITE
   // ============================================================
   "03": {
     number: "03",
-    title: "Nova Finance",
-    titleSolid: "NOVA",
-    titleStroke: "FINANCE",
-    tagline: "FINANCIAL CLARITY WITHOUT THE CLUTTER",
-    category: "Fintech Dashboard",
+    title: "Aayam Strength Studio",
+    titleSolid: "AAYAM",
+    titleStroke: "STUDIO",
+    tagline: "A GYM SITE THAT SOUNDS LIKE A COACH, NOT A SUPPLEMENT AD",
+    category: "Gym Website",
     year: "2026",
-    role: "UI/UX & Frontend Development",
-    timeline: "Concept Project",
+    role: "Design & Frontend Development",
+    timeline: "2026",
+    liveUrl: "https://gymsitedemo-ecru.vercel.app",
+    githubUrl: "https://github.com/raazkumar24/GYM",
 
     summary:
-      "A conceptual finance dashboard designed to make personal finance easier to understand through clear metrics, spending charts and budget tracking.",
+      "A one-page site for a strength studio in Indiranagar, Bengaluru. Programs, recovery rooms, coaches, an FAQ and a pricing table in rupees — and a free-trial form that opens WhatsApp with the message already written.",
 
-    badgeText: "FINTECH / REACT / TYPESCRIPT / ",
+    badgeText: "AAYAM / STRENGTH STUDIO / BENGALURU / ",
 
     brief: {
       description:
-        "A fictional fintech dashboard concept focused on simplifying personal finance. The interface brings spending insights, account summaries and budget information into one organized workspace.",
-      client: "Personal Concept Project",
-      timeline: "Concept Project",
-      services: "UI Design, Frontend Development, Data Visualization",
-      platform: "React, TypeScript, Tailwind CSS",
+        "Most gym sites I looked at were neon, shouty and full of stock six-packs. I wanted the opposite: earthy colours, big condensed type and calm motion, with the practical stuff a member actually asks — what does it cost, when is it open, how do I try it. This is a demo I built to show studio owners, so the address, stats and reviews on it are sample content.",
+      client: "Demo site for gyms and studios",
+      timeline: "2026",
+      services: "Design, Frontend Development, Motion, Copywriting",
+      platform: "React 19, TypeScript, Vite, Tailwind CSS v4, Motion, Lenis, Vercel",
     },
 
     experience: {
-      tagline: "Your money, at a glance",
-      desktopImg:
-        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600",
-      mobileImg:
-        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1000",
-      caption: "Concept dashboard across desktop and mobile",
+      tagline: "Strength, held with intention",
+      desktopImg: "/ProjectsImages/Aayam/desktop.png",
+      mobileImg: "/ProjectsImages/Aayam/mobile.png",
+      caption:
+        "The hero opens out of a rounded frame and the photo drifts slower than the text as you scroll.",
       screen: {
-        nav: ["Overview", "Transactions", "Budgets", "Settings"],
-        primary: "View Analytics",
-        secondary: "Export Report",
+        nav: ["About", "Programs", "Pricing", "Coaches", "FAQ"],
+        primary: "Free Trial",
+        secondary: "Book a free session",
       },
     },
 
     challenges: [
       {
         number: "01",
-        title: "Too much financial information",
+        title: "Not looking like every other gym",
         description:
-          "Important financial metrics need a clear visual hierarchy so users can understand their finances quickly.",
+          "Dark, neon and aggressive is the default. I went with bone and clay colours, a grain overlay and an italic serif next to heavy condensed caps, so it feels closer to a magazine than a flyer.",
       },
       {
         number: "02",
-        title: "Making data understandable",
+        title: "Pricing people can read in a second",
         description:
-          "Charts and spending categories should communicate useful information without overwhelming the interface.",
+          "Four plans, three billing periods. A toggle switches between monthly, quarterly (−10%) and annual (−25%) and every price recalculates in Indian number format and still ends in 99.",
       },
       {
         number: "03",
-        title: "Designing for smaller screens",
+        title: "Getting the enquiry somewhere useful",
         description:
-          "The dashboard layout needs to adapt to mobile screens while keeping important financial information accessible.",
+          "Small studios answer on WhatsApp, not email. Picking a plan fills the trial form, and submitting opens WhatsApp with name, phone, plan and preferred time already typed out.",
       },
     ],
 
     visualDirection: {
       description:
-        "A clean financial interface with deep navy typography, electric blue accents and subtle green indicators. Light surfaces keep the dashboard calm and readable.",
+        "Ink and paper with a burnt clay accent. Archivo condensed for the big headings, Instrument Serif italics for the one word that matters, and Geist Mono for small labels like opening hours.",
 
       colors: [
         {
-          name: "MIDNIGHT NAVY",
-          hex: "#172554",
-          role: "Primary brand and headings",
+          name: "INK",
+          hex: "#151513",
+          role: "Hero, text and dark cards",
         },
         {
-          name: "CLOUD WHITE",
-          hex: "#F8FAFC",
-          role: "Main background",
+          name: "PAPER",
+          hex: "#F5F2EC",
+          role: "Page background",
           isLight: true,
         },
         {
-          name: "ELECTRIC BLUE",
-          hex: "#2563EB",
-          role: "Primary accent and actions",
+          name: "CLAY",
+          hex: "#B8502C",
+          role: "Accent, buttons and discounts",
         },
         {
-          name: "MINT GREEN",
-          hex: "#10B981",
-          role: "Positive indicators",
+          name: "BONE",
+          hex: "#ECE8E0",
+          role: "Toggles and quiet surfaces",
           isLight: true,
         },
       ],
 
       typeface: {
-        name: "INTER",
-        weights: "REGULAR / MEDIUM / SEMIBOLD",
-        role: "Dashboard and data typography",
+        name: "ARCHIVO / INSTRUMENT SERIF",
+        weights: "CONDENSED 600 / ITALIC 400 / GEIST MONO",
+        role: "Display caps, serif accents and mono labels",
       },
 
       sampleCard: {
-        title: "Monthly Overview",
+        title: "Transit",
         description:
-          "A sample summary of income, expenses and savings.",
+          "4 personal sessions a month, sauna and cold plunge daily, priority class booking.",
         image:
-          "https://images.unsplash.com/photo-1554224155-6726b3ff858f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
-        price: "$4,250",
+          "https://images.unsplash.com/photo-1734668485281-c1d03fee6023?auto=format&fit=crop&q=80&w=400",
+        price: "₹4,999",
       },
     },
 
     building: {
-      title: "Designed around financial data",
+      title: "One data file, small components",
       description:
-        "A modular React interface using typed data models and reusable components to present financial information.",
+        "Everything the owner would change — plans, programs, hours, WhatsApp number — sits in one data.ts file. Motion handles the reveals and scroll parallax, Lenis smooths the scroll, and both switch off when the visitor has reduced motion turned on.",
+
+      steps: [
+        {
+          tag: "REACT 19",
+          title: "Sections",
+          desc: "Hero, programs, pricing, trial",
+        },
+        {
+          tag: "MOTION",
+          title: "Animation",
+          desc: "Scroll-linked parallax",
+        },
+        {
+          tag: "TAILWIND V4",
+          title: "Styling",
+          desc: "Theme tokens in CSS",
+        },
+      ],
+
+      codeFile: "Pricing.tsx",
+
+      codeSnippet: `const inr = (n: number) =>
+  new Intl.NumberFormat("en-IN").format(n)
+
+const [billing, setBilling] = useState<Billing>("monthly")
+const opt = billingOptions.find((b) => b.id === billing)!
+
+// quarterly −10%, annual −25%, price still ends in 99
+const monthly = opt.off
+  ? Math.round((p.price * (1 - opt.off)) / 100) * 100 - 1
+  : p.price`,
+
+      features: [
+        {
+          title: "WhatsApp Trial Form",
+          desc: "Opens a pre-written message with the chosen plan.",
+          icon: "device",
+        },
+        {
+          title: "Billing Toggle",
+          desc: "Monthly, quarterly or annual, priced in rupees.",
+          icon: "cms",
+        },
+        {
+          title: "Scroll Motion",
+          desc: "Parallax hero and line-by-line reveals.",
+          icon: "speed",
+        },
+        {
+          title: "Reduced Motion",
+          desc: "Lenis and animations step aside when asked.",
+          icon: "seo",
+        },
+      ],
+    },
+
+    outcome: {
+      description:
+        "A gym site I can hand to a studio owner and swap their details into in an afternoon: one data file, live on Vercel, and an enquiry flow that lands in the app they already use.",
+
+      highlights: [
+        {
+          title: "OWN VISUAL VOICE",
+          desc: "Earthy, editorial, not neon.",
+        },
+        {
+          title: "PRICING IN ₹",
+          desc: "Three billing periods, one toggle.",
+        },
+        {
+          title: "WHATSAPP FIRST",
+          desc: "Enquiries go where owners reply.",
+        },
+      ],
+
+      galleryImages: [
+        {
+          url: "/ProjectsImages/Aayam/desktop.png",
+          title: "Hero",
+          caption: "The first screen, with the oversized AAYAM wordmark below.",
+        },
+        {
+          url: "/ProjectsImages/Aayam/pricing.png",
+          title: "Pricing",
+          caption: "Four plans with the monthly / quarterly / annual toggle.",
+        },
+      ],
+    },
+  },
+
+  // ============================================================
+  // 04 — SHOPNEST | FIRST FULL MERN STORE
+  // ============================================================
+  "04": {
+    number: "04",
+    title: "ShopNest",
+    titleSolid: "SHOP",
+    titleStroke: "NEST",
+    tagline: "THE FIRST STORE I BUILT END TO END — LOGIN TO PLACED ORDER",
+    category: "MERN E-commerce",
+    year: "2025",
+    role: "Full-Stack Development",
+    timeline: "2025",
+    liveUrl: "https://my-shop-r71y.onrender.com/",
+    githubUrl: "https://github.com/raazkumar24/ecommerce-project",
+
+    summary:
+      "An online store on the MERN stack: accounts, a cart saved to your profile, a shipping → payment → place-order checkout, product reviews, and an admin side for products, orders and users. Product photos upload straight to Cloudinary.",
+
+    badgeText: "SHOPNEST / MERN / JWT / CLOUDINARY / ",
+
+    brief: {
+      description:
+        "Before Genz Store, I wanted to prove to myself I could build a whole shop without a template — the database, the API and every screen in between. ShopNest is where I learned JWT auth, protected and admin-only routes, Mongoose models with reviews inside products, and image uploads through Multer and Cloudinary.",
+      client: "Personal Full-Stack Project",
+      timeline: "2025",
+      services: "Frontend, REST API, Database Design, Auth, Image Uploads",
+      platform:
+        "React 19, Vite, Tailwind CSS v4, Node.js, Express, MongoDB (Mongoose), JWT, Cloudinary, Render",
+    },
+
+    experience: {
+      tagline: "Browse, add to cart, check out",
+      desktopImg:
+        "https://images.unsplash.com/photo-1563013544-824ae1b704d3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600",
+      mobileImg:
+        "https://images.unsplash.com/photo-1713947506242-8fcae733d158?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1000",
+      caption:
+        "A React client and a separate Express API, live on Render.",
+      screen: {
+        nav: ["Home", "Products", "Categories", "Cart", "Admin"],
+        primary: "Add to Cart",
+        secondary: "View Cart",
+      },
+    },
+
+    challenges: [
+      {
+        number: "01",
+        title: "Keeping the cart with the user",
+        description:
+          "A cart in localStorage disappears on another device. The cart lives in MongoDB against the user and is fetched with their token, while shipping address and payment method stay in localStorage between checkout steps.",
+      },
+      {
+        number: "02",
+        title: "Who is allowed to do what",
+        description:
+          "Shoppers, logged-in customers and admins all see different things. An Express middleware checks the Bearer token on every protected route, and a second one blocks anything admin-only.",
+      },
+      {
+        number: "03",
+        title: "Products that admins can actually manage",
+        description:
+          "Admins add and edit products with several images, stock count, brand and category. Images go through Multer to Cloudinary, so the database only stores URLs.",
+      },
+    ],
+
+    visualDirection: {
+      description:
+        "Soft and warm instead of the usual blue shop: dusty rose buttons, a deep cocoa for headings and a blush circle behind the featured product. Roboto keeps prices and forms easy to read.",
+
+      colors: [
+        {
+          name: "DUSTY ROSE",
+          hex: "#D98A7E",
+          role: "Buttons, prices and links",
+        },
+        {
+          name: "COCOA",
+          hex: "#5C3A2E",
+          role: "Headings and product names",
+        },
+        {
+          name: "BLUSH",
+          hex: "#FADCD9",
+          role: "Hero shape and soft panels",
+          isLight: true,
+        },
+        {
+          name: "SAND",
+          hex: "#D4A28E",
+          role: "Gradient end on CTAs",
+          isLight: true,
+        },
+      ],
+
+      typeface: {
+        name: "ROBOTO",
+        weights: "REGULAR / MEDIUM / BOLD",
+        role: "Everything — headings, prices and forms",
+      },
+
+      sampleCard: {
+        title: "Featured product",
+        description:
+          "Name, price, a quantity stepper and Add to Cart, right in the hero.",
+        image:
+          "https://images.unsplash.com/photo-1483985988355-763728e1935b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+        price: "ADD TO CART",
+      },
+    },
+
+    building: {
+      title: "A React client and an Express API",
+      description:
+        "The client and server are separate folders. React context holds auth, cart and notifications; the API is split into product, user and order routes with controllers and Mongoose models behind them.",
 
       steps: [
         {
           tag: "REACT",
-          title: "Interface",
-          desc: "Reusable components",
+          title: "Client",
+          desc: "Pages, context, checkout",
         },
         {
-          tag: "TYPESCRIPT",
-          title: "Data Structure",
-          desc: "Typed data models",
+          tag: "EXPRESS",
+          title: "API",
+          desc: "Routes, JWT middleware",
         },
         {
-          tag: "TAILWIND",
-          title: "Styling",
-          desc: "Responsive layout",
+          tag: "MONGODB",
+          title: "Data",
+          desc: "Users, products, orders",
         },
       ],
 
-      codeFile: "MetricCard.tsx",
+      codeFile: "authMiddleware.js",
 
-      codeSnippet: `type Metric = {
-  label: string;
-  value: number;
-  change: number;
-};
-
-function MetricCard({ metric }: { metric: Metric }) {
-  return (
-    <article className="metric-card">
-      <span>{metric.label}</span>
-      <h2>{metric.value.toLocaleString()}</h2>
-      <p>{metric.change}%</p>
-    </article>
-  );
+      codeSnippet: `const protect = async (req, res, next) => {
+  const header = req.headers.authorization
+  if (!header?.startsWith("Bearer")) {
+    return res.status(401).json({ message: "Not authorized, no token" })
+  }
+  try {
+    const token = header.split(" ")[1]
+    const decoded = jwt.verify(token, process.env.JWT_SECRET)
+    req.user = await User.findById(decoded.id).select("-password")
+    next()
+  } catch {
+    res.status(401).json({ message: "Not authorized, token failed" })
+  }
 }`,
 
       features: [
         {
-          title: "Financial Overview",
-          desc: "Important metrics presented in one place.",
+          title: "Checkout Steps",
+          desc: "Shipping, payment, then place order.",
           icon: "device",
         },
         {
-          title: "Data Visualization",
-          desc: "Readable charts and financial insights.",
-          icon: "speed",
-        },
-        {
-          title: "Reusable Components",
-          desc: "A modular interface system.",
+          title: "Admin Panel",
+          desc: "Products, orders and users in one place.",
           icon: "cms",
         },
         {
-          title: "Typed Data",
-          desc: "Structured TypeScript data models.",
+          title: "Reviews & Ratings",
+          desc: "Stored inside each product document.",
+          icon: "speed",
+        },
+        {
+          title: "Cloudinary Uploads",
+          desc: "Multiple images per product via Multer.",
           icon: "seo",
         },
       ],
@@ -709,240 +915,33 @@ function MetricCard({ metric }: { metric: Metric }) {
 
     outcome: {
       description:
-        "A conceptual finance dashboard with a clear information hierarchy, reusable components and a responsive interface.",
+        "ShopNest is rough in places, but it's the project where full-stack stopped being a word on my CV: a real login, a real database and an order that actually gets saved.",
 
       highlights: [
         {
-          title: "CLEAR DATA PRESENTATION",
-          desc: "Key numbers at a glance.",
+          title: "FULL MERN FLOW",
+          desc: "Database to checkout, no template.",
         },
         {
-          title: "MODULAR INTERFACE",
-          desc: "Reusable dashboard components.",
+          title: "ROLE-BASED ACCESS",
+          desc: "Customer and admin routes.",
         },
         {
-          title: "RESPONSIVE LAYOUT",
-          desc: "Designed for different screen sizes.",
+          title: "CLOUD IMAGES",
+          desc: "Uploads straight to Cloudinary.",
         },
       ],
 
       galleryImages: [
         {
-          url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1400",
-          title: "Analytics Overview",
-          caption: "Financial information in one view.",
+          url: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1400",
+          title: "Checkout",
+          caption: "Shipping, payment method and order summary.",
         },
         {
-          url: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200",
-          title: "Data Visualization",
-          caption: "Charts and financial insights.",
-        },
-      ],
-    },
-  },
-
-  // ============================================================
-  // 04 — FORMA STUDIO | SAMPLE / CONCEPT PROJECT
-  // ============================================================
-  "04": {
-    number: "04",
-    title: "Forma Studio",
-    titleSolid: "FORMA",
-    titleStroke: "STUDIO",
-    tagline: "SPACES DESIGNED TO MAKE A STATEMENT",
-    category: "Architecture Portfolio",
-    year: "2026",
-    role: "Creative Development",
-    timeline: "Concept Project",
-
-    summary:
-      "An editorial-style architecture portfolio concept showcasing contemporary spaces through large photography, refined typography and immersive layouts.",
-
-    badgeText: "ARCHITECTURE / GSAP / REACT / ",
-
-    brief: {
-      description:
-        "A fictional architecture studio website designed around visual storytelling. The experience combines large project imagery, minimal typography and thoughtful motion to present architectural work.",
-      client: "Personal Concept Project",
-      timeline: "Concept Project",
-      services: "UI Design, Frontend Development, Motion Design",
-      platform: "React, GSAP, Tailwind CSS",
-    },
-
-    experience: {
-      tagline: "Architecture deserves its own space",
-      desktopImg:
-        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600",
-      mobileImg:
-        "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1000",
-      caption: "Concept architecture portfolio across desktop and mobile",
-      screen: {
-        nav: ["Studio", "Projects", "Approach", "Contact"],
-        primary: "Explore Projects",
-        secondary: "Our Studio",
-      },
-    },
-
-    challenges: [
-      {
-        number: "01",
-        title: "Let the architecture speak",
-        description:
-          "Large images need enough room to communicate the character and details of each architectural project.",
-      },
-      {
-        number: "02",
-        title: "Motion with a purpose",
-        description:
-          "Subtle transitions and scroll-based animations should guide visitors without distracting from the photography.",
-      },
-      {
-        number: "03",
-        title: "An editorial experience",
-        description:
-          "Typography, spacing and image composition need to work together like a carefully designed architecture publication.",
-      },
-    ],
-
-    visualDirection: {
-      description:
-        "Warm stone backgrounds, deep charcoal typography and muted terracotta accents create a refined architectural identity. Spacious layouts and strong photography define the experience.",
-
-      colors: [
-        {
-          name: "RAW STONE",
-          hex: "#E8E3DA",
-          role: "Primary background",
-          isLight: true,
-        },
-        {
-          name: "CHARCOAL",
-          hex: "#252525",
-          role: "Typography and contrast",
-        },
-        {
-          name: "TERRACOTTA",
-          hex: "#B66A4B",
-          role: "Brand accent",
-        },
-        {
-          name: "PAPER WHITE",
-          hex: "#FAF9F6",
-          role: "Cards and content surfaces",
-          isLight: true,
-        },
-      ],
-
-      typeface: {
-        name: "MANROPE / PLAYFAIR DISPLAY",
-        weights: "REGULAR / MEDIUM / SEMIBOLD",
-        role: "Editorial and architectural typography",
-      },
-
-      sampleCard: {
-        title: "Modern Architecture",
-        description:
-          "A visual-first presentation of contemporary spaces.",
-        image:
-          "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
-        price: "PROJECT 01",
-      },
-    },
-
-    building: {
-      title: "A visual experience built with motion",
-      description:
-        "React manages the interface, GSAP handles scroll-based animation and Tailwind CSS provides a responsive design system.",
-
-      steps: [
-        {
-          tag: "REACT",
-          title: "Interface",
-          desc: "Component architecture",
-        },
-        {
-          tag: "GSAP",
-          title: "Animation",
-          desc: "Scroll-linked motion",
-        },
-        {
-          tag: "TAILWIND",
-          title: "Styling",
-          desc: "Responsive design",
-        },
-      ],
-
-      codeFile: "ScrollAnimation.tsx",
-
-      codeSnippet: `import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
-
-gsap.from(".project-image", {
-  y: 80,
-  opacity: 0,
-  duration: 1,
-  ease: "power3.out",
-  scrollTrigger: {
-    trigger: ".project-section",
-    start: "top 80%",
-  },
-});`,
-
-      features: [
-        {
-          title: "Editorial Layout",
-          desc: "Typography-led visual storytelling.",
-          icon: "device",
-        },
-        {
-          title: "Scroll Animations",
-          desc: "Motion powered by GSAP.",
-          icon: "speed",
-        },
-        {
-          title: "Project Gallery",
-          desc: "Large architectural imagery.",
-          icon: "cms",
-        },
-        {
-          title: "Responsive Design",
-          desc: "Layouts for different screen sizes.",
-          icon: "seo",
-        },
-      ],
-    },
-
-    outcome: {
-      description:
-        "A conceptual architecture portfolio that combines editorial typography, immersive photography and scroll-based interactions into one visual experience.",
-
-      highlights: [
-        {
-          title: "EDITORIAL EXPERIENCE",
-          desc: "A refined, publication-inspired layout.",
-        },
-        {
-          title: "VISUAL STORYTELLING",
-          desc: "Architecture presented through imagery.",
-        },
-        {
-          title: "MOTION & INTERACTION",
-          desc: "Purposeful scroll-based animation.",
-        },
-      ],
-
-      galleryImages: [
-        {
-          url: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1400",
-          title: "Architectural Living",
-          caption: "Contemporary architectural spaces.",
-        },
-        {
-          url: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200",
-          title: "Interior Details",
-          caption: "Materials, light and composition.",
+          url: "https://images.unsplash.com/photo-1713947506242-8fcae733d158?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200",
+          title: "On mobile",
+          caption: "The same flow on a phone.",
         },
       ],
     },

@@ -170,7 +170,7 @@ export function Contact({ time }: ContactProps) {
 
       <div className="contact-layout">
         <div className="contact-copy" data-rise>
-          <SectionLabel number="04">Contact / New business</SectionLabel>
+          <SectionLabel number="05">Say hello</SectionLabel>
           <h2>
             Got an idea
             <br />
@@ -187,20 +187,20 @@ export function Contact({ time }: ContactProps) {
                 <span className="availability-dot" />
                 <span>Available for new projects</span>
               </div>
-              <span className="availability-pill">2026 • OPEN</span>
+              <span className="availability-pill">IST • UTC+5:30</span>
             </div>
             <dl className="availability-stats">
               <div className="availability-item">
-                <dt>01 / Response</dt>
+                <dt>Replies</dt>
                 <dd>Within 48 hrs</dd>
               </div>
               <div className="availability-item">
-                <dt>02 / Local time</dt>
+                <dt>My time</dt>
                 <dd>{time || "--:--"} IST</dd>
               </div>
               <div className="availability-item">
-                <dt>03 / Location</dt>
-                <dd>India • Remote</dd>
+                <dt>Based in</dt>
+                <dd>Chandigarh, India</dd>
               </div>
             </dl>
           </div>
