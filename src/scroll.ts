@@ -261,7 +261,7 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
     // ---------- Big split headings rise char by char ----------
     q("[data-split]").forEach((title) => {
       // Split words first so a heading can only wrap between words, never mid-word
-      const split = SplitText.create(title, { type: "words,chars", mask: "chars" })
+      const split = SplitText.create(title, { type: "words,chars", mask: "chars", wordsClass: "split-word" })
       splits.push(split)
       gsap.from(split.chars, {
         yPercent: 115,
@@ -359,7 +359,7 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
       .timeline({
         scrollTrigger: { trigger: ".who-scene", start: "top top", end: "+=130%", scrub: true, pin: true, anticipatePin: isTouch ? 0 : 1 },
       })
-      .fromTo(".who-title", { scale: 0.42, letterSpacing: "0.12em" }, { scale: 1, letterSpacing: "-0.035em", ease: "power2.out" })
+      .fromTo(".who-title", { scale: 0.42, letterSpacing: "0.08em" }, { scale: 1, letterSpacing: "-0.012em", ease: "power2.out" })
       .fromTo(".who-title", { backgroundPositionX: "100%" }, { backgroundPositionX: "0%", ease: "none" }, 0.35)
       .from(".who-kicker", { opacity: 0, y: 30 }, 0.6)
 

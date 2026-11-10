@@ -202,7 +202,7 @@ export function setupCaseStudyScroll({ root, onHeader }: CaseStudyScrollOptions)
         .from(label.querySelector("i"), { scaleX: 0, transformOrigin: "0 50%", duration: 1.3, ease: "expo.out" }, 0.15)
     })
     q("[data-cs-split]").forEach((title) => {
-      const split = SplitText.create(title, { type: "words,chars", mask: "chars" })
+      const split = SplitText.create(title, { type: "words,chars", mask: "chars", wordsClass: "split-word" })
       splits.push(split)
       gsap.from(split.chars, {
         yPercent: 115,

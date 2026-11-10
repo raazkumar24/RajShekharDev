@@ -909,7 +909,7 @@ button:focus-visible .roll::after {
   font-stretch: 75%;
   font-weight: 900;
   line-height: 0.8;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.025em;
   filter: drop-shadow(var(--hero-shadow));
 }
 
@@ -1281,6 +1281,16 @@ button:focus-visible .roll::after {
   background: currentColor;
 }
 
+/* Split words guaranteed whitespace spacing */
+.split-word {
+  display: inline-block;
+  margin-right: 0.22em;
+}
+
+.split-word:last-child {
+  margin-right: 0;
+}
+
 .outline-title {
   margin-top: 16px;
   color: transparent;
@@ -1289,7 +1299,8 @@ button:focus-visible .roll::after {
   font-weight: 900;
   font-size: clamp(56px, 8.9vw, 150px);
   line-height: 0.86;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.02em;
+  word-spacing: 0.22em;
   white-space: nowrap;
   -webkit-text-stroke: 1.5px var(--outline);
   paint-order: stroke fill;
@@ -1549,6 +1560,7 @@ button:focus-visible .roll::after {
 .who-title {
   font-size: clamp(50px, 14.7vw, 232px);
   text-align: center;
+  word-spacing: 0.22em;
 }
 
 .who-grid {
@@ -1667,7 +1679,8 @@ button:focus-visible .roll::after {
   font-weight: 900;
   font-size: clamp(64px, 14vw, 240px);
   line-height: 0.82;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.02em;
+  word-spacing: 0.22em;
 }
 
 /* Fill-on-scroll text: outline with a solid fill sliding in */
@@ -2503,7 +2516,8 @@ button:focus-visible .roll::after {
   font-weight: 900;
   font-size: clamp(68px, 10.5vw, 184px);
   line-height: 0.82;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.025em;
+  word-spacing: 0.22em;
   text-transform: uppercase;
 }
 
@@ -3439,7 +3453,8 @@ button:focus-visible .roll::after {
   font-weight: 900;
   font-size: clamp(80px, 20.5vw, 400px);
   line-height: 0.8;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.025em;
+  word-spacing: 0.22em;
   white-space: nowrap;
   will-change: transform;
 }
@@ -5427,11 +5442,28 @@ button:focus-visible {
   .outline-title {
     white-space: normal;
     letter-spacing: 0;
+    word-spacing: 0.18em;
+  }
+
+  .big-title {
+    font-size: clamp(46px, 12.5vw, 80px);
+    line-height: 0.88;
+    letter-spacing: -0.012em;
+    word-spacing: 0.18em;
+  }
+
+  .wk-title {
+    font-size: clamp(44px, 11vw, 76px);
+    line-height: 0.88;
+    letter-spacing: -0.012em;
+    word-spacing: 0.18em;
   }
 
   .talk-title {
     font-size: clamp(38px, 13.5vw, 68px);
     line-height: 0.85;
+    letter-spacing: -0.012em;
+    word-spacing: 0.18em;
     white-space: nowrap;
   }
 
@@ -5728,7 +5760,8 @@ button:focus-visible {
   font-weight: 900;
   font-size: clamp(48px, 8vw, 140px);
   line-height: 0.86;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.025em;
+  word-spacing: 0.2em;
   text-transform: uppercase;
 }
 
