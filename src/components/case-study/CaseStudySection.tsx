@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import type { CSSProperties, ReactNode } from "react"
 import type { CaseStudyData, Project } from "../../types/portfolio"
 import { caseStudies } from "../../data/caseStudiesData"
-import { ArrowDown, ArrowUpRight, Icon } from "../common/Icon"
+import { ArrowUpRight, Icon } from "../common/Icon"
 import { SectionLabel } from "../common/SectionLabel"
 import { Footer } from "../layout/Footer"
 import { setupCaseStudyScroll } from "./caseStudyScroll"
@@ -69,28 +69,6 @@ function hostOf(url: string) {
   }
 }
 
-const TOKEN =
-  /(\/\/.*$)|("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|`(?:[^`\\]|\\.)*`)|\b(import|from|export|async|function|return|await|const|let|if|throw|new|type)\b|\b([A-Za-z_$][\w$]*)(?=\()/g
-
-/** Tiny syntax highlighter: comments, strings, keywords and function calls. */
-function highlight(line: string) {
-  const parts: ReactNode[] = []
-  let last = 0
-  for (const match of line.matchAll(TOKEN)) {
-    const index = match.index ?? 0
-    if (index > last) parts.push(line.slice(last, index))
-    const kind = match[1] ? "c" : match[2] ? "s" : match[3] ? "k" : "f"
-    parts.push(
-      <em className={kind} key={index}>
-        {match[0]}
-      </em>,
-    )
-    last = index + match[0].length
-  }
-  if (last < line.length) parts.push(line.slice(last))
-  return parts.length ? parts : " "
-}
-
 export function CaseStudySection({
   project,
   allProjects,
@@ -110,7 +88,6 @@ export function CaseStudySection({
   const host = study.liveUrl ? hostOf(study.liveUrl) : "localhost:3000"
   const { visualDirection: visual, building, outcome } = study
   const bandText = `${[...project.tags, study.category].join(" / ").toUpperCase()} / `
-  const codeLines = building.codeSnippet.split("\n")
   const screen = study.experience.screen
 
   useEffect(() => {
@@ -239,33 +216,6 @@ export function CaseStudySection({
             </div>
           </dl>
         </div>
-
-        <figure className="cs-cover">
-          <div className="cs-cover-media">
-            <img alt={project.alt} src={project.image} />
-          </div>
-          <figcaption>
-            <span className="cs-cover-pill">
-              {study.category} — {study.year}
-            </span>
-            <a className="cs-cover-cue" href="#cs-brief">
-              Read the story <ArrowDown />
-            </a>
-          </figcaption>
-          <div aria-hidden="true" className="cs-stamp">
-            <svg viewBox="0 0 120 120">
-              <defs>
-                <path d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0" id={`cs-stamp-${study.number}`} />
-              </defs>
-              <text>
-                <textPath href={`#cs-stamp-${study.number}`} lengthAdjust="spacing" textLength="285">
-                  {study.badgeText ?? "DESIGN / BUILD / SHIP / "}
-                </textPath>
-              </text>
-            </svg>
-            <span>{study.number}</span>
-          </div>
-        </figure>
       </header>
 
       {/* ---------- 01 · Brief ---------- */}
@@ -505,36 +455,6 @@ export function CaseStudySection({
               </li>
             ))}
           </ul>
-
-          <div className="cs-code">
-            <div className="cs-code-bar">
-              <span className="cs-dots">
-                <i />
-                <i />
-                <i />
-              </span>
-              <p>{building.codeFile}</p>
-              <button onClick={() => copy(building.codeSnippet)} type="button">
-                {copied === building.codeSnippet ? "Copied" : "Copy"}
-              </button>
-            </div>
-            <pre className="cs-code-body">
-              <code>
-                {codeLines.map((line, lineIndex) => (
-                  <span className="cs-code-line" key={lineIndex}>
-                    <b>{lineIndex + 1}</b>
-                    <span>{highlight(line)}</span>
-                  </span>
-                ))}
-              </code>
-            </pre>
-            <div className="cs-code-status">
-              <p>
-                <i /> Ready
-              </p>
-              <p>UTF-8 • TypeScript</p>
-            </div>
-          </div>
         </div>
       </section>
 

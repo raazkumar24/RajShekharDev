@@ -161,17 +161,6 @@ export function setupCaseStudyScroll({ root, onHeader }: CaseStudyScrollOptions)
       .to(".cs-title-solid", { xPercent: -12, ease: "none" }, 0)
       .to(".cs-title-outline", { xPercent: 10, ease: "none" }, 0)
 
-    // Cover image parallax inside its frame
-    gsap.fromTo(
-      ".cs-cover-media img",
-      { yPercent: -8 },
-      {
-        yPercent: 8,
-        ease: "none",
-        scrollTrigger: { trigger: ".cs-cover", start: "top bottom", end: "bottom top", scrub: true },
-      },
-    )
-
     // ---------- Brief: words light up as you read ----------
     gsap.fromTo(
       ".cs-word",
@@ -299,15 +288,6 @@ export function setupCaseStudyScroll({ root, onHeader }: CaseStudyScrollOptions)
       clearProps: "transform,opacity",
       scrollTrigger: { trigger: ".cs-features", start: "top 88%" },
     })
-    gsap
-      .timeline({ scrollTrigger: { trigger: ".cs-code", start: "top 88%", end: "center 50%", scrub: 1 } })
-      .from(".cs-code", { y: 80, rotate: 2, opacity: 0, ease: "power3.out" })
-      .fromTo(
-        ".cs-code-line",
-        { clipPath: "inset(0 100% 0 0)" },
-        { clipPath: "inset(0 0% 0 0)", stagger: 0.12, ease: "none" },
-        0.2,
-      )
 
     // ---------- Outcome ----------
     q(".cs-results [data-fill]").forEach((element) => {

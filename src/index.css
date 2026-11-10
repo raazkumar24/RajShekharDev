@@ -6989,14 +6989,14 @@ button:focus-visible {
 }
 
 .cs-build-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  align-items: start;
-  gap: clamp(28px, 4vw, 64px);
-  margin-top: clamp(60px, 7vw, 110px);
+  display: block;
+  margin-top: clamp(48px, 6vw, 90px);
 }
 
 .cs-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 0 clamp(24px, 4vw, 56px);
   border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent);
 }
 
