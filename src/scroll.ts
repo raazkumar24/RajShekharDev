@@ -566,11 +566,6 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
       clearProps: "transform,opacity,visibility",
       scrollTrigger: { trigger: ".contact-links", start: "top 88%" },
     })
-    gsap.fromTo(".footer-name", { yPercent: 60 }, {
-      yPercent: 0,
-      ease: "none",
-      scrollTrigger: { trigger: ".site-footer", start: "top bottom", end: "bottom bottom", scrub: true },
-    })
   }, root)
 
   // Magnetic buttons (header CTA, social links, talk badge)

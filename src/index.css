@@ -4581,7 +4581,7 @@ button:focus-visible .roll::after {
 }
 
 .site-footer {
-  border-top: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+  border-top: 1px solid color-mix(in srgb, currentColor 16%, transparent);
 }
 
 .footer-row {
@@ -4589,31 +4589,118 @@ button:focus-visible .roll::after {
   justify-content: space-between;
   align-items: center;
   gap: 20px;
-  padding: 26px var(--pad);
+  padding: 24px var(--pad);
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-.footer-row > a {
-  justify-self: end;
+.footer-copy {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: color-mix(in srgb, currentColor 75%, transparent);
 }
 
-.footer-name-wrap {
-  overflow: hidden;
-  padding: 0 var(--pad);
+.footer-sep {
+  opacity: 0.4;
 }
 
-.footer-name {
-  font-family: var(--display);
-  font-stretch: 75%;
-  font-weight: 900;
-  font-size: 15.6vw;
-  line-height: 0.78;
-  letter-spacing: -0.045em;
-  text-align: center;
-  white-space: nowrap;
+.footer-top-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+  background: color-mix(in srgb, currentColor 6%, transparent);
+  color: inherit;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.footer-top-btn:hover {
+  background: color-mix(in srgb, currentColor 14%, transparent);
+  border-color: color-mix(in srgb, currentColor 45%, transparent);
+  transform: translateY(-2px);
+}
+
+.footer-top-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.footer-top-btn:hover .footer-top-icon {
+  transform: translateY(-2px);
+}
+
+/* Floating Scroll To Top button */
+.floating-top-btn {
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  z-index: 85;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--bg, #0b0c0e) 70%, transparent);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+  color: inherit;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(16px) scale(0.9);
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.35s,
+              background 0.25s,
+              border-color 0.25s,
+              box-shadow 0.25s;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.floating-top-btn--visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.floating-top-btn:hover {
+  background: color-mix(in srgb, currentColor 18%, transparent);
+  border-color: color-mix(in srgb, currentColor 48%, transparent);
+  transform: translateY(-3px) scale(1.06);
+  box-shadow: 0 14px 34px -4px rgba(0, 0, 0, 0.45);
+}
+
+.floating-top-btn:active {
+  transform: translateY(0) scale(0.96);
+}
+
+.floating-top-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.floating-top-btn:hover .floating-top-icon {
+  transform: translateY(-2px);
 }
 
 /* ---------- Loader ---------- */
@@ -5547,14 +5634,18 @@ button:focus-visible {
   }
 
   .footer-row {
-    display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
+    padding: 20px var(--pad);
   }
 
-  .footer-name {
-    font-size: clamp(34px, 14.2vw, 220px);
+  .floating-top-btn {
+    right: 18px;
+    bottom: 18px;
+    width: 42px;
+    height: 42px;
   }
 }
 

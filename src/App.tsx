@@ -10,6 +10,7 @@ import { CustomCursor } from "./components/layout/CustomCursor"
 import { Header } from "./components/layout/Header"
 import { MobileMenu } from "./components/layout/MobileMenu"
 import { PageCurtain } from "./components/layout/PageCurtain"
+import { ScrollToTop } from "./components/layout/ScrollToTop"
 import { Hero } from "./components/sections/Hero"
 import { Manifesto } from "./components/sections/Manifesto"
 import { MarqueeBands } from "./components/sections/MarqueeBands"
@@ -299,6 +300,7 @@ export default function App() {
           </div>
         )}
       </main>
+      <ScrollToTop topHref={view === "case-study" ? "#cs-top" : "#home"} />
     </div>
   )
 }

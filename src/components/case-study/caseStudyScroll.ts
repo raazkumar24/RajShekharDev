@@ -346,15 +346,6 @@ export function setupCaseStudyScroll({ root, onHeader }: CaseStudyScrollOptions)
       clearProps: "transform,opacity",
       scrollTrigger: { trigger: ".cs-cta", start: "top 88%" },
     })
-    gsap.fromTo(
-      ".cs-next .footer-name",
-      { yPercent: 60 },
-      {
-        yPercent: 0,
-        ease: "none",
-        scrollTrigger: { trigger: ".cs-next .site-footer", start: "top bottom", end: "bottom bottom", scrub: true },
-      },
-    )
 
     const mm = gsap.matchMedia()
     // The build flow line runs horizontally on desktop, vertically on mobile
