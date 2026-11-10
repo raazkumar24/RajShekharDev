@@ -50,6 +50,28 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
     if (!link) return
     const href = link.getAttribute("href") || ""
     if (href.length < 2 || href.startsWith("#case-study")) return
+
+    // If clicking an in-page work link (e.g. #work-01, #work-02) on desktop when pinned:
+    if (href.startsWith("#work-") && window.innerWidth > 900) {
+      const st = ScrollTrigger.getById("works-pinned")
+      if (st) {
+        const num = href.replace("#work-", "")
+        const items = Array.from(root.querySelectorAll<HTMLElement>(".wk-item"))
+        const targetIndex = items.findIndex((item) => item.id === `work-${num}`)
+        if (targetIndex !== -1 && items.length > 0) {
+          event.preventDefault()
+          const targetScroll = st.start + (targetIndex / items.length) * (st.end - st.start) + 10
+          if (lenis) {
+            lenis.start()
+            lenis.scrollTo(targetScroll, { duration: 1.5, easing: (t) => 1 - Math.pow(1 - t, 5) })
+          } else {
+            window.scrollTo({ top: targetScroll, behavior: "smooth" })
+          }
+          return
+        }
+      }
+    }
+
     const target = document.querySelector(href)
     if (!target) return
     event.preventDefault()
@@ -507,13 +529,52 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
         gsap.fromTo(card, { scale: 1 }, { scale: 0.9 + index * 0.025, ease: "none", scrollTrigger: trigger })
         gsap.fromTo(card.querySelector(".card-dim"), { opacity: 0 }, { opacity: 0.45, ease: "none", scrollTrigger: { ...trigger } })
       })
+
+      // ---------- Works: Premium Sticky Showcase Pinning ----------
+      const stage = root.querySelector<HTMLElement>(".wk-stage")
+      if (stage) {
+        const items = root.querySelectorAll<HTMLElement>(".wk-item")
+        const totalProjects = items.length
+
+        if (totalProjects > 0) {
+          ScrollTrigger.create({
+            id: "works-pinned",
+            trigger: stage,
+            start: "top top",
+            end: () => `+=${totalProjects * 100}%`,
+            pin: true,
+            anticipatePin: isTouch ? 0 : 1,
+            scrub: true,
+            onUpdate: (self) => {
+              const activeIndex = Math.min(
+                totalProjects - 1,
+                Math.floor(self.progress * totalProjects),
+              )
+              stage.dispatchEvent(
+                new CustomEvent("project-change", {
+                  detail: { index: activeIndex, progress: self.progress },
+                }),
+              )
+            },
+          })
+        }
+      }
     })
 
     mm.add("(max-width: 900px)", () => {
       processLine("scaleY")
+      q(".wk-item").forEach((item) => {
+        gsap.from(item, {
+          y: 40,
+          opacity: 0.4,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: { trigger: item, start: "top 88%" },
+        })
+      })
     })
 
-    // ---------- Works: browser windows settle in, phones drift past them ----------
+    // ---------- Works: index entrance reveal ----------
     gsap.from(".wk-index li", {
       y: 30,
       autoAlpha: 0,
@@ -522,27 +583,6 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
       ease: "power3.out",
       clearProps: "transform,opacity,visibility",
       scrollTrigger: { trigger: ".wk-index", start: "top 88%" },
-    })
-    q(".wk-item").forEach((item) => {
-      const shot = item.querySelector(".wk-shot")
-      const phone = item.querySelector(".wk-phone")
-      if (shot) {
-        gsap.fromTo(shot, { y: 90, rotate: 2.5, scale: 0.92, opacity: 0.35 }, {
-          y: 0,
-          rotate: 0,
-          scale: 1,
-          opacity: 1,
-          ease: "none",
-          scrollTrigger: { trigger: item, start: "top bottom", end: "top 30%", scrub: 1 },
-        })
-      }
-      if (phone) {
-        gsap.fromTo(phone, { y: 120 }, {
-          y: -50,
-          ease: "none",
-          scrollTrigger: { trigger: item, start: "top bottom", end: "bottom top", scrub: true },
-        })
-      }
     })
 
     // ---------- Contact: LET'S TALK grows to fill the screen ----------

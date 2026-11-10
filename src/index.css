@@ -2643,23 +2643,26 @@ button:focus-visible .roll::after {
   color: var(--brand);
 }
 
-/* Stage: details stay pinned on the left while the screens scroll past on the right */
+/* Stage: sticky showcase where active project is vertically centered */
 .wk-stage {
   display: grid;
   grid-template-columns: minmax(0, 4.6fr) minmax(0, 7.4fr);
-  gap: clamp(40px, 6vw, 110px);
-  margin-top: clamp(30px, 4vw, 60px);
+  gap: clamp(40px, 5vw, 90px);
+  height: 100svh;
+  min-height: 640px;
+  align-items: center;
+  position: relative;
+  margin-top: 0;
 }
 
 .wk-panel {
-  position: sticky;
-  top: 0;
   display: flex;
-  height: 100svh;
   flex-direction: column;
   justify-content: center;
-  gap: 30px;
-  padding: 100px 0 56px;
+  gap: 28px;
+  padding: 0;
+  height: auto;
+  position: relative;
 }
 
 .wk-panel-num {
@@ -2902,20 +2905,79 @@ button:focus-visible .roll::after {
   background: var(--brand);
 }
 
-/* Shots: a browser window with the phone version leaning on it */
-.wk-item {
+.wk-shots {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
   position: relative;
-  display: flex;
-  min-height: 100svh;
-  flex-direction: column;
-  justify-content: center;
+  width: 100%;
 }
 
-/* The last screen only needs to reach the middle of the viewport */
+/* Shots: stacked at vertical center, transitioning smoothly as active project changes */
+.wk-item {
+  grid-area: 1 / 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 0;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(40px) scale(0.96);
+  pointer-events: none;
+  transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 700ms cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 600ms;
+}
+
+.wk-item.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+  z-index: 2;
+}
+
+.wk-item.is-prev {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-40px) scale(0.96);
+  pointer-events: none;
+  z-index: 1;
+}
+
 .wk-item:last-child {
-  min-height: 82svh;
-  justify-content: flex-start;
-  padding-top: 9svh;
+  min-height: 0;
+  justify-content: center;
+  padding-top: 0;
+}
+
+@media (min-width: 901px) and (max-height: 800px) {
+  .wk-stage {
+    min-height: 0;
+    gap: 36px;
+  }
+  .wk-panel {
+    gap: 16px;
+  }
+  .wk-panel-num {
+    font-size: clamp(68px, 7.5vw, 110px);
+  }
+  .wk-info {
+    gap: 10px;
+  }
+  .wk-info h3 {
+    font-size: clamp(32px, 3.5vw, 50px);
+  }
+  .wk-desc {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .wk-browser {
+    width: 86%;
+  }
 }
 
 .wk-shot {
@@ -3444,7 +3506,7 @@ button:focus-visible .roll::after {
   font-family: var(--display);
   font-stretch: 75%;
   font-weight: 900;
-  font-size: clamp(80px, 20.5vw, 400px);
+  font-size: clamp(60px, 20.5vw, 280px);
   line-height: 0.8;
   letter-spacing: 0.025em;
   white-space: nowrap;
@@ -5101,19 +5163,35 @@ button:focus-visible {
   }
 
   .wk-stage {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 0;
     gap: 0;
-    margin-top: clamp(70px, 12vw, 100px);
+    margin-top: clamp(60px, 10vw, 90px);
   }
 
   .wk-panel {
     display: none;
   }
 
+  .wk-shots {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(70px, 14vw, 110px);
+  }
+
   .wk-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
     min-height: 0;
     gap: 34px;
-    margin-bottom: clamp(80px, 15vw, 120px);
+    margin-bottom: 0;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    pointer-events: auto !important;
   }
 
   .wk-item:last-child {

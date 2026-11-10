@@ -105,19 +105,53 @@ function ShotSketch({ title }: { title: string }) {
 export function Works({ onSelectProject }: WorksProps) {
   const [active, setActive] = useState(0)
   const itemRefs = useRef<Array<HTMLElement | null>>([])
+  const stageRef = useRef<HTMLDivElement>(null)
 
-  // The project crossing the middle of the screen drives the sticky panel
+  // Listen to project-change events from the desktop sticky scroll,
+  // or use IntersectionObserver on mobile viewports (<= 900px)
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActive(Number((entry.target as HTMLElement).dataset.index))
-        })
-      },
-      { rootMargin: "-45% 0px -45% 0px" },
-    )
-    itemRefs.current.forEach((item) => item && observer.observe(item))
-    return () => observer.disconnect()
+    const stage = stageRef.current
+    if (!stage) return
+
+    const onProjectChange = (e: Event) => {
+      const { index } = (e as CustomEvent<{ index: number }>).detail
+      if (typeof index === "number") {
+        setActive((prev) => (prev === index ? prev : index))
+      }
+    }
+    stage.addEventListener("project-change", onProjectChange)
+
+    let observer: IntersectionObserver | null = null
+    const initMobileObserver = () => {
+      if (window.innerWidth <= 900) {
+        if (!observer) {
+          observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  const idx = Number((entry.target as HTMLElement).dataset.index)
+                  if (!Number.isNaN(idx)) setActive(idx)
+                }
+              })
+            },
+            { rootMargin: "-35% 0px -35% 0px" },
+          )
+          itemRefs.current.forEach((item) => item && observer?.observe(item))
+        }
+      } else {
+        observer?.disconnect()
+        observer = null
+      }
+    }
+
+    initMobileObserver()
+    window.addEventListener("resize", initMobileObserver)
+
+    return () => {
+      stage.removeEventListener("project-change", onProjectChange)
+      observer?.disconnect()
+      window.removeEventListener("resize", initMobileObserver)
+    }
   }, [])
 
   const open = (project: Project) => (event: MouseEvent<HTMLAnchorElement>) => {
@@ -159,7 +193,7 @@ export function Works({ onSelectProject }: WorksProps) {
         </ol>
       </header>
 
-      <div className="wk-stage">
+      <div className="wk-stage" ref={stageRef}>
         <aside className="wk-panel" aria-label="Project details">
           <div className="wk-panel-num" aria-hidden="true">
             <span className="wk-num-window">
@@ -191,7 +225,7 @@ export function Works({ onSelectProject }: WorksProps) {
         <div className="wk-shots">
           {projects.map((project, index) => (
             <article
-              className={`wk-item ${index === active ? "is-active" : ""}`}
+              className={`wk-item ${index === active ? "is-active" : index < active ? "is-prev" : ""}`}
               data-index={index}
               id={`work-${project.number}`}
               key={project.number}
