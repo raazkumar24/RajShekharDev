@@ -1704,7 +1704,7 @@ button:focus-visible .roll::after {
 
 .tool-row {
   display: grid;
-  grid-template-columns: 70px minmax(0, 1.25fr) minmax(260px, 0.75fr);
+  grid-template-columns: 50px minmax(0, 1.25fr) minmax(260px, 0.75fr);
   align-items: center;
   gap: 24px;
   padding: clamp(22px, 3vw, 40px) 0;
@@ -1723,7 +1723,7 @@ button:focus-visible .roll::after {
   font-family: var(--display);
   font-stretch: 75%;
   font-weight: 900;
-  font-size: clamp(56px, 9.5vw, 160px);
+  font-size: clamp(50px, 9.5vw, 130px);
   line-height: 0.86;
   /* letter-spacing: -0.015em; */
   text-transform: uppercase;
@@ -4601,14 +4601,18 @@ button:focus-visible .roll::after {
   opacity: 0.4;
 }
 
+/* Back to top capsule in footer - frosted glass look */
 .footer-top-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
+  gap: 10px;
+  padding: 8px 18px;
   border-radius: 9999px;
-  border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
-  background: color-mix(in srgb, currentColor 6%, transparent);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.03) 100%);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.28), 0 8px 24px -4px rgba(0, 0, 0, 0.25);
   color: inherit;
   font-family: var(--mono);
   font-size: 11px;
@@ -4616,13 +4620,26 @@ button:focus-visible .roll::after {
   text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .footer-top-btn:hover {
-  background: color-mix(in srgb, currentColor 14%, transparent);
-  border-color: color-mix(in srgb, currentColor 45%, transparent);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.06) 100%);
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.45), 0 12px 28px -4px rgba(0, 0, 0, 0.35);
   transform: translateY(-2px);
+}
+
+.site[data-theme="concrete"] .footer-top-btn {
+  border: 1px solid rgba(29, 23, 20, 0.12);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(244, 239, 230, 0.6) 100%);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.95), 0 8px 20px -4px rgba(29, 23, 20, 0.08);
+}
+
+.site[data-theme="concrete"] .footer-top-btn:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(244, 239, 230, 0.8) 100%);
+  border-color: rgba(29, 23, 20, 0.25);
+  box-shadow: inset 0 1px 1.5px 0 rgba(255, 255, 255, 1), 0 12px 26px -4px rgba(29, 23, 20, 0.14);
 }
 
 .footer-top-icon {
@@ -4636,24 +4653,27 @@ button:focus-visible .roll::after {
   transform: translateY(-2px);
 }
 
-/* Floating Scroll To Top button */
+/* Floating Scroll To Top button - Premium Frosted Glass Look */
 .floating-top-btn {
   position: fixed;
   right: 28px;
   bottom: 28px;
   z-index: 85;
-  width: 46px;
-  height: 46px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: color-mix(in srgb, var(--bg, #0b0c0e) 70%, transparent);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.04) 100%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   color: inherit;
-  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.35);
+  box-shadow:
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.2),
+    0 16px 36px -6px rgba(0, 0, 0, 0.45);
   opacity: 0;
   visibility: hidden;
   transform: translateY(16px) scale(0.9);
@@ -4661,9 +4681,9 @@ button:focus-visible .roll::after {
   transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
               visibility 0.35s,
-              background 0.25s,
-              border-color 0.25s,
-              box-shadow 0.25s;
+              background 0.3s,
+              border-color 0.3s,
+              box-shadow 0.3s;
   cursor: pointer;
   text-decoration: none;
 }
@@ -4676,14 +4696,40 @@ button:focus-visible .roll::after {
 }
 
 .floating-top-btn:hover {
-  background: color-mix(in srgb, currentColor 18%, transparent);
-  border-color: color-mix(in srgb, currentColor 48%, transparent);
-  transform: translateY(-3px) scale(1.06);
-  box-shadow: 0 14px 34px -4px rgba(0, 0, 0, 0.45);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.08) 100%);
+  border-color: rgba(255, 255, 255, 0.42);
+  transform: translateY(-4px) scale(1.08);
+  box-shadow:
+    inset 0 1px 2px 0 rgba(255, 255, 255, 0.65),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.15),
+    0 20px 44px -6px rgba(0, 0, 0, 0.55),
+    0 0 24px rgba(255, 255, 255, 0.12);
 }
 
 .floating-top-btn:active {
-  transform: translateY(0) scale(0.96);
+  transform: translateY(-1px) scale(0.98);
+  box-shadow:
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.3),
+    0 8px 20px -4px rgba(0, 0, 0, 0.4);
+}
+
+/* Concrete theme adaptation for floating top btn */
+.site[data-theme="concrete"] .floating-top-btn {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(244, 239, 230, 0.55) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow:
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 1px 0 rgba(29, 23, 20, 0.06),
+    0 14px 32px -6px rgba(29, 23, 20, 0.14);
+}
+
+.site[data-theme="concrete"] .floating-top-btn:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(244, 239, 230, 0.75) 100%);
+  border-color: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    inset 0 1px 2px 0 rgba(255, 255, 255, 1),
+    0 20px 40px -6px rgba(29, 23, 20, 0.18),
+    0 0 20px rgba(201, 48, 31, 0.15);
 }
 
 .floating-top-icon {
@@ -5634,8 +5680,8 @@ button:focus-visible {
   .floating-top-btn {
     right: 18px;
     bottom: 18px;
-    width: 42px;
-    height: 42px;
+    width: 46px;
+    height: 46px;
   }
 }
 
