@@ -147,22 +147,28 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
         .from(".hero-portrait img", { yPercent: 10, opacity: 0, duration: 1.1 }, 0.2)
         .from(".hero-fade", { y: 20, opacity: 0, duration: 0.8, stagger: 0.06, clearProps: "transform,opacity" }, 0.35)
     } else {
-      // Signed-sheet intro: notes settle, the name is written, underlined and stamped,
-      // then the page lifts off like a sheet pulled from a pad.
+      // Counter intro: notes settle, the count runs to 100 with the bar, then the
+      // ink lifts in staggered shutters over a lemon flash that wipes away last.
       const statusLines = q(".loader-status span")
+      const countEl = root.querySelector<HTMLElement>(".loader-count-num")
+      const count = { value: 0 }
       const intro = gsap
         .timeline({ defaults: { ease: "expo.out" }, onComplete: () => root.classList.add("is-loaded") })
         .to(".loader-note > span", { opacity: 1, y: 0, duration: 0.7, stagger: 0.06, startAt: { y: 10 } }, 0)
-        .to(".loader-signature", { clipPath: "inset(-20% 0% -20% 0)", duration: 1.15, ease: "power1.inOut" }, 0.15)
-        .to(".loader-swash path", { strokeDashoffset: 0, duration: 0.55, ease: "power2.inOut" }, 1.05)
-        .fromTo(
-          ".loader-stamp",
-          { opacity: 0, scale: 1.9, rotate: -32 },
-          { opacity: 0.92, scale: 1, rotate: -14, duration: 0.32, ease: "power4.in" },
-          1.3,
+        .to([".loader-count-num", ".loader-count-unit"], { yPercent: 0, y: 0, duration: 0.9, stagger: 0.08 }, 0.05)
+        .to(
+          count,
+          {
+            value: 100,
+            duration: 1.75,
+            ease: "power2.inOut",
+            onUpdate: () => {
+              if (countEl) countEl.textContent = String(Math.round(count.value)).padStart(3, "0")
+            },
+          },
+          0.1,
         )
-        // The thump of the stamp landing
-        .fromTo(".loader-paper", { scale: 1 }, { scale: 0.992, duration: 0.07, yoyo: true, repeat: 1, ease: "power1.out" }, 1.62)
+        .to(".loader-bar i", { scaleX: 1, duration: 1.75, ease: "power2.inOut" }, 0.1)
       statusLines.forEach((line, index) => {
         const at = index * 0.62
         intro.to(line, { yPercent: 0, y: 0, duration: 0.45, ease: "power3.out", startAt: { yPercent: 110 } }, at)
@@ -171,11 +177,16 @@ export function setupScroll({ root, onSection, onHeader, initialTarget }: Option
         }
       })
       intro
-        .to(".loader", { yPercent: -112, rotate: -4, transformOrigin: "0% 100%", duration: 1.05, ease: "expo.inOut" }, 2.05)
+        // Exit: content clears, shutters lift left to right, then the flash follows
+        .to([".loader-count-num", ".loader-count-unit"], { yPercent: -105, duration: 0.55, ease: "power3.in", stagger: 0.04 }, 1.95)
+        .to([".loader-note > span", ".loader-status"], { opacity: 0, y: -12, duration: 0.4, ease: "power2.in" }, 1.95)
+        .to(".loader-bar", { scaleX: 0, transformOrigin: "100% 50%", duration: 0.5, ease: "power3.in" }, 1.95)
+        .to(".loader-col", { yPercent: -100, duration: 0.85, stagger: 0.06, ease: "expo.inOut" }, 2.25)
+        .to(".loader-flash", { yPercent: -100, duration: 0.8, ease: "expo.inOut" }, 2.6)
         .set(".loader", { display: "none" })
-        .from(heroSplit.chars, { yPercent: 110, rotate: 6, duration: 1.4, stagger: 0.035 }, 2.45)
-        .from(".hero-portrait img", { yPercent: 12, scale: 1.06, opacity: 0, duration: 1.6, ease: "expo.out" }, 2.55)
-        .from(".hero-fade", { y: 24, opacity: 0, duration: 0.9, stagger: 0.07, clearProps: "transform,opacity" }, 2.75)
+        .from(heroSplit.chars, { yPercent: 110, rotate: 6, duration: 1.4, stagger: 0.035 }, 2.85)
+        .from(".hero-portrait img", { yPercent: 12, scale: 1.06, opacity: 0, duration: 1.6, ease: "expo.out" }, 2.95)
+        .from(".hero-fade", { y: 24, opacity: 0, duration: 0.9, stagger: 0.07, clearProps: "transform,opacity" }, 3.15)
     }
 
     // Hero responds to the pointer: the star drifts and the portrait leans in

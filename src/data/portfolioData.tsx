@@ -185,14 +185,15 @@ export const socials: SocialLink[] = [
   },
   {
     label: "LinkedIn",
-    href: "https://www.linkedin.com/",
+    href: "https://www.linkedin.com/in/raj-shekhar-44887338b/",
     icon: (
       <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
     ),
   },
   {
     label: "Instagram",
-    href: "https://www.instagram.com/",
+    href: "https://www.instagram.com/raaz__kumar_/?hl=en",
+    handle: "@raaz__kumar_",
     icon: (
       <>
         <rect height="18" rx="5" width="18" x="3" y="3" />

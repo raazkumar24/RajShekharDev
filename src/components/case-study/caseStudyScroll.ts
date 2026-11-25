@@ -146,14 +146,6 @@ export function setupCaseStudyScroll({ root, onHeader }: CaseStudyScrollOptions)
       .from(titleSplit.chars, { yPercent: 115, duration: 1.2, stagger: 0.035 }, 0.1)
       .from(".cs-fade", { y: 26, opacity: 0, duration: 0.9, stagger: 0.08, clearProps: "transform,opacity" }, 0.3)
       .from(".cs-switch button", { y: 14, opacity: 0, duration: 0.6, stagger: 0.05, clearProps: "transform,opacity" }, 0.45)
-      .fromTo(
-        ".cs-cover",
-        { clipPath: "inset(18% 10% 0% 10% round 28px)" },
-        { clipPath: "inset(0% 0% 0% 0% round 28px)", duration: 1.5, ease: "expo.inOut" },
-        0.25,
-      )
-      .from(".cs-cover-media img", { scale: 1.35, duration: 1.8 }, 0.25)
-      .from(".cs-stamp", { scale: 0, rotate: -120, duration: 1, ease: "back.out(1.6)" }, 1.1)
 
     // Title halves drift apart as the hero leaves
     gsap

@@ -55,7 +55,7 @@ export function Header({
           }`}
           style={{ transform: `translateX(${pill.x}px)`, width: pill.w }}
         />
-        {navItems.slice(0, 4).map((item, index) => (
+        {navItems.slice(0, 4).map((item) => (
           <a
             aria-current={active === item.id ? "page" : undefined}
             className={active === item.id ? "is-active" : ""}
@@ -66,7 +66,6 @@ export function Header({
             onBlur={() => setHovered(null)}
             onMouseEnter={() => setHovered(item.id)}
           >
-            <sup>0{index + 1}</sup>
             <span className="roll" data-text={item.label}>
               {item.label}
             </span>
@@ -86,7 +85,7 @@ export function Header({
               type="button"
             >
               <span />
-              {option === "concrete" ? "Concrete 01" : "Red 02"}
+              {option === "concrete" ? "Concrete" : "Red"}
             </button>
           ))}
         </div>

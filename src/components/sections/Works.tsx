@@ -54,15 +54,20 @@ function ProjectInfo({ project, isActive, onOpen }: ProjectInfoProps) {
             <ArrowUpRight />
           </i>
         </a>
-        {project.liveUrl && (
-          <a className="wk-link" href={project.liveUrl} rel="noreferrer" target="_blank">
-            Live site <ArrowUpRight />
-          </a>
-        )}
-        {project.repoUrl && (
-          <a className="wk-link" href={project.repoUrl} rel="noreferrer" target="_blank">
-            Code <ArrowUpRight />
-          </a>
+        {(project.liveUrl || project.repoUrl) && (
+          // Grouped so the secondary links wrap together instead of splitting
+          <span className="wk-links">
+            {project.liveUrl && (
+              <a className="wk-link" href={project.liveUrl} rel="noreferrer" target="_blank">
+                Live site <ArrowUpRight />
+              </a>
+            )}
+            {project.repoUrl && (
+              <a className="wk-link" href={project.repoUrl} rel="noreferrer" target="_blank">
+                Code <ArrowUpRight />
+              </a>
+            )}
+          </span>
         )}
       </div>
     </div>

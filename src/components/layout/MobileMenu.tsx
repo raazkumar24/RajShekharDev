@@ -78,7 +78,7 @@ export function MobileMenu({
               type="button"
             >
               <span />
-              {option === "concrete" ? "Concrete 01" : "Red 02"}
+              {option === "concrete" ? "Concrete" : "Red"}
             </button>
           ))}
         </div>

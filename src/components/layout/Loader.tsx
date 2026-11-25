@@ -3,19 +3,32 @@ interface LoaderProps {
 }
 
 const statusLines = ["Pouring the chai", "Sharpening pencils", "Opening the studio"]
+const shutters = [0, 1, 2, 3, 4]
 
 /**
- * Intro sheet: a signed, stamped page on ruled paper. Motion lives in scroll.ts;
- * the CSS keeps everything hidden until the timeline plays.
+ * Intro: an ink screen with a big counter that fills to 100, then lifts away in
+ * staggered shutters over a lemon flash. Motion lives in scroll.ts; the CSS keeps
+ * everything at its start state until the timeline plays.
  */
 export function Loader({ time }: LoaderProps) {
   return (
     <div className="loader" aria-hidden="true">
-      <div className="loader-paper">
-        <div className="loader-row loader-row--top">
+      <div className="loader-flash" />
+      <div className="loader-cols">
+        {shutters.map((index) => (
+          <span className="loader-col" key={index} />
+        ))}
+      </div>
+
+      <div className="loader-content">
+        <div className="loader-row">
           <p className="loader-note">
             <span>Raj Shekhar</span>
             <span>Full-stack developer</span>
+          </p>
+          <p className="loader-note loader-note--mid">
+            <span>Portfolio</span>
+            <span>Edition 2026</span>
           </p>
           <p className="loader-note loader-note--end">
             <span>Chandigarh, IN</span>
@@ -23,51 +36,26 @@ export function Loader({ time }: LoaderProps) {
           </p>
         </div>
 
-        <div className="loader-sign">
-          <p className="loader-signature">Raj Shekhar</p>
-          <svg className="loader-swash" viewBox="0 0 600 60" preserveAspectRatio="none">
-            <path
-              d="M6 42 C 120 18, 260 52, 380 30 S 560 14, 594 34"
-              pathLength={1}
-            />
-          </svg>
-
-          <svg className="loader-stamp" viewBox="0 0 200 200">
-            <defs>
-              {/* Roughens the edges so the stamp reads as ink, not vector */}
-              <filter id="loader-ink" x="-10%" y="-10%" width="120%" height="120%">
-                <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" />
-                <feDisplacementMap in="SourceGraphic" scale="3.5" />
-              </filter>
-              <path id="loader-stamp-ring" d="M100 100 m -74 0 a 74 74 0 1 1 148 0 a 74 74 0 1 1 -148 0" />
-            </defs>
-            <g filter="url(#loader-ink)">
-              <circle cx="100" cy="100" r="94" fill="none" strokeWidth="4" />
-              <circle cx="100" cy="100" r="58" fill="none" strokeWidth="1.5" />
-              <text className="loader-stamp-ring">
-                <textPath href="#loader-stamp-ring" lengthAdjust="spacing" startOffset="0" textLength="458">
-                  Selected work · Chandigarh · 2026 ·
-                </textPath>
-              </text>
-              <text className="loader-stamp-mono" x="100" y="112" textAnchor="middle">
-                RS
-              </text>
-              <text className="loader-stamp-year" x="100" y="134" textAnchor="middle">
-                Folio no. 26
-              </text>
-            </g>
-          </svg>
+        <div className="loader-main">
+          <p className="loader-count">
+            <span className="loader-count-num">000</span>
+            <span className="loader-count-unit">%</span>
+          </p>
+          <div className="loader-side">
+            <p className="loader-status">
+              {statusLines.map((line) => (
+                <span key={line}>{line}</span>
+              ))}
+            </p>
+            <p className="loader-note">
+              <span>Websites that load fast</span>
+              <span>and feel alive.</span>
+            </p>
+          </div>
         </div>
 
-        <div className="loader-row loader-row--bottom">
-          <p className="loader-status">
-            {statusLines.map((line) => (
-              <span key={line}>{line}</span>
-            ))}
-          </p>
-          <p className="loader-note loader-note--end">
-            <span>Signed &amp; built by hand</span>
-          </p>
+        <div className="loader-bar">
+          <i />
         </div>
       </div>
     </div>

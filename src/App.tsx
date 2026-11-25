@@ -42,7 +42,11 @@ export default function App() {
       : null,
   )
   const transitioning = useRef(false)
-  const [theme, setTheme] = useState<Theme>("concrete")
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === "undefined") return "concrete"
+    const saved = window.localStorage.getItem("rs-theme")
+    return saved === "red" || saved === "concrete" ? saved : "concrete"
+  })
   const [view, setView] = useState<View>(() =>
     initialHash.startsWith("#case-study") ? "case-study" : "home",
   )
@@ -209,6 +213,19 @@ export default function App() {
     return () => window.removeEventListener("keydown", onKey)
   }, [menuOpen])
 
+  // Remember the chosen theme between visits
+  useEffect(() => {
+    window.localStorage.setItem("rs-theme", theme)
+  }, [theme])
+
+  // Keep document title in sync for navigation history and search/analytics tracking
+  useEffect(() => {
+    document.title =
+      view === "case-study"
+        ? `${selectedProject.title} — Case Study | Raj Shekhar`
+        : "Raj Shekhar — Full-Stack Developer & Creative Technologist"
+  }, [view, selectedProject])
+
   // Custom cursor lives across both views
   useEffect(() => {
     const root = rootRef.current
@@ -251,6 +268,13 @@ export default function App() {
 
   return (
     <div className="site" data-theme={theme} ref={rootRef}>
+      <a
+        className="skip-link"
+        href="#main-content"
+        onClick={() => document.getElementById("main-content")?.focus({ preventScroll: true })}
+      >
+        Skip to content
+      </a>
       <Loader time={time} />
       <PageCurtain kicker={curtain.kicker} ref={curtainRef} title={curtain.title} />
       <CustomCursor />
@@ -274,7 +298,7 @@ export default function App() {
         theme={theme}
         time={time}
       />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         {/* Each view gets a wrapper GSAP never moves: pinned sections are re-parented
             into pin-spacers, so React must only ever remove this stable container. */}
         {view === "home" ? (
